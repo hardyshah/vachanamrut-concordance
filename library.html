@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="gu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Satsang Library</title>
+<meta name="description" content="Religious texts of the Bhagwan Shri Swaminarayan sampradaya: the Vachanamrut, Vachanamrut Nondh, Shrimad Bhagwat, Nimit Matra, Amrutvarsha, Satsang Prabha and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anek+Gujarati:wght@400;500;600;700&family=Rasa:wght@400;500;600&family=Shrikhand&display=swap">
+<style>
+/* Layout: a bookshelf. Each book is a card with its cover, Gujarati title, author and publisher, and Read / Download actions. Grouped by kind. */
+:root{
+  --paper:#f3f4ee; --surface:#ffffff; --sunk:#e9ebe3; --ink:#15211f; --ink-2:#55625f; --ink-3:#86918d; --line:#d8dcd1;
+  --saffron:#b9560c; --saffron-strong:#9a4507; --saffron-soft:#f8e2cb; --peacock:#0e5a61; --peacock-soft:#d6e7e6;
+  --shadow:0 1px 2px rgba(20,33,31,.06),0 8px 24px rgba(20,33,31,.06);
+  --f-read:"Rasa","Noto Serif Gujarati",Georgia,serif;
+  --f-ui:"Anek Gujarati","Noto Sans Gujarati",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-display:"Shrikhand","Anek Gujarati",serif;
+  --r:10px; --maxw:1080px; color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0e1416; --surface:#151e21; --sunk:#1b262a; --ink:#e6e8e1; --ink-2:#a3aeaa; --ink-3:#71807c; --line:#273439;
+  --saffron:#f0974a; --saffron-strong:#ffb06a; --saffron-soft:#3a2615; --peacock:#6cbcbc; --peacock-soft:#18363a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0e1416; --surface:#151e21; --sunk:#1b262a; --ink:#e6e8e1; --ink-2:#a3aeaa; --ink-3:#71807c; --line:#273439;
+  --saffron:#f0974a; --saffron-strong:#ffb06a; --saffron-soft:#3a2615; --peacock:#6cbcbc; --peacock-soft:#18363a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-ui);font-size:16px;line-height:1.5;margin:0;-webkit-font-smoothing:antialiased}
+a{color:var(--peacock);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--saffron);outline-offset:2px;border-radius:4px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:14px;padding-block:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:8px;color:var(--ink);white-space:nowrap;margin-right:auto}
+.brand:hover{text-decoration:none}
+.brand .gu{font-family:var(--f-display);font-size:24px;color:var(--saffron);line-height:1}
+.brand .en{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.nav{display:flex;gap:2px;flex-wrap:wrap}
+.nav a{color:var(--ink-2);padding:6px 10px;border-radius:999px;font-size:14px;font-weight:500}
+.nav a:hover{text-decoration:none;background:var(--sunk);color:var(--ink)}
+.nav a.on{background:var(--ink);color:var(--paper)}
+.theme{border:1px solid var(--line);background:none;border-radius:999px;width:34px;height:34px;display:grid;place-items:center;cursor:pointer;color:var(--ink-2)}
+main{padding-block:32px 80px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.hero h1{font-family:var(--f-display);font-weight:400;color:var(--saffron);font-size:clamp(40px,8vw,68px);line-height:1.1;margin:8px 0 4px}
+.hero h1 + .en{font-family:var(--f-read);font-size:26px;font-weight:600;margin:0 0 12px}
+.hero p{max-width:62ch;color:var(--ink-2);margin:0 0 10px}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin:22px 0 4px}
+.filters button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:6px 12px;cursor:pointer}
+.filters button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+section.shelf{margin-top:34px}
+section.shelf > header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:16px}
+section.shelf h2{font-family:var(--f-read);font-size:24px;font-weight:600;margin:0}
+section.shelf h2 span{color:var(--saffron)}
+.muted{color:var(--ink-3);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px}
+.book{display:grid;grid-template-columns:104px 1fr;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;box-shadow:var(--shadow)}
+.cover{width:104px;aspect-ratio:3/4;border-radius:4px;overflow:hidden;background:var(--sunk);border:1px solid var(--line);display:block}
+.cover img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.cover.type{display:grid;place-items:center;text-align:center;padding:8px;background:linear-gradient(160deg,var(--saffron-soft),var(--surface));color:var(--saffron-strong);font-family:var(--f-display);font-size:19px;line-height:1.15}
+.cover.type.peacock{background:linear-gradient(160deg,var(--peacock-soft),var(--surface));color:var(--peacock)}
+.book h3{font-family:var(--f-read);font-size:21px;font-weight:600;line-height:1.2;margin:0}
+.book .en{font-size:13px;color:var(--ink-2);margin:2px 0 6px}
+.book dl{margin:0;font-size:13px;color:var(--ink-2);display:grid;grid-template-columns:auto 1fr;gap:1px 8px}
+.book dt{color:var(--ink-3)}
+.book dd{margin:0}
+.book .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.btn{font-size:14px;font-weight:600;border-radius:999px;padding:5px 12px;border:1px solid var(--line);color:var(--ink);background:var(--paper)}
+.btn:hover{text-decoration:none;border-color:var(--ink-3)}
+.btn.primary{background:var(--saffron);border-color:var(--saffron);color:#fff}
+:root[data-theme="dark"] .btn.primary{color:#1b1206}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn.primary{color:#1b1206}}
+.btn.primary:hover{background:var(--saffron-strong)}
+.feature{grid-column:1/-1;grid-template-columns:140px 1fr;background:linear-gradient(120deg,var(--saffron-soft),var(--surface) 60%)}
+.feature .cover{width:140px}
+.feature h3{font-size:28px}
+.feature p{margin:6px 0 0;color:var(--ink-2);font-size:14.5px;max-width:64ch}
+.credit{font-size:13.5px;color:var(--ink-2);margin-top:6px}
+.credit b{color:var(--saffron-strong)}
+footer{border-top:1px solid var(--line);padding-block:22px 40px;color:var(--ink-3);font-size:13px}
+@media (max-width:520px){.feature{grid-template-columns:96px 1fr}.feature .cover,.cover{width:96px}.book{grid-template-columns:96px 1fr}.feature h3{font-size:23px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="library.html"><span class="gu">ગ્રંથાલય</span><span class="en">Satsang Library</span></a>
+  <nav class="nav" aria-label="Site">
+    <a href="library.html" class="on">Library</a>
+    <a href="index.html">Vachanamrut</a>
+    <a href="index.html#nondh">Nondh</a>
+  </nav>
+  <button class="theme" id="theme" aria-label="Switch light or dark theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg></button>
+</div></header>
+<main class="wrap">
+  <div class="hero">
+    <div class="eyebrow">શ્રી સ્વામિનારાયણો વિજયતેતરામ્</div>
+    <h1>સત્સંગ ગ્રંથાલય</h1>
+    <div class="en">Satsang Library</div>
+    <p>Religious texts of Bhagwan Shri Swaminarayan's sampradaya, in one place. The Vachanamrut and the Vachanamrut Nondh can be searched and read on this site. The other books open as the original PDFs, to read in the browser or download.</p>
+  </div>
+  <div class="filters" id="filters" role="toolbar" aria-label="Show"></div>
+  <div id="shelves"></div>
+</main>
+<footer class="wrap">Books are reproduced from the published editions; the rights stay with their publishers, named on each card. Vachanamrut Nondh compiled by Ashwin Babubhai Shah, with special guidance / inspiration from Nathji Mandal and (Bhaiji Dada and Dadaji).</footer>
+<script>
+"use strict";
+const SHELVES=[
+ {k:"scripture",gu:"શાસ્ત્ર",en:"Scriptures"},
+ {k:"motabhai",gu:"પૂ. મોટાભાઈના ગ્રંથો",en:"Writings of Pu. Motabhai (Ishwarlal L. Pandya)"},
+ {k:"satsang",gu:"સત્સંગ સાહિત્ય",en:"Satsang literature"},
+];
+// p = pages, mb = file size
+const BOOKS=[
+ {s:"scripture",feature:true,gu:"વચનામૃત",en:"Vachanamrut",cover:{t:"વચનામૃત"},
+  desc:"The discourses of Bhagwan Shri Swaminarayan: all 273 Vachanamruts with the Partharo, searchable word by word, with a word index, glossary and the scriptures they cite.",
+  meta:[["Edition","Shree Swaminarayan Mandir, Bhuj"],["Pages","704"]],
+  acts:[["Read the Vachanamrut","index.html#contents",1],["Search the word index","index.html#index"]]},
+ {s:"scripture",feature:true,gu:"વચનામૃત નોંધ",en:"Vachanamrut Nondh",slug:"vachanamrut-nondh",cover:{t:"વચનામૃત નોંધ",c:"peacock"},
+  desc:"A topic-by-topic reference index of the Vachanamrut: 5,583 topics with references and quotations, 13 appendices and an index of parables. Each reference opens the passage in the Vachanamrut.",
+  credit:'Compiled by <b>Ashwin Babubhai Shah</b>, with special guidance / inspiration from Nathji Mandal and (Bhaiji Dada and Dadaji)',
+  meta:[["Pages","1,099"]],p:1099,mb:6.3,
+  acts:[["Open the Nondh","index.html#nondh",1],["Original PDF","books/vachanamrut-nondh.pdf"]]},
+ {s:"scripture",gu:"શ્રીમદ્ ભાગવત મહાપુરાણ",en:"Shrimad Bhagwat Mahapuran",slug:"shrimad-bhagwat-mahapuran",
+  meta:[["Author","Ved Vyas · original text, complete (Gujarati)"],["Publisher","Shri Swaminarayan Mandir, Jetalpurdham"]],p:984,mb:3.0},
+ {s:"scripture",gu:"અષ્ટકો અને કીર્તનો",en:"Ashtako ane Kirtano · for daily worship",slug:"ashtako-ane-kirtano",cover:{t:"અષ્ટકો અને કીર્તનો"},
+  meta:[["Explained by","Rameshchandra L. Pandya"],["Publisher","Shri Swaminarayan Satsang Seva Mandal, Nadiad"],["Year","2001 (reprint)"]],p:152,mb:1.2},
+ {s:"motabhai",gu:"નિમિત્ત માત્ર ૧",en:"Nimit Matra · Part 1",slug:"nimit-matra-1",
+  meta:[["Author","Pandya Ishwarlal Labhshankar"],["Publisher","A. Ni. Shri Shukla Nathjibhai Ichchharam Sarvajanik Trust"],["Year","1980 (V.S. 2037)"]],p:712,mb:75.8,note:"Large scanned book"},
+ {s:"motabhai",gu:"નિમિત્ત માત્ર ૩",en:"Nimit Matra · Part 3",slug:"nimit-matra-3",
+  meta:[["Author","Pandya Ishwarlal Labhshankar"]],p:239,mb:1.7},
+ {s:"motabhai",gu:"નિમિત્ત માત્ર ૪",en:"Nimit Matra · Part 4",slug:"nimit-matra-4",
+  meta:[["Author","Pandya Ishwarlal Labhshankar"]],p:239,mb:1.6},
+ {s:"motabhai",gu:"અમૃતવર્ષા ૧",en:"Amrutvarsha · Part 1 · from Pu. Motabhai's letters",slug:"amrutvarsha-1",
+  meta:[["Publisher","Shukla Nathjibhai Ichchharam Sarvajanik Trust, Nadiad"],["Year","1997 (V.S. 2053)"]],p:88,mb:1.2},
+ {s:"motabhai",gu:"અમૃતવર્ષા ૨",en:"Amrutvarsha · Part 2 · from Pu. Motabhai's inspiring letters",slug:"amrutvarsha-2",
+  meta:[["Publisher","Shri Nathjibhai Shukla ane Shri Ishwarlal Pandya Ashram Jaher Trust, Nadiad"]],p:88,mb:4.8},
+ {s:"satsang",gu:"સત્સંગ પ્રભા ૧",en:"Satsang Prabha · Part 1",slug:"satsang-prabha-1",
+  meta:[["Author","Rameshchandra L. Pandya"],["Publisher","Shri Nathjibhai Shukla ane Shri Ishwarlal Pandya Ashram Jaher Trust"],["Year","2022"]],p:576,mb:1.3},
+ {s:"satsang",gu:"સ્મૃતિ અંક · સત્સંગ પ્રદીપ",en:"Smruti Ank of Jivanmukta Pu. Ishwarlal L. Pandya (Pu. Motabhai) · Satsang Pradeep",slug:"smruti-ank-satsang-pradeep",
+  meta:[["Magazine of","Shri Swaminarayan Satsang Seva Mandal"],["Issue","Year 12, issues 9–10, Aug–Sep 1982"]],p:133,mb:10.7},
+];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function card(b){
+  const pdf=b.slug?`books/${b.slug}.pdf`:null;
+  const cov=b.cover?`<span class="cover type ${b.cover.c||""}" aria-hidden="true">${esc(b.cover.t)}</span>`:`<span class="cover"><img src="books/covers/${b.slug}.jpg" alt="" loading="lazy" width="104" height="139"></span>`;
+  const acts=b.acts||[["Read","books/"+b.slug+".pdf",1,1],["Download",pdf,0,0,1]];
+  const meta=[...(b.meta||[])];if(b.p&&!b.meta.some(m=>m[0]==="Pages"))meta.push(["Pages",b.p.toLocaleString("en-IN")]);
+  return `<article class="book${b.feature?" feature":""}">
+   <a href="${esc(acts[0][1])}"${acts[0][1].endsWith(".pdf")?' target="_blank" rel="noopener"':""} aria-label="${esc(acts[0][0])}: ${esc(b.en)}">${cov}</a>
+   <div><h3>${esc(b.gu)}</h3><div class="en">${esc(b.en)}</div>
+    ${b.credit?`<div class="credit">${b.credit}</div>`:""}
+    ${b.desc?`<p>${esc(b.desc)}</p>`:""}
+    <dl>${meta.map(m=>`<dt>${esc(m[0])}</dt><dd>${esc(m[1])}</dd>`).join("")}${b.mb?`<dt>File</dt><dd>PDF, ${b.mb} MB${b.note?" · "+esc(b.note):""}</dd>`:""}</dl>
+    <div class="acts">${acts.map(a=>`<a class="btn${a[2]?" primary":""}" href="${esc(a[1])}"${a[1].endsWith(".pdf")&&!a[4]?' target="_blank" rel="noopener"':""}${a[4]?` download="${esc(b.en.split(" · ")[0]+(b.en.includes("Part")?" "+b.en.match(/Part \d+/)[0]:""))}.pdf"`:""}>${esc(a[0])}</a>`).join("")}</div>
+   </div></article>`;
+}
+let show="all";
+function draw(){
+  document.getElementById("filters").innerHTML=[["all","All books"],...SHELVES.map(s=>[s.k,s.en.split(" (")[0]])].map(([k,l])=>`<button data-k="${k}" class="${show===k?"on":""}" aria-pressed="${show===k}">${esc(l)}</button>`).join("");
+  document.getElementById("shelves").innerHTML=SHELVES.filter(s=>show==="all"||show===s.k).map(s=>{const bs=BOOKS.filter(b=>b.s===s.k);
+    return `<section class="shelf" id="${s.k}"><header><h2><span>${esc(s.gu)}</span> · ${esc(s.en)}</h2><span class="muted">${bs.length} ${bs.length===1?"book":"books"}</span></header><div class="grid">${bs.map(card).join("")}</div></section>`}).join("");
+}
+document.getElementById("filters").onclick=e=>{const b=e.target.closest("button");if(!b)return;show=b.dataset.k;draw()};
+draw();
+// theme toggle, shared with the Vachanamrut pages
+(function(){const r=document.documentElement;let t=null;try{t=localStorage.getItem("vc-theme")}catch(e){}if(t==="light"||t==="dark")r.dataset.theme=t;
+  document.getElementById("theme").onclick=()=>{const dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=dark?"light":"dark";try{localStorage.setItem("vc-theme",r.dataset.theme)}catch(e){}}})();
+</script>
+</body>
+</html>
