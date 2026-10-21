@@ -557,7 +557,7 @@ function viewReader(id){
     <div class="pager">${prev?`<a href="#v-${prev.id}">← ${esc(vlabel(prev))} · ${esc(prev.title.slice(0,40))}</a>`:"<span></span>"}${next?`<a href="#v-${next.id}">${esc(vlabel(next))} · ${esc(next.title.slice(0,40))} →</a>`:""}</div>
   </article>
   <aside class="side">
-    ${hl?`<div class="panel"><div class="eyebrow">Highlighted</div><div style="font-family:var(--f-read);font-size:20px">${esc(hw)}</div><div class="hitnav"><button id="hp" aria-label="Previous match">↑</button><span id="hc" class="num muted"></span><button id="hn" aria-label="Next match">↓</button></div><a href="#w-${hl.lemmas[0]}">← Back to all occurrences</a><button class="more" id="clr" style="margin:0">Clear highlight</button></div>`:""}
+    ${hl?`<div class="panel"><div class="eyebrow">Highlighted</div><div style="font-family:var(--f-read);font-size:20px">${esc(hl.label||hw)}</div><div class="hitnav"><button id="hp" aria-label="Previous match">↑</button><span id="hc" class="num muted"></span><button id="hn" aria-label="Next match">↓</button></div>${hl.back?`<a href="#${hl.back}">← Back to the Nondh</a>`:hl.lemmas.length?`<a href="#w-${hl.lemmas[0]}">← Back to all occurrences</a>`:""}<button class="more" id="clr" style="margin:0">Clear highlight</button></div>`:""}
     <div class="panel"><div class="eyebrow">Section</div><div>${esc(s.en)} <span class="muted">(${esc(s.gu)})</span></div>
       <div class="chips">${s.vs.slice(Math.max(0,s.vs.indexOf(vi)-6),s.vs.indexOf(vi)+7).map(j=>`<a class="chip ${j===vi?"on":""}" href="#v-${T.v[j].id}">${esc(vlabel(T.v[j]))}</a>`).join("")}</div>
       <a href="#contents">All contents →</a></div>
@@ -721,17 +721,52 @@ function viewTopic(i){
      ${e[2]?`<div class="ntext">${linkRefs(e[2])}</div>`:""}
      ${e[4]&&e[4][0]!=="u"?`<button class="more openp" data-v="${esc(e[4][1])}" data-pi="${e[4][2]}">Read this passage in ${esc(e[4][1])} →</button>`:""}</article>`).join("")}</div>
    <div class="pager">${ND.topics[i-1]?`<a href="#n-${i-1}">← ${esc(ND.topics[i-1].t.slice(0,40))}</a>`:"<span></span>"}${ND.topics[i+1]?`<a href="#n-${i+1}">${esc(ND.topics[i+1].t.slice(0,40))} →</a>`:""}</div>`;
-  wireNondhLinks($("#main"));
+  wireNondhLinks($("#main"),g.t);
 }
-function wireNondhLinks(root){
+// find the paragraph of Vachanamrut vi that best matches a piece of Nondh text
+const STOP=new Set("અને તે એ જે આ તો પણ છે છે. છીએ હોય હતા હતું હતી કે ને નો ની નું ના માં થી તથા એમ તેમ જેમ એવો એવા એવી એવું તેને તેનો તેની તેનું તેના જેને જેનો કરીને કરે કર્યું થાય થઈ થકા સર્વે કોઈ કેમ શું વચ વચનામૃત જુઓ પ્ર મ અં".split(" ").map(w=>nkey(w)));
+const SUF=["માંથી","માંજ","માં","થી","ને","નો","ની","નું","ના","એ","ો","િ","ું","ા","ે","ુ"].map(nkey);
+function stem(k){for(const x of SUF)if(k.length>x.length+1&&k.endsWith(x))return k.slice(0,-x.length);return k}
+function toks(t){return (t.match(/[\u0A81-\u0AE3]+/g)||[]).map(w=>[w,nkey(w)]).filter(([,k])=>k.length>1&&!STOP.has(k))}
+function locate(vi,ctx){
+  const v=T.v[vi],want=[...new Set(toks(ctx).map(([,k])=>stem(k)))];if(!want.length)return null;
+  const P=v.paras.map(p=>toks(p[1]).map(([w,k],j)=>[w,stem(k)]));
+  const df=new Map();P.forEach(ts=>new Set(ts.map(x=>x[1])).forEach(k=>df.set(k,(df.get(k)||0)+1)));
+  const wt=k=>df.has(k)?1/df.get(k):0;
+  const seq=toks(ctx).map(([,k])=>stem(k)),pairs=new Set();for(let j=1;j<seq.length;j++)pairs.add(seq[j-1]+" "+seq[j]);
+  let best=-1,bs=0;
+  P.forEach((ts,pi)=>{const have=new Set(ts.map(x=>x[1]));let sc=0;want.forEach(k=>{if(have.has(k))sc+=wt(k)});
+    for(let j=1;j<ts.length;j++)if(pairs.has(ts[j-1][1]+" "+ts[j][1]))sc+=1;
+    if(sc>bs){bs=sc;best=pi}});
+  if(best<0)return null;
+  const ranked=want.filter(k=>P[best].some(x=>x[1]===k)).sort((a,b)=>wt(b)-wt(a)).slice(0,3);
+  const forms=new Set(P[best].filter(x=>ranked.includes(x[1])).map(x=>nkey(x[0])));
+  return {pi:best,forms};
+}
+function openLocated(vi,ctx,label){
+  const r=locate(vi,ctx),back=location.hash.slice(1);
+  if(!r){state.hl=null;go("v-"+T.v[vi].id);return}
+  let off=-1;const t=T.v[vi].paras[r.pi][1],re=/[\u0A81-\u0AE3]+/g;let m;while((m=re.exec(t)))if(r.forms.has(nkey(m[0]))){off=m.index;break}
+  state.hl={forms:r.forms,lemmas:[],label,back,target:off>=0?{vi,pi:r.pi,off}:null,para:r.pi};go("v-"+T.v[vi].id);
+}
+function wireNondhLinks(root,title){
   root.querySelectorAll(".openp").forEach(b=>b.onclick=()=>openPara(VBYID[b.dataset.v].i,+b.dataset.pi));
   root.querySelectorAll("a.ref[data-pi]").forEach(a=>a.onclick=ev=>{ev.preventDefault();openPara(+a.dataset.vi,+a.dataset.pi)});
+  // references with no verified quotation: open at the passage that best matches the entry
+  root.querySelectorAll("a.ref:not([data-pi]),a.inref").forEach(a=>a.onclick=ev=>{
+    const id=a.getAttribute("href").slice(3),v=VBYID[id];if(!v)return;ev.preventDefault();
+    let ctx="";
+    if(a.classList.contains("inref")){let n=a.nextSibling;while(n&&ctx.length<300&&!(n.classList&&n.classList.contains("inref"))){ctx+=n.textContent;n=n.nextSibling}}
+    else{const e=a.closest(".nentry"),nt=e&&e.querySelector(".ntext");ctx=nt?nt.textContent:""}
+    const t=title||"";openLocated(v.i,(t+" ").repeat(2)+ctx,t||ctx.trim().slice(0,40));
+  });
 }
 function viewParables(){
   document.title="Parables · Vachanamrut Nondh";
   $("#main").innerHTML=`<div class="eyebrow">${CREDIT}</div><h1 class="ttitle">દ્રષ્ટાંત · Parables by Vachanamrut</h1>
   <p class="note">The Nondh's closing index of the examples and parables (dṛṣṭānt) used in each discourse, in book order.</p>
   <div class="nentries">${ND.parables.map(p=>`<article class="nentry"><div class="nmeta">${p[0]?refChip(p[0]):""}<span class="p">p. ${p[2]}</span></div><div class="ntext">${esc(p[1])}</div></article>`).join("")}</div>`;
+  wireNondhLinks($("#main"));
 }
 function viewAppendix(n){
   const a=ND.appendices.find(x=>x.n===n);if(!a){viewNondh();return}
@@ -739,6 +774,7 @@ function viewAppendix(n){
   $("#main").innerHTML=`<div class="eyebrow">${CREDIT} · પરિશિષ્ટ ${n} · PDF page ${a.p}</div><h1 class="ttitle">${esc(a.title)}</h1>
    <div class="chips" style="margin:12px 0">${ND.appendices.map(x=>`<a class="chip ${x.n===n?"on":""}" href="#appx-${x.n}">${x.n}</a>`).join("")}</div>
    <div class="appx">${linkRefs(a.text)}</div>`;
+  wireNondhLinks($("#main"));
 }
 function nondhPanelForWord(e){
   const tops=topicsForLemma(e);if(!tops.length)return "";
