@@ -273,7 +273,7 @@ footer{border-top:1px solid var(--line);padding-block:20px 40px;color:var(--ink-
   </div>
 </header>
 <main class="wrap" id="main"><div class="loading">Loading the Vachanamrut…</div></main>
-<footer class="wrap">Text decoded from the Gujarati Vachanamrut PDF (Shree Swaminarayan Mandir, Bhuj edition, 704 pages). Page numbers are PDF pages. Sanskrit passages are OCR text. Common function words are not indexed; use full-text search for them. The Vachanamrut Nondh section reproduces the reference index compiled by Ashwin Babubhai Shah.</footer>
+<footer class="wrap">Text decoded from the Gujarati Vachanamrut PDF (Shree Swaminarayan Mandir, Bhuj edition, 704 pages). Page numbers are PDF pages. Sanskrit passages are OCR text. Common function words are not indexed; use full-text search for them. The Vachanamrut Nondh section reproduces the reference index compiled by Ashwin Babubhai Shah, with special guidance / inspiration from Nathji Mandal and (Bhaiji Dada and Dadaji).</footer>
 <div class="tip" id="tip" hidden></div>
 
 <script>
@@ -437,7 +437,7 @@ function viewHome(){
   <section class="block"><header><h2>Most frequent significant words</h2><a href="#index">Browse the full index →</a></header>
     <div class="topwords">${top.map(e=>`<a class="tw" href="#w-${e.i}"><span class="w">${esc(e.h)}<small>${esc(e.r)}</small></span><span class="n">${fmt(e.c)}</span><span class="bar"><i style="width:${(e.c/tmax*100).toFixed(1)}%"></i></span></a>`).join("")}</div></section>
   <section class="block ncallout"><div><div class="eyebrow">Also in this concordance</div><h2><span class="gu">વચનામૃત નોંધ</span> Vachanamrut Nondh</h2>
-    <p>The hand-compiled topic index by <b>Ashwin Babubhai Shah</b>: ${fmt(ND.topics.length)} topics, quotations checked against the text, 13 appendices and an index of parables, linked throughout the word index and the reader.</p></div><a class="cta" href="#nondh">Open the Nondh →</a></section>
+    <p>The hand-compiled topic index by <b>Ashwin Babubhai Shah</b>, with special guidance / inspiration from Nathji Mandal and (Bhaiji Dada and Dadaji): ${fmt(ND.topics.length)} topics, quotations checked against the text, 13 appendices and an index of parables, linked throughout the word index and the reader.</p></div><a class="cta" href="#nondh">Open the Nondh →</a></section>
   <section class="block"><header><h2>Key terms</h2><a href="#glossary">Open the glossary →</a></header>
     <div class="chips">${GL.map(g=>`<a class="chip" href="#w-${g.lemmas[0]}"><span class="gu">${esc(g.term)}</span><small>${esc(g.gloss)}</small></a>`).join("")}</div></section>`;
   wireStrip($("#main"),i=>{state.hl=null;go("v-"+T.v[i].id)},"words");
@@ -562,7 +562,7 @@ function viewReader(id){
       <div class="chips">${s.vs.slice(Math.max(0,s.vs.indexOf(vi)-6),s.vs.indexOf(vi)+7).map(j=>`<a class="chip ${j===vi?"on":""}" href="#v-${T.v[j].id}">${esc(vlabel(T.v[j]))}</a>`).join("")}</div>
       <a href="#contents">All contents →</a></div>
     ${(()=>{const ts=ND.byV[v.id]||[],ps=ND.parByV[v.id]||[];if(!ts.length&&!ps.length)return "";
-      return `<div class="panel nondhside"><div class="eyebrow">Vachanamrut Nondh</div><div class="muted" style="font-size:12px">by Ashwin Babubhai Shah</div>
+      return `<div class="panel nondhside"><div class="eyebrow">Vachanamrut Nondh</div><div class="muted" style="font-size:12px">compiled by Ashwin Babubhai Shah, with special guidance / inspiration from Nathji Mandal and (Bhaiji Dada and Dadaji)</div>
       ${ts.length?`<div><b>${ts.length}</b> topics cite this Vachanamrut</div><div class="chips">${ts.slice(0,24).map(i=>`<a class="chip" href="#n-${i}"><span class="gu">${esc(ND.topics[i].t.slice(0,34))}</span></a>`).join("")}</div>${ts.length>24?`<details><summary class="muted">${ts.length-24} more</summary><div class="chips">${ts.slice(24).map(i=>`<a class="chip" href="#n-${i}"><span class="gu">${esc(ND.topics[i].t.slice(0,34))}</span></a>`).join("")}</div></details>`:""}`:""}
       ${ps.length?`<div class="eyebrow" style="margin-top:6px">Parables (દ્રષ્ટાંત)</div><ul class="plist">${ps.map(j=>`<li>${esc(ND.parables[j][1].slice(0,140))}</li>`).join("")}</ul>`:""}</div>`})()}
   </aside></div>`;
@@ -652,7 +652,7 @@ function viewFind(q){
    <div id="fr">${hits.slice(0,600).map(h=>kwic(h[0],h[1],h[2],h[3],"").replace('class="kwic"',`class="kwic" data-q="${esc(q)}"`)).join("")}</div>`;
 }
 /* ---- Vachanamrut Nondh (compiled by Ashwin Babubhai Shah) ---- */
-const CREDIT=`<span class="credit">Vachanamrut Nondh · compiled by <b>Ashwin Babubhai Shah</b></span>`;
+const CREDIT=`<span class="credit">Vachanamrut Nondh · compiled by <b>Ashwin Babubhai Shah</b>, with special guidance / inspiration from Nathji Mandal and (Bhaiji Dada and Dadaji)</span>`;
 function openPara(vi,pi){state.hl={forms:new Set(),lemmas:[],target:null,para:pi};go("v-"+T.v[vi].id)}
 function refChip(id,check){
   const v=VBYID[id];if(!v)return "";
@@ -685,7 +685,7 @@ function viewNondh(){
   <div class="nhero">
     <div class="eyebrow">A reference index by hand</div>
     <h1><span class="gu">વચનામૃત નોંધ</span>Vachanamrut Nondh</h1>
-    <p class="by">Compiled by <b>Ashwin Babubhai Shah</b></p>
+    <p class="by">Compiled by <b>Ashwin Babubhai Shah</b>, with special guidance / inspiration from Nathji Mandal and (Bhaiji Dada and Dadaji)</p>
     <p>A topic-by-topic notebook of the Vachanamrut: ${fmt(ND.topics.length)} topics with references, quotations, cross-references, 13 appendices and an index of the parables used in each discourse. It is reproduced here from the original PDF and joined to the automatic word index. Every quotation was checked against the text, and each reference opens the passage in the reader.</p>
     <div class="stats">
       <div><b>${fmt(ND.topics.length)}</b><span>topics</span></div>
