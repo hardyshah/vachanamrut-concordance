@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="gu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Vachanamrut Concordance</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anek+Gujarati:wght@400;500;600;700&family=Rasa:ital,wght@0,400;0,500;0,600;1,400&family=Shrikhand&family=Tiro+Devanagari+Sanskrit&display=swap">
+<style>
+/* Layout: sticky search bar over a single reading column; word pages open with a whole-book "seismograph" strip, then KWIC lines grouped by section. */
+:root{
+  --paper:#f3f4ee; --surface:#ffffff; --sunk:#e9ebe3; --ink:#15211f; --ink-2:#55625f; --ink-3:#86918d; --line:#d8dcd1;
+  --saffron:#b9560c; --saffron-strong:#9a4507; --saffron-soft:#f8e2cb; --peacock:#0e5a61; --peacock-soft:#d6e7e6;
+  --mark:#fbd9b4; --mark-ink:#5a2604; --shadow:0 1px 2px rgba(20,33,31,.06),0 8px 24px rgba(20,33,31,.06);
+  --f-read:"Rasa","Noto Serif Gujarati",Georgia,serif;
+  --f-ui:"Anek Gujarati","Noto Sans Gujarati",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-display:"Shrikhand","Anek Gujarati",serif;
+  --f-dev:"Tiro Devanagari Sanskrit","Noto Serif Devanagari",serif;
+  --r:10px; --maxw:1080px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0e1416; --surface:#151e21; --sunk:#1b262a; --ink:#e6e8e1; --ink-2:#a3aeaa; --ink-3:#71807c; --line:#273439;
+  --saffron:#f0974a; --saffron-strong:#ffb06a; --saffron-soft:#3a2615; --peacock:#6cbcbc; --peacock-soft:#18363a;
+  --mark:#6b3a12; --mark-ink:#ffe6cc; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0e1416; --surface:#151e21; --sunk:#1b262a; --ink:#e6e8e1; --ink-2:#a3aeaa; --ink-3:#71807c; --line:#273439;
+  --saffron:#f0974a; --saffron-strong:#ffb06a; --saffron-soft:#3a2615; --peacock:#6cbcbc; --peacock-soft:#18363a;
+  --mark:#6b3a12; --mark-ink:#ffe6cc; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:120px}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-ui);font-size:16px;line-height:1.5;margin:0;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
+a{color:var(--peacock);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--saffron);outline-offset:2px;border-radius:4px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+/* top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:14px;padding-block:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:8px;color:var(--ink);white-space:nowrap}
+.brand:hover{text-decoration:none}
+.brand .gu{font-family:var(--f-display);font-size:24px;color:var(--saffron);line-height:1}
+.brand .en{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.search{position:relative;flex:1 1 280px;min-width:0}
+.search input{width:100%;font:inherit;font-size:16px;padding:9px 12px 9px 38px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--ink)}
+.search input:focus{outline:none;border-color:var(--saffron);box-shadow:0 0 0 3px var(--saffron-soft)}
+.search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--ink-3)}
+.sugg{position:absolute;left:0;right:0;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);max-height:min(70vh,520px);overflow:auto;padding:6px}
+.sugg button{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:4px 12px;width:100%;text-align:left;background:none;border:0;padding:8px 10px;border-radius:8px;cursor:pointer}
+.sugg button[aria-selected="true"],.sugg button:hover{background:var(--saffron-soft)}
+.sugg .h{font-family:var(--f-read);font-size:19px;font-weight:600}
+.sugg .r{color:var(--ink-2);font-size:13px;margin-left:8px;font-weight:400;font-family:var(--f-ui)}
+.sugg .c{color:var(--ink-3);font-size:13px;font-variant-numeric:tabular-nums}
+.sugg .full{grid-template-columns:1fr;color:var(--peacock);border-top:1px solid var(--line);border-radius:0 0 8px 8px;margin-top:4px}
+.nav{display:flex;gap:2px;flex-wrap:wrap}
+.nav a{color:var(--ink-2);padding:6px 10px;border-radius:999px;font-size:14px;font-weight:500}
+.nav a:hover{text-decoration:none;background:var(--sunk);color:var(--ink)}
+.nav a.on{background:var(--ink);color:var(--paper)}
+.theme{border:1px solid var(--line);background:none;border-radius:999px;width:34px;height:34px;display:grid;place-items:center;cursor:pointer;color:var(--ink-2)}
+main{padding-block:28px 80px;min-height:60vh}
+h1,h2,h3{text-wrap:balance;margin:0}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.muted{color:var(--ink-2)}
+.num{font-variant-numeric:tabular-nums}
+.chip{display:inline-flex;align-items:baseline;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 10px;font-size:14px;cursor:pointer;color:var(--ink)}
+.chip small{color:var(--ink-3);font-variant-numeric:tabular-nums}
+.chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip.on small{color:inherit;opacity:.7}
+.chip .gu{font-family:var(--f-read);font-size:16px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.loading{padding:80px 0;text-align:center;color:var(--ink-2)}
+/* home */
+.hero{display:grid;gap:18px;padding-block:24px 8px}
+.hero h1{font-family:var(--f-display);font-weight:400;font-size:clamp(44px,8vw,84px);line-height:1.05;color:var(--saffron)}
+.hero h1 span{display:block;font-family:var(--f-read);font-size:clamp(20px,3vw,28px);color:var(--ink);font-weight:500;margin-top:6px}
+.hero p{max-width:62ch;font-size:17px;color:var(--ink-2);margin:0}
+.bigsearch{display:flex;gap:8px;max-width:640px}
+.bigsearch input{flex:1;min-width:0;font:inherit;font-size:20px;padding:14px 18px;border:1.5px solid var(--ink);border-radius:14px;background:var(--surface);color:var(--ink)}
+.bigsearch input:focus{outline:none;border-color:var(--saffron);box-shadow:0 0 0 4px var(--saffron-soft)}
+.bigsearch button{border:0;background:var(--saffron);color:#fff;padding:0 20px;border-radius:14px;font-weight:600;cursor:pointer}
+.stats{display:flex;flex-wrap:wrap;gap:28px;padding-block:8px}
+.stats div{display:grid}
+.stats b{font-family:var(--f-read);font-size:30px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
+.stats span{font-size:13px;color:var(--ink-2)}
+section.block{margin-top:44px;display:grid;gap:14px}
+section.block > header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:8px}
+section.block h2{font-family:var(--f-read);font-weight:600;font-size:24px}
+.topwords{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:2px 28px}
+.tw{display:grid;grid-template-columns:minmax(0,1fr) 3.4rem;align-items:center;gap:10px;padding:5px 0;color:var(--ink);border-bottom:1px dashed var(--line)}
+.tw:hover{text-decoration:none}
+.tw .w{font-family:var(--f-read);font-size:18px;display:flex;gap:8px;align-items:baseline;min-width:0}
+.tw .w small{font-family:var(--f-ui);color:var(--ink-3);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tw .bar{grid-column:1/-1;height:3px;background:var(--sunk);border-radius:2px;overflow:hidden;margin-top:-2px}
+.tw .bar i{display:block;height:100%;background:var(--saffron)}
+.tw .n{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-2);font-size:14px}
+/* strip */
+.strip{position:relative;overflow-x:auto}
+.strip svg{display:block;width:100%;min-width:640px;height:auto}
+.strip .lab{font:600 10px var(--f-ui);fill:var(--ink-2);letter-spacing:.06em}
+.tip{position:fixed;z-index:40;pointer-events:none;background:var(--ink);color:var(--paper);padding:6px 10px;border-radius:8px;font-size:13px;max-width:280px;box-shadow:var(--shadow)}
+/* word page */
+.wordhead{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 28px;align-items:end}
+.wordhead h1{font-family:var(--f-display);font-weight:400;font-size:clamp(46px,9vw,92px);line-height:1;color:var(--ink);word-break:break-word}
+.wordhead .rom{font-size:20px;color:var(--ink-2);margin-top:8px}
+.wordhead .rom i{font-family:var(--f-read);color:var(--ink-3);margin-left:10px}
+.kpis{display:flex;gap:22px}
+.kpis div{display:grid;text-align:right}
+.kpis b{font-family:var(--f-read);font-size:34px;font-weight:600;line-height:1;font-variant-numeric:tabular-nums;color:var(--saffron)}
+.kpis span{font-size:12px;color:var(--ink-2);letter-spacing:.06em;text-transform:uppercase}
+.defbox{background:var(--peacock-soft);border-radius:var(--r);padding:14px 16px;display:grid;gap:4px;max-width:78ch}
+.defbox b{font-weight:600}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.twocol{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:20px}
+.secbars{display:grid;gap:7px}
+.secbar{display:grid;grid-template-columns:8.5rem minmax(0,1fr) 3rem;gap:10px;align-items:center;font-size:14px;cursor:pointer;background:none;border:0;padding:2px 0;text-align:left}
+.secbar .t{display:block;height:12px;background:var(--sunk);border-radius:3px;overflow:hidden}
+.secbar .t i{display:block;height:100%;border-radius:3px}
+.secbar .v{text-align:right;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.secbar .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.secbar .nm small{color:var(--ink-3)}
+.related{display:grid;gap:8px}
+.group{margin-top:26px}
+.group > h3{display:flex;align-items:baseline;gap:10px;font-family:var(--f-read);font-weight:600;font-size:20px;padding-bottom:6px;border-bottom:2px solid var(--ink);margin-bottom:4px}
+.group > h3 small{font-family:var(--f-ui);font-weight:500;font-size:13px;color:var(--ink-2)}
+.group > h3 .gu{color:var(--saffron)}
+.kwic{display:grid;grid-template-columns:5.6rem minmax(0,1fr) auto minmax(0,1fr);align-items:baseline;column-gap:6px;padding:7px 4px;border-bottom:1px solid var(--line);cursor:pointer;color:var(--ink);font-family:var(--f-read);font-size:17px}
+.kwic:hover{background:var(--saffron-soft);text-decoration:none}
+.kwic .ref{font-family:var(--f-ui);font-size:12.5px;color:var(--ink-2);display:grid;line-height:1.25}
+.kwic .ref b{color:var(--peacock);font-weight:600;font-size:13.5px}
+.kwic .L{display:flex;justify-content:flex-end;overflow:hidden;white-space:nowrap;-webkit-mask-image:linear-gradient(90deg,transparent,#000 3rem);mask-image:linear-gradient(90deg,transparent,#000 3rem)}
+.kwic .R{overflow:hidden;white-space:nowrap;-webkit-mask-image:linear-gradient(270deg,transparent,#000 3rem);mask-image:linear-gradient(270deg,transparent,#000 3rem)}
+.kwic .K{font-weight:600;color:var(--mark-ink);background:var(--mark);padding:0 4px;border-radius:4px;white-space:nowrap}
+.more{margin-top:10px;background:none;border:1px dashed var(--line);border-radius:8px;padding:8px 14px;cursor:pointer;color:var(--peacock)}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.toolbar label{display:inline-flex;gap:6px;align-items:center;font-size:14px;color:var(--ink-2);cursor:pointer}
+/* reader */
+.reader{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:40px}
+.rhead{display:grid;gap:8px;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:22px}
+.rhead h1{font-family:var(--f-read);font-weight:600;font-size:clamp(26px,4vw,38px);line-height:1.2}
+.rhead .vid{font-family:var(--f-display);color:var(--saffron);font-size:22px;font-weight:400}
+.text{font-family:var(--f-read);font-size:20px;line-height:1.85;max-width:38em}
+.text p{margin:0 0 1em;text-indent:1.6em;position:relative}
+.text p.first{text-indent:0}
+.text strong.emph{font-weight:600;color:var(--peacock)}
+.text mark{background:var(--mark);color:var(--mark-ink);border-radius:3px;padding:0 2px}
+.text mark.cur{outline:2px solid var(--saffron);outline-offset:1px;animation:flash 1.2s ease-out}
+@keyframes flash{0%{background:var(--saffron);color:#fff}100%{background:var(--mark)}}
+@media (prefers-reduced-motion:reduce){.text mark.cur{animation:none}}
+.text .pg{display:inline-block;text-indent:0;font-family:var(--f-ui);font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--ink-3);border:1px solid var(--line);border-radius:4px;padding:0 4px;margin:0 4px;vertical-align:2px;line-height:1.5}
+.text sup.fn{font-family:var(--f-ui);font-size:11px;color:var(--saffron);font-weight:700;margin-left:1px}
+.dev{font-family:var(--f-dev);font-size:.95em;color:var(--ink-2)}
+.fns{border-top:1px solid var(--line);margin-top:24px;padding-top:12px;font-size:15px;color:var(--ink-2);display:grid;gap:6px;max-width:42em}
+.fns .p{font-size:11px;color:var(--ink-3);margin-right:8px;font-weight:600}
+.side{position:sticky;top:96px;align-self:start;display:grid;gap:16px;font-size:14px}
+.side .panel{display:grid;gap:10px;padding:14px}
+.hitnav{display:flex;align-items:center;gap:8px}
+.hitnav button,.pager a{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:6px 10px;cursor:pointer}
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:30px;flex-wrap:wrap}
+.pager a{color:var(--ink);font-size:14px;max-width:48%}
+/* contents, glossary, sources */
+.toc{display:grid;gap:4px}
+.tocrow{display:grid;grid-template-columns:4.2rem minmax(0,1fr) 4.4rem;gap:12px;padding:8px 6px;border-bottom:1px solid var(--line);color:var(--ink);align-items:baseline}
+.tocrow:hover{background:var(--sunk);text-decoration:none}
+.tocrow b{font-family:var(--f-ui);color:var(--saffron);font-weight:600}
+.tocrow .t{font-family:var(--f-read);font-size:17px}
+.tocrow .p{color:var(--ink-3);font-size:13px;text-align:right;font-variant-numeric:tabular-nums}
+.secnav{display:flex;flex-wrap:wrap;gap:6px}
+.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.gcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:10px;align-content:start}
+.gcard h3{font-family:var(--f-display);font-weight:400;font-size:34px;color:var(--saffron);line-height:1.1}
+.gcard .ia{font-family:var(--f-read);font-style:italic;color:var(--ink-2);font-size:17px}
+.gcard .gl{font-weight:600}
+.gcard p{margin:0;color:var(--ink);font-size:15px;line-height:1.6}
+.gcard .meta{font-size:13px;color:var(--ink-2);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.src{border-bottom:1px solid var(--line);padding-block:16px;display:grid;gap:8px}
+.src summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;align-items:baseline}
+.src summary::-webkit-details-marker{display:none}
+.src h3{font-family:var(--f-read);font-weight:600;font-size:22px}
+.src h3 .gu{color:var(--saffron);margin-right:10px}
+.src .cnt{font-variant-numeric:tabular-nums;color:var(--ink-2);font-size:14px;text-align:right}
+.src p{margin:0;color:var(--ink-2);max-width:70ch;grid-column:1/-1}
+.src .vlist{display:flex;flex-wrap:wrap;gap:6px}
+.alpha{display:flex;flex-wrap:wrap;gap:4px;position:sticky;top:64px;background:var(--paper);padding-block:8px;z-index:5}
+.alpha button{font-family:var(--f-read);font-size:18px;min-width:38px;padding:4px 6px;border:1px solid var(--line);background:var(--surface);border-radius:8px;cursor:pointer}
+.alpha button.on{background:var(--saffron);border-color:var(--saffron);color:#fff}
+.azlist{columns:3 260px;column-gap:28px}
+.az{display:flex;justify-content:space-between;gap:10px;break-inside:avoid;padding:4px 0;border-bottom:1px dashed var(--line);color:var(--ink)}
+.az:hover{text-decoration:none;color:var(--saffron)}
+.az span{font-family:var(--f-read);font-size:17px}
+.az small{color:var(--ink-3);font-variant-numeric:tabular-nums}
+.note{font-size:13px;color:var(--ink-3);max-width:80ch}
+.credit{font-size:13px;color:var(--ink-2);letter-spacing:0;text-transform:none;font-weight:500}
+.credit b{color:var(--saffron);font-weight:600}
+.nhero{display:grid;gap:14px;padding-block:12px 4px}
+.nhero h1{font-family:var(--f-read);font-size:clamp(30px,5vw,48px);font-weight:600;line-height:1.1}
+.nhero h1 .gu{display:block;font-family:var(--f-display);font-weight:400;color:var(--saffron);font-size:clamp(44px,8vw,76px);line-height:1.05}
+.nhero .by{font-size:20px;margin:0;font-family:var(--f-read)}
+.nhero .by b{color:var(--saffron)}
+.nhero p{margin:0;max-width:72ch;color:var(--ink-2)}
+.filter{font:inherit;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);min-width:0;width:min(280px,100%)}
+.ttitle{font-family:var(--f-read);font-weight:600;font-size:clamp(28px,4.5vw,42px);line-height:1.2;margin-top:6px}
+.nentries{display:grid;gap:12px;margin-top:22px}
+.nentry{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:grid;gap:8px}
+.nentry.k-s{background:none;border-style:dashed}
+.nmeta{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.nmeta .p{margin-left:auto;font-size:12px;color:var(--ink-3)}
+.ntext{font-family:var(--f-read);font-size:18px;line-height:1.7}
+.ntext .inref,.appx .inref{background:var(--peacock-soft);border-radius:4px;padding:0 3px}
+.chip.ref{font-weight:600;color:var(--peacock)}
+.chip.src2{font-size:12px;color:var(--ink-2)}
+.badge{font-size:12px;border-radius:999px;padding:2px 9px;font-weight:600}
+.badge.ok{background:var(--peacock-soft);color:var(--peacock)}
+.badge.diff{background:var(--saffron-soft);color:var(--saffron-strong)}
+.badge.info{background:var(--sunk);color:var(--ink-2)}
+.badge.none{background:var(--sunk);color:var(--ink-3)}
+.appx{white-space:pre-wrap;font-family:var(--f-read);font-size:17.5px;line-height:1.75;max-width:46em}
+.plist{margin:0;padding-left:18px;display:grid;gap:6px;font-family:var(--f-read);font-size:15px}
+.ncallout{grid-template-columns:minmax(0,1fr) auto;align-items:center;background:var(--saffron-soft);border-radius:var(--r);padding:20px 22px}
+.ncallout h2{font-family:var(--f-read);font-weight:600;font-size:24px}
+.ncallout h2 .gu{font-family:var(--f-display);font-weight:400;color:var(--saffron);margin-right:6px}
+.ncallout p{margin:6px 0 0;max-width:70ch}
+.cta{background:var(--saffron);color:#fff;padding:10px 16px;border-radius:999px;font-weight:600;white-space:nowrap}
+.cta:hover{text-decoration:none;filter:brightness(1.05)}
+.text p.flashp{border-radius:6px;animation:pflash 3s ease-out}
+@keyframes pflash{0%,40%{background:var(--saffron-soft);box-shadow:0 0 0 6px var(--saffron-soft)}100%{background:transparent;box-shadow:0 0 0 6px transparent}}
+@media (max-width:620px){.ncallout{grid-template-columns:minmax(0,1fr)}}
+footer{border-top:1px solid var(--line);padding-block:20px 40px;color:var(--ink-3);font-size:13px}
+@media (max-width:860px){
+  .reader{grid-template-columns:minmax(0,1fr)}
+  .side{position:static;order:-1}
+  .twocol{grid-template-columns:minmax(0,1fr)}
+  .wordhead{grid-template-columns:minmax(0,1fr)}
+  .kpis div{text-align:left}
+}
+@media (max-width:620px){
+  .top .wrap{gap:8px}
+  .brand .en{display:none}
+  .search{order:3;flex-basis:100%}
+  .nav{order:2;margin-left:auto}
+  .nav a{padding:5px 8px;font-size:13px}
+  .kwic{grid-template-columns:minmax(0,1fr);row-gap:2px}
+  .kwic .L,.kwic .R{display:inline;white-space:normal;-webkit-mask-image:none;mask-image:none}
+  .kwic .line{display:block}
+  .text{font-size:18.5px}
+  .secbar{grid-template-columns:6.5rem minmax(0,1fr) 2.6rem}
+}
+@media (min-width:621px){.kwic .line{display:contents}}
+</style>
+</head>
+<body>
+
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#home" aria-label="Home"><span class="gu">વચનામૃત</span><span class="en">Concordance</span></a>
+    <div class="search" id="searchbox">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Search a word: ઈશ્વર or ishvar" aria-label="Search the concordance">
+      <div class="sugg" id="sugg" role="listbox" hidden></div>
+    </div>
+    <nav class="nav" id="nav">
+      <a href="#index" data-v="index">Index</a>
+      <a href="#contents" data-v="contents">Contents</a>
+      <a href="#glossary" data-v="glossary">Glossary</a>
+      <a href="#sources" data-v="sources">Sources</a>
+      <a href="#nondh" data-v="n">Nondh</a>
+    </nav>
+    <button class="theme" id="theme" title="Theme: system" aria-label="Switch theme"></button>
+  </div>
+</header>
+<main class="wrap" id="main"><div class="loading">Loading the Vachanamrut…</div></main>
+<footer class="wrap">Text decoded from the Gujarati Vachanamrut PDF (Shree Swaminarayan Mandir, Bhuj edition, 704 pages). Page numbers are PDF pages. Sanskrit passages are OCR text. Common function words are not indexed; use full-text search for them. The Vachanamrut Nondh section reproduces the reference index compiled by Ashwin Babubhai Shah.</footer>
+<div class="tip" id="tip" hidden></div>
+
+<script>
+"use strict";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const GD="૦૧૨૩૪૫૬૭૮૯";
+const gnum=n=>String(n).replace(/\d/g,d=>GD[d]);
+const fmt=n=>n.toLocaleString("en-US");
+let T,IX,GL,BIB,ND,SEC={},SECLIST=[],VBYID={},FORM2L=new Map();
+const state={hl:null};
+/* ---- normalisation (mirrors the Python build) ---- */
+function nkey(w){
+  w=w.replace(/ઇ/g,"ઈ").replace(/ી/g,"િ").replace(/ઊ/g,"ઉ").replace(/ૂ/g,"ુ").replace(/ઁ/g,"ં").replace(/દૃ/g,"દ્ર").replace(/઼/g,"");
+  w=w.replace(/ઈ/g,"ઇ");
+  return w.replace(/[ઙઞણનમ]્(?=[કખગઘચછજઝટઠડઢતથદધપફબભ])/g,"ં");
+}
+function skeleton(s){
+  s=s.toLowerCase();
+  for(const [a,b] of [["ā","a"],["ī","i"],["ū","u"],["ṛ","ru"],["ṁ","n"],["ṅ","n"],["ñ","n"],["ṇ","n"],["ṭ","t"],["ḍ","d"],["ḷ","l"],["ś","sh"],["ṣ","sh"],["ḥ","h"]]) s=s.split(a).join(b);
+  s=s.replace(/[^a-z]/g,"");
+  for(const [a,b] of [["w","v"],["ph","f"],["z","j"],["x","ksh"],["q","k"],["ck","k"]]) s=s.split(a).join(b);
+  s=s.replace(/c(?!h)/g,"k");
+  for(const [a,b] of [["chh","ch"],["sh","s"],["ee","i"],["oo","u"],["ri","r"],["ru","r"]]) s=s.split(a).join(b);
+  s=s.replace(/(?:gy|jn|dny|gny)a?(?=a?n)/g,"gn").split("jn").join("gn");
+  s=s.split("a").join("");
+  s=s.replace(/([kgcjtdpb])h/g,"$1");
+  return s.replace(/(.)\1+/g,"$1");
+}
+const isGu=s=>/[\u0A80-\u0AFF]/.test(s);
+function lev(a,b){if(Math.abs(a.length-b.length)>2)return 9;const d=Array.from({length:b.length+1},(_,i)=>i);for(let i=1;i<=a.length;i++){let p=d[0];d[0]=i;for(let j=1;j<=b.length;j++){const t=d[j];d[j]=Math.min(d[j]+1,d[j-1]+1,p+(a[i-1]===b[j-1]?0:1));p=t}}return d[b.length]}
+/* ---- search ---- */
+function search(q,limit=12){
+  q=q.trim(); if(!q) return [];
+  const out=[];
+  if(isGu(q)){
+    const k=nkey(q.replace(/[^\u0A80-\u0AFF]/g,""));
+    IX.forEach((e,i)=>{
+      let s=0;
+      if(e.k===k) s=100; else if(e._fk.has(k)) s=90;
+      else if(e.k.startsWith(k)) s=60; else if(e.k.includes(k)) s=35;
+      if(s) out.push([s+Math.log10(e.c+1)*4,i]);
+    });
+  }else{
+    const sk=skeleton(q); if(!sk) return [];
+    IX.forEach((e,i)=>{
+      let s=0;
+      if(e.sk===sk) s=100; else if(e.sk.startsWith(sk)) s=60+sk.length;
+      else if(sk.length>=4&&lev(e.sk,sk)<=1) s=50; else if(sk.length>=4&&e.sk.includes(sk)) s=30;
+      if(s) out.push([s+Math.log10(e.c+1)*4,i]);
+    });
+  }
+  out.sort((a,b)=>b[0]-a[0]);
+  return out.slice(0,limit).map(x=>x[1]);
+}
+/* ---- data load ---- */
+async function load(){
+  const D=window.VC_DATA;
+  const [t,ix,gl,bib,nd]=D?[D.text,D.index,D.glossary,D.biblio,D.nondh]:await Promise.all(["text","index","glossary","biblio","nondh"].map(n=>fetch(`data/${n}.json`).then(r=>{if(!r.ok)throw new Error(n);return r.json()})));
+  T=t;IX=ix;GL=gl;BIB=bib;ND=nd;
+  ND.byV={};ND.tkeys=[];ND.bykey=new Map();
+  ND.topics.forEach((g,i)=>{g.i=i;ND.tkeys.push(new Set((g.t.match(/[\u0A81-\u0AE3]+/g)||[]).map(nkey)));if(!ND.bykey.has(g.k))ND.bykey.set(g.k,i);
+    g.r.forEach(r=>{(ND.byV[r]||(ND.byV[r]=[])).push(i)})});
+  ND.parByV={};ND.parables.forEach((p,i)=>{if(p[0])(ND.parByV[p[0]]||(ND.parByV[p[0]]=[])).push(i)});
+  SECLIST=T.sections; SECLIST.forEach((s,i)=>{SEC[s.k]={...s,i,vs:[],wc:0}});
+  T.v.forEach((v,i)=>{v.i=i;v.wc=T.wc[i];VBYID[v.id]=v;SEC[v.sec].vs.push(i);SEC[v.sec].wc+=v.wc});
+  IX.forEach((e,i)=>{e.i=i;e._fk=new Set(e.f.map(nkey));for(const f of e._fk) if(!FORM2L.has(f)) FORM2L.set(f,i)});
+  GL.forEach(g=>g.lemmas.forEach(l=>{(IX[l]._gl||(IX[l]._gl=[])).push(g)}));
+}
+const MAIN=["GP","S","K","L","P","GM","V","A","AS","J","GA"];
+const secColor=k=>{const i=MAIN.indexOf(k);return i<0?"var(--ink-3)":(i%2?"var(--peacock)":"var(--saffron)")};
+const vlabel=v=>v.sec==="IN"?"Intro":v.sec==="EP"?"Close":v.sec==="BK"?"BK":v.id;
+/* ---- routing ---- */
+function go(h){if(location.hash==="#"+h) route(); else location.hash=h}
+window.addEventListener("hashchange",route);
+function route(){
+  const h=decodeURIComponent(location.hash.slice(1))||"home";
+  document.querySelectorAll("#nav a").forEach(a=>a.classList.toggle("on",h.startsWith(a.dataset.v)));
+  $("#sugg").hidden=true;
+  let m;
+  if((m=h.match(/^w-(\d+)$/))&&IX[+m[1]]) viewWord(+m[1]);
+  else if((m=h.match(/^v-(.+)$/))&&VBYID[m[1]]) viewReader(m[1]);
+  else if(h==="index") viewIndex();
+  else if(h==="contents") viewContents();
+  else if(h==="glossary") viewGlossary();
+  else if(h==="sources") viewSources();
+  else if(h==="find") viewFind(state.find||"");
+  else if(h==="nondh") viewNondh();
+  else if(h==="parables") viewParables();
+  else if((m=h.match(/^n-(\d+)$/))&&ND.topics[+m[1]]) viewTopic(+m[1]);
+  else if((m=h.match(/^appx-(\d+)$/))) viewAppendix(+m[1]);
+  else viewHome();
+  if(!(m&&h.startsWith("v-")&&state.hl&&(state.hl.target||state.hl.para!=null))) window.scrollTo(0,0);
+}
+/* ---- shared pieces ---- */
+function clean(s){return s.replace(/〔[^〕]*〕|[⟦⟧]/g,"")}
+function kwic(vi,pi,off,len,lemmas){
+  const v=T.v[vi],p=v.paras[pi],t=p[1];
+  let pg=p[0];for(let j=0;j<p[2].length;j+=2) if(off>=p[2][j]) pg=p[2][j+1];
+  const L=clean(t.slice(Math.max(0,off-90),off)),K=t.slice(off,off+len),R=clean(t.slice(off+len,off+len+90));
+  return `<a class="kwic" href="#v-${v.id}" data-v="${vi}" data-p="${pi}" data-o="${off}" data-l="${lemmas||""}"><span class="ref"><b>${esc(vlabel(v))}</b>p. ${pg}</span><span class="line"><span class="L"><span>${esc(L)}</span></span><span class="K">${esc(K)}</span><span class="R">${esc(R)}</span></span></a>`;
+}
+document.addEventListener("click",e=>{
+  const a=e.target.closest(".kwic");
+  if(a){e.preventDefault();openAt(+a.dataset.v,+a.dataset.p,+a.dataset.o,a.dataset.l?a.dataset.l.split(",").map(Number):[],a.dataset.q||null)}
+});
+function openAt(vi,pi,off,lemmas,phrase){
+  const forms=new Set();lemmas.forEach(l=>IX[l]._fk.forEach(f=>forms.add(f)));
+  state.hl={forms,lemmas,target:{vi,pi,off},phrase};
+  go("v-"+T.v[vi].id);
+}
+function strip(counts,opts={}){
+  // whole-book distribution: one bar per discourse
+  const n=T.v.length,W=1000,H=opts.h||90,base=H-22,max=Math.max(1,...counts);
+  let bars="",labs="";
+  const bw=W/n;
+  T.v.forEach((v,i)=>{
+    const c=counts[i];if(!c&&!opts.all)return;
+    const h=opts.all?base-6:Math.max(2,Math.sqrt(c/max)*(base-6));
+    bars+=`<rect x="${(i*bw).toFixed(2)}" y="${(base-h).toFixed(2)}" width="${Math.max(1,bw-.6).toFixed(2)}" height="${h.toFixed(2)}" fill="${secColor(v.sec)}" data-i="${i}" data-c="${c}"/>`;
+  });
+  for(const s of SECLIST){if(!MAIN.includes(s.k))continue;const vs=SEC[s.k].vs;const x0=vs[0]*bw,x1=(vs[vs.length-1]+1)*bw;
+    labs+=`<line x1="${x0.toFixed(1)}" x2="${x0.toFixed(1)}" y1="${base+2}" y2="${base+8}" stroke="var(--ink-3)" stroke-width="1"/>`;
+    if(x1-x0>22) labs+=`<text class="lab" x="${((x0+x1)/2).toFixed(1)}" y="${H-4}" text-anchor="middle">${s.k}</text>`;}
+  return `<div class="strip" data-strip><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opts.label||"Distribution across the book")}"><line x1="0" x2="${W}" y1="${base}" y2="${base}" stroke="var(--line)" stroke-width="1"/>${bars}${labs}</svg></div>`;
+}
+function wireStrip(root,onclick,unit){
+  root.querySelectorAll("[data-strip] rect").forEach(r=>{
+    r.style.cursor="pointer";
+    r.addEventListener("mousemove",e=>{const v=T.v[+r.dataset.i];const tip=$("#tip");tip.hidden=false;
+      tip.innerHTML=`<b>${esc(vlabel(v))}</b> · ${esc(SEC[v.sec].en)}<br>${esc(v.title||"")}${unit?`<br>${r.dataset.c} ${unit}`:""}`;
+      tip.style.left=Math.min(innerWidth-290,e.clientX+12)+"px";tip.style.top=(e.clientY+14)+"px"});
+    r.addEventListener("mouseleave",()=>$("#tip").hidden=true);
+    r.addEventListener("click",()=>{$("#tip").hidden=true;onclick(+r.dataset.i)});
+  });
+}
+/* ---- home ---- */
+const FEATURED=["ઈશ્વર","બ્રહ્મ","અક્ષર","માયા","પુરુષોત્તમ","જીવ","આત્મા","ભક્તિ","ધર્મ","જ્ઞાન","વૈરાગ્ય","એકાંતિક"];
+function lemmaOf(w){const k=nkey(w);if(FORM2L.has(k))return FORM2L.get(k);const r=search(w,1);return r[0]}
+function viewHome(){
+  document.title="Vachanamrut Concordance";
+  const total=T.wc.reduce((a,b)=>a+b,0),occ=IX.reduce((a,e)=>a+e.c,0),nv=T.v.filter(v=>MAIN.includes(v.sec)).length;
+  const top=IX.filter(e=>!/^(સંવત્|ઈતિ|વચનામૃતમ્|વિરાજમાન|બેઠી|ભરાઈ|દેશદેશના|દરબાર|શ્વેત|ધારણ|મુખારવિંદ|સભા|પ્રશ્ન|ઉત્તર|દિવસ|સુદિ|વદિ|પૂછ્યો|પૂછ્યું)$/.test(e.h)).slice(0,30);
+  const tmax=top[0].c;
+  $("#main").innerHTML=`
+  <div class="hero">
+    <div class="eyebrow">Gujarati Vachanamrut · word index</div>
+    <h1>વચનામૃત<span>Every word, every place it is spoken.</span></h1>
+    <p>Look up a term in Gujarati script or in Latin letters (try <i>ishvar</i>, <i>akshar</i>, <i>maya</i>) to see every occurrence across the ${nv} discourses, in context, with the page it is on.</p>
+    <form class="bigsearch" id="bigf"><input id="bigq" type="search" autocomplete="off" placeholder="ઈશ્વર · ishvar" aria-label="Search a word"><button>Search</button></form>
+    <div class="chips">${FEATURED.map(w=>{const i=lemmaOf(w);return i==null?"":`<a class="chip" href="#w-${i}"><span class="gu">${w}</span><small>${esc(IX[i].r)}</small></a>`}).join("")}</div>
+    <div class="stats">
+      <div><b>${nv}</b><span>Vachanamruts</span></div>
+      <div><b>${fmt(total)}</b><span>words of text</span></div>
+      <div><b>${fmt(IX.length)}</b><span>indexed headwords</span></div>
+      <div><b>${fmt(occ)}</b><span>indexed occurrences</span></div>
+    </div>
+  </div>
+  <section class="block"><header><h2>The book at a glance</h2><span class="muted">Length of each discourse, in order. Colours alternate by section.</span></header>
+    ${strip(T.wc,{label:"Words per discourse"})}</section>
+  <section class="block"><header><h2>Most frequent significant words</h2><a href="#index">Browse the full index →</a></header>
+    <div class="topwords">${top.map(e=>`<a class="tw" href="#w-${e.i}"><span class="w">${esc(e.h)}<small>${esc(e.r)}</small></span><span class="n">${fmt(e.c)}</span><span class="bar"><i style="width:${(e.c/tmax*100).toFixed(1)}%"></i></span></a>`).join("")}</div></section>
+  <section class="block ncallout"><div><div class="eyebrow">Also in this concordance</div><h2><span class="gu">વચનામૃત નોંધ</span> Vachanamrut Nondh</h2>
+    <p>The hand-compiled topic index by <b>Ashwin Babubhai Shah</b>: ${fmt(ND.topics.length)} topics, quotations checked against the text, 13 appendices and an index of parables, linked throughout the word index and the reader.</p></div><a class="cta" href="#nondh">Open the Nondh →</a></section>
+  <section class="block"><header><h2>Key terms</h2><a href="#glossary">Open the glossary →</a></header>
+    <div class="chips">${GL.map(g=>`<a class="chip" href="#w-${g.lemmas[0]}"><span class="gu">${esc(g.term)}</span><small>${esc(g.gloss)}</small></a>`).join("")}</div></section>`;
+  wireStrip($("#main"),i=>{state.hl=null;go("v-"+T.v[i].id)},"words");
+  $("#bigf").addEventListener("submit",e=>{e.preventDefault();submitQuery($("#bigq").value)});
+}
+function submitQuery(q){
+  q=q.trim();if(!q)return;
+  const r=search(q,1);
+  if(r.length) go("w-"+r[0]); else{state.find=q;go("find")}
+}
+/* ---- word page ---- */
+function viewWord(i){
+  const e=IX[i];document.title=`${e.h} · Vachanamrut Concordance`;
+  const related=IX.filter(x=>x!==e&&x.k.length>e.k.length&&x.k.includes(e.k)).sort((a,b)=>b.c-a.c).slice(0,40);
+  const ws={lemmas:new Set([i]),form:null,sec:null};
+  const occList=()=>{
+    const arr=[];
+    for(const l of ws.lemmas){const o=IX[l].o;for(let j=0;j<o.length;j+=4){
+      if(ws.form){const t=T.v[o[j]].paras[o[j+1]][1].substr(o[j+2],o[j+3]);if(t!==ws.form)continue}
+      arr.push([o[j],o[j+1],o[j+2],o[j+3],l])}}
+    arr.sort((a,b)=>a[0]-b[0]||a[1]-b[1]||a[2]-b[2]);return arr;
+  };
+  const gl=e._gl||[];
+  $("#main").innerHTML=`
+   <div class="wordhead">
+     <div><div class="eyebrow">Headword</div><h1>${esc(e.h)}</h1><div class="rom">${esc(e.r)}<i>${esc(e.ia)}</i></div></div>
+     <div class="kpis" id="kpis"></div>
+   </div>
+   ${gl.length?`<div class="defbox" style="margin-top:18px">${gl.map(g=>`<div><b>${esc(g.term)} · ${esc(g.gloss)}.</b> ${esc(g.definition)} <a href="#glossary">Glossary →</a></div>`).join("")}</div>`:""}
+   <section class="block"><header><h2>Spellings and forms</h2><span class="muted">Click a form to show only that form</span></header>
+     <div class="chips" id="forms">${e.f.map((f,j)=>`<button class="chip" data-f="${esc(f)}"><span class="gu">${esc(f)}</span><small>${e.fc[j]}</small></button>`).join("")}</div>
+     ${related.length?`<div class="related"><div class="eyebrow" style="margin-top:8px">Words containing ${esc(e.h)} — tick to include</div><div class="chips" id="rel">${related.map(r=>`<label class="chip"><input type="checkbox" value="${r.i}" style="margin:0"> <span class="gu">${esc(r.h)}</span><small>${r.c}</small></label>`).join("")}</div></div>`:""}
+   </section>
+   <section class="block"><header><h2>Where it occurs</h2><span class="muted" id="striphint">Each bar is one Vachanamrut. Click a bar to read it.</span></header><div id="wstrip"></div>
+     <div class="twocol"><div class="panel"><div class="eyebrow" style="margin-bottom:10px">Per 10,000 words, by section</div><div class="secbars" id="secbars"></div></div>
+     <div class="panel"><div class="eyebrow" style="margin-bottom:10px">Densest Vachanamruts</div><div id="dense" class="toc"></div></div></div></section>
+   ${nondhPanelForWord(e)}
+   <section class="block"><header><h2>Concordance</h2><div class="toolbar" id="secfilter"></div></header><div id="occ"></div></section>`;
+  function render(){
+    const arr=occList(),counts=new Array(T.v.length).fill(0),secC={};
+    arr.forEach(o=>{counts[o[0]]++;const s=T.v[o[0]].sec;secC[s]=(secC[s]||0)+1});
+    const nv=counts.filter(Boolean).length;
+    $("#kpis").innerHTML=`<div><b>${fmt(arr.length)}</b><span>occurrences</span></div><div><b>${nv}</b><span>Vachanamruts</span></div>`;
+    $("#wstrip").innerHTML=strip(counts,{label:"Occurrences per Vachanamrut"});
+    wireStrip($("#wstrip"),vi=>{const o=arr.find(x=>x[0]===vi);openAt(o[0],o[1],o[2],[...ws.lemmas])},"occurrences");
+    const rates=SECLIST.filter(s=>secC[s.k]).map(s=>({s,c:secC[s.k],r:secC[s.k]/SEC[s.k].wc*1e4}));
+    const rmax=Math.max(...rates.map(x=>x.r),1);
+    $("#secbars").innerHTML=rates.map(x=>`<button class="secbar" data-s="${x.s.k}"><span class="nm">${esc(x.s.en)} <small>${x.c}</small></span><span class="t"><i style="width:${(x.r/rmax*100).toFixed(1)}%;background:${secColor(x.s.k)}"></i></span><span class="v">${x.r.toFixed(1)}</span></button>`).join("");
+    $("#secbars").querySelectorAll(".secbar").forEach(b=>b.onclick=()=>{ws.sec=b.dataset.s;renderList(arr);document.getElementById("occ").scrollIntoView({behavior:"smooth"})});
+    const dense=counts.map((c,vi)=>[c,vi]).filter(x=>x[0]).sort((a,b)=>b[0]-a[0]).slice(0,6);
+    $("#dense").innerHTML=dense.map(([c,vi])=>{const v=T.v[vi];const o=arr.find(x=>x[0]===vi);return `<a class="tocrow kwicjump" href="#v-${v.id}" data-v="${vi}" data-p="${o[1]}" data-o="${o[2]}"><b>${esc(vlabel(v))}</b><span class="t">${esc(v.title)}</span><span class="p">${c}×</span></a>`}).join("");
+    $("#dense").querySelectorAll(".kwicjump").forEach(a=>a.onclick=ev=>{ev.preventDefault();openAt(+a.dataset.v,+a.dataset.p,+a.dataset.o,[...ws.lemmas])});
+    renderList(arr);
+  }
+  function renderList(arr){
+    const secs=SECLIST.filter(s=>arr.some(o=>T.v[o[0]].sec===s.k));
+    $("#secfilter").innerHTML=`<button class="chip ${ws.sec?"":"on"}" data-s="">All sections</button>`+secs.map(s=>`<button class="chip ${ws.sec===s.k?"on":""}" data-s="${s.k}">${esc(s.en)}</button>`).join("");
+    $("#secfilter").querySelectorAll("button").forEach(b=>b.onclick=()=>{ws.sec=b.dataset.s||null;renderList(arr)});
+    const lem=[...ws.lemmas].join(",");
+    let html="";
+    for(const s of secs){
+      if(ws.sec&&ws.sec!==s.k)continue;
+      const g=arr.filter(o=>T.v[o[0]].sec===s.k);
+      const lim=ws.sec?400:60;
+      html+=`<div class="group" data-sec="${s.k}"><h3><span class="gu">${esc(s.gu)}</span>${esc(s.en)}<small>${g.length} occurrence${g.length>1?"s":""} · ${new Set(g.map(o=>o[0])).size} Vachanamruts</small></h3>`+
+        g.slice(0,lim).map(o=>kwic(o[0],o[1],o[2],o[3],lem)).join("")+
+        (g.length>lim?`<button class="more" data-sec="${s.k}" data-from="${lim}">Show ${g.length-lim} more in ${esc(s.en)}</button>`:"")+`</div>`;
+    }
+    $("#occ").innerHTML=html||`<p class="muted">No occurrences.</p>`;
+    $("#occ").querySelectorAll(".more").forEach(b=>b.onclick=()=>{
+      const g=arr.filter(o=>T.v[o[0]].sec===b.dataset.sec),from=+b.dataset.from,to=from+400;
+      b.insertAdjacentHTML("beforebegin",g.slice(from,to).map(o=>kwic(o[0],o[1],o[2],o[3],lem)).join(""));
+      if(to>=g.length)b.remove();else{b.dataset.from=to;b.textContent=`Show ${g.length-to} more`}});
+  }
+  $("#forms").querySelectorAll("button").forEach(b=>b.onclick=()=>{
+    ws.form=ws.form===b.dataset.f?null:b.dataset.f;
+    $("#forms").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x.dataset.f===ws.form));render()});
+  const rel=$("#rel");if(rel)rel.addEventListener("change",ev=>{const l=+ev.target.value;ev.target.checked?ws.lemmas.add(l):ws.lemmas.delete(l);ev.target.closest(".chip").classList.toggle("on",ev.target.checked);render()});
+  render();
+  wireNondhLinks($("#main"));
+}
+/* ---- reader ---- */
+function renderPara(t,pb,hl,ti){
+  const breaks=[];for(let j=0;j<pb.length;j+=2)breaks.push([pb[j],pb[j+1]]);
+  let out="",last=0,bi=0;
+  const plain=(a,b)=>{let s="";while(bi<breaks.length&&breaks[bi][0]<=b){const o=Math.max(a,breaks[bi][0]);s+=esc(t.slice(a,o))+`<span class="pg" title="PDF page ${breaks[bi][1]}">p. ${breaks[bi][1]}</span>`;a=o;bi++}return s+esc(t.slice(a,b))};
+  const re=/〔([^〕]*)〕|⟦|⟧|[\u0A81-\u0AE3]+|[\u0900-\u097F][\u0900-\u097F\u0964\u0965\s,.;:!?'"“”‘’\-0-9]*[\u0900-\u097F\u0964\u0965]/g;
+  let m,open=false;
+  while((m=re.exec(t))){
+    out+=plain(last,m.index);const w=m[0];last=m.index+w.length;
+    if(m[1]!==undefined) out+=m[1]?`<sup class="fn">${esc(m[1])}</sup>`:"";
+    else if(w==="⟦"){out+=`<strong class="emph">`;open=true}
+    else if(w==="⟧"){if(open)out+="</strong>";open=false}
+    else if(/^[\u0900-\u097F]/.test(w)) out+=`<span class="dev" lang="sa">${esc(w)}</span>`;
+    else if(hl&&hl.has(nkey(w))) out+=`<mark data-o="${m.index}"${ti===m.index?' class="cur" id="cur"':""}>${w}</mark>`;
+    else out+=w;
+  }
+  out+=plain(last,t.length);if(open)out+="</strong>";
+  return out;
+}
+function viewReader(id){
+  const v=VBYID[id],vi=v.i,s=SEC[v.sec];
+  const hl=state.hl&&state.hl.forms&&state.hl.forms.size?state.hl:null;
+  const tg=state.hl&&state.hl.target&&state.hl.target.vi===vi?state.hl.target:null;
+  document.title=`${vlabel(v)} · Vachanamrut Concordance`;
+  const prev=T.v[vi-1],next=T.v[vi+1];
+  const hw=hl?hl.lemmas.map(l=>IX[l].h).join(", "):"";
+  let body=v.paras.map((p,pi)=>`<p class="${pi===0?"first":""}" data-pi="${pi}"><span class="pg" title="PDF page ${p[0]}">p. ${p[0]}</span>${renderPara(p[1],p[2],hl?hl.forms:null,tg&&tg.pi===pi?tg.off:-1)}</p>`).join("");
+  if(state.hl&&state.hl.phrase){const ph=state.hl.phrase;body=body.replace(new RegExp(ph.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"g"),x=>`<mark>${x}</mark>`)}
+  $("#main").innerHTML=`<div class="reader"><article>
+    <div class="rhead"><div class="eyebrow">${esc(s.gu)} · ${esc(s.en)}${MAIN.includes(v.sec)?` · Vachanamrut ${v.n} of ${s.vs.length}`:""}</div>
+      <div class="vid">${MAIN.includes(v.sec)?`${esc(s.gu)} ${gnum(v.n)}`:esc(s.gu)}</div>
+      <h1>${esc(v.title)}</h1>
+      <div class="muted num">${esc(vlabel(v))} · PDF pages ${v.p0}–${v.p1} · ${fmt(v.wc)} words</div></div>
+    <div class="text" id="rtext">${body}</div>
+    ${v.fns.length?`<div class="fns"><div class="eyebrow">Footnotes in the printed edition</div>${v.fns.map(f=>`<div><span class="p">p. ${f[0]}</span>${esc(f[1])}</div>`).join("")}</div>`:""}
+    <div class="pager">${prev?`<a href="#v-${prev.id}">← ${esc(vlabel(prev))} · ${esc(prev.title.slice(0,40))}</a>`:"<span></span>"}${next?`<a href="#v-${next.id}">${esc(vlabel(next))} · ${esc(next.title.slice(0,40))} →</a>`:""}</div>
+  </article>
+  <aside class="side">
+    ${hl?`<div class="panel"><div class="eyebrow">Highlighted</div><div style="font-family:var(--f-read);font-size:20px">${esc(hw)}</div><div class="hitnav"><button id="hp" aria-label="Previous match">↑</button><span id="hc" class="num muted"></span><button id="hn" aria-label="Next match">↓</button></div><a href="#w-${hl.lemmas[0]}">← Back to all occurrences</a><button class="more" id="clr" style="margin:0">Clear highlight</button></div>`:""}
+    <div class="panel"><div class="eyebrow">Section</div><div>${esc(s.en)} <span class="muted">(${esc(s.gu)})</span></div>
+      <div class="chips">${s.vs.slice(Math.max(0,s.vs.indexOf(vi)-6),s.vs.indexOf(vi)+7).map(j=>`<a class="chip ${j===vi?"on":""}" href="#v-${T.v[j].id}">${esc(vlabel(T.v[j]))}</a>`).join("")}</div>
+      <a href="#contents">All contents →</a></div>
+    ${(()=>{const ts=ND.byV[v.id]||[],ps=ND.parByV[v.id]||[];if(!ts.length&&!ps.length)return "";
+      return `<div class="panel nondhside"><div class="eyebrow">Vachanamrut Nondh</div><div class="muted" style="font-size:12px">by Ashwin Babubhai Shah</div>
+      ${ts.length?`<div><b>${ts.length}</b> topics cite this Vachanamrut</div><div class="chips">${ts.slice(0,24).map(i=>`<a class="chip" href="#n-${i}"><span class="gu">${esc(ND.topics[i].t.slice(0,34))}</span></a>`).join("")}</div>${ts.length>24?`<details><summary class="muted">${ts.length-24} more</summary><div class="chips">${ts.slice(24).map(i=>`<a class="chip" href="#n-${i}"><span class="gu">${esc(ND.topics[i].t.slice(0,34))}</span></a>`).join("")}</div></details>`:""}`:""}
+      ${ps.length?`<div class="eyebrow" style="margin-top:6px">Parables (દ્રષ્ટાંત)</div><ul class="plist">${ps.map(j=>`<li>${esc(ND.parables[j][1].slice(0,140))}</li>`).join("")}</ul>`:""}</div>`})()}
+  </aside></div>`;
+  if(hl){
+    const marks=[...document.querySelectorAll("#rtext mark")];let cur=Math.max(0,marks.findIndex(m=>m.id==="cur"));
+    const show=()=>{marks.forEach(m=>m.classList.remove("cur"));if(!marks.length){$("#hc").textContent="0 here";return}
+      const m=marks[cur];m.classList.add("cur");$("#hc").textContent=`${cur+1} of ${marks.length}`};
+    const jump=()=>{show();marks[cur]&&marks[cur].scrollIntoView({block:"center",behavior:"smooth"})};
+    $("#hp").onclick=()=>{cur=(cur-1+marks.length)%marks.length;jump()};
+    $("#hn").onclick=()=>{cur=(cur+1)%marks.length;jump()};
+    $("#clr").onclick=()=>{state.hl=null;viewReader(id)};
+    show();
+    if(tg){const el=$("#cur");if(el)requestAnimationFrame(()=>el.scrollIntoView({block:"center"}))}
+  }
+  if(state.hl&&state.hl.para!=null){const el=document.querySelector(`#rtext p[data-pi="${state.hl.para}"]`);if(el){el.classList.add("flashp");requestAnimationFrame(()=>el.scrollIntoView({block:"center"}))}state.hl.para=null}
+  if(state.hl)state.hl.target=null;
+}
+/* ---- contents ---- */
+function viewContents(){
+  document.title="Contents · Vachanamrut Concordance";
+  $("#main").innerHTML=`<div class="eyebrow">Contents</div><h1 style="font-family:var(--f-read);font-size:40px;font-weight:600;margin:6px 0 16px">${T.v.filter(v=>MAIN.includes(v.sec)).length} Vachanamruts in ${MAIN.length} sections</h1>
+  <div class="secnav">${SECLIST.map(s=>`<a class="chip" href="#contents" data-jump="${s.k}"><span class="gu">${esc(s.gu)}</span><small>${s.vs.length}</small></a>`).join("")}</div>
+  ${SECLIST.map(s=>`<section class="block" id="sec-${s.k}"><header><h2><span style="color:var(--saffron)">${esc(s.gu)}</span> · ${esc(s.en)}</h2><span class="muted num">${s.vs.length} · ${fmt(s.wc)} words</span></header>
+   <div class="toc">${s.vs.map(i=>{const v=T.v[i];return `<a class="tocrow" href="#v-${v.id}"><b>${esc(vlabel(v))}</b><span class="t">${esc(v.title)}</span><span class="p">p. ${v.p0}</span></a>`}).join("")}</div></section>`).join("")}`;
+  document.querySelectorAll("[data-jump]").forEach(a=>a.onclick=e=>{e.preventDefault();document.getElementById("sec-"+a.dataset.jump).scrollIntoView({behavior:"smooth"})});
+  document.querySelectorAll(".tocrow").forEach(a=>a.addEventListener("click",()=>state.hl=null));
+}
+/* ---- A–Z index ---- */
+const LETTERS="અ આ ઇ ઉ ઋ એ ઐ ઓ ઔ ક ખ ગ ઘ ચ છ જ ઝ ટ ઠ ડ ઢ ણ ત થ દ ધ ન પ ફ બ ભ મ ય ર લ વ શ ષ સ હ ળ".split(" ");
+function viewIndex(){
+  document.title="Index · Vachanamrut Concordance";
+  const groups={};
+  IX.forEach(e=>{let c=e.k[0];if(c==="ઈ")c="ઇ";if(c==="ઊ")c="ઉ";(groups[c]||(groups[c]=[])).push(e)});
+  let cur=state.letter||"ઇ",min=state.minc||1,sort=state.sort||"az";
+  $("#main").innerHTML=`<div class="eyebrow">Index</div><h1 style="font-family:var(--f-read);font-size:40px;font-weight:600;margin:6px 0 6px">${fmt(IX.length)} headwords, A to ળ</h1>
+   <p class="note">Spelling variants (ઈ/ઇ, ી/િ, ૂ/ુ, ન્દ/ંદ, દૃ/દ્ર) and case endings (-ને, -નો, -ની, -નું, -ના, -માં, -થી, -એ, plural -ઓ) are grouped under one headword.</p>
+   <div class="alpha" id="alpha">${LETTERS.filter(l=>groups[l]).map(l=>`<button data-l="${l}" class="${l===cur?"on":""}">${l}</button>`).join("")}</div>
+   <div class="toolbar" style="margin:10px 0 16px"><label>Sort <select id="srt"><option value="az">A–Z</option><option value="freq">Most frequent</option></select></label>
+     <label>Minimum occurrences <select id="minc"><option>1</option><option>2</option><option>5</option><option>10</option><option>25</option></select></label><span class="muted num" id="cnt"></span></div>
+   <div class="azlist" id="az"></div>`;
+  $("#srt").value=sort;$("#minc").value=String(min);
+  const draw=()=>{let g=(groups[cur]||[]).filter(e=>e.c>=min);
+    g=sort==="az"?g.slice().sort((a,b)=>a.h.localeCompare(b.h,"gu")):g.slice().sort((a,b)=>b.c-a.c);
+    $("#cnt").textContent=`${g.length} headwords`;
+    $("#az").innerHTML=g.map(e=>`<a class="az" href="#w-${e.i}"><span>${esc(e.h)}</span><small>${e.c}</small></a>`).join("")};
+  $("#alpha").onclick=e=>{const b=e.target.closest("button");if(!b)return;cur=state.letter=b.dataset.l;$("#alpha").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));draw()};
+  $("#srt").onchange=e=>{sort=state.sort=e.target.value;draw()};
+  $("#minc").onchange=e=>{min=state.minc=+e.target.value;draw()};
+  draw();
+}
+/* ---- glossary ---- */
+function viewGlossary(){
+  document.title="Glossary · Vachanamrut Concordance";
+  $("#main").innerHTML=`<div class="eyebrow">Glossary</div><h1 style="font-family:var(--f-read);font-size:40px;font-weight:600;margin:6px 0 6px">Key terms of the Vachanamrut</h1>
+  <p class="note" style="margin-bottom:20px">Short working definitions written for this concordance, with links into the index. Counts include every grouped form of each linked word.</p>
+  <div class="gloss">${GL.map(g=>`<article class="gcard"><div><h3>${esc(g.term)}</h3><div class="ia">${esc(g.iast)} · <span class="gl">${esc(g.gloss)}</span></div></div>
+   <p>${esc(g.definition)}</p>
+   <div class="meta"><span>In the index:</span>${g.lemmas.map(l=>`<a class="chip" href="#w-${l}"><span class="gu">${esc(IX[l].h)}</span><small>${IX[l].c}</small></a>`).join("")}</div>
+   ${(()=>{const ts=[...new Set(g.lemmas.flatMap(l=>topicsForLemma(IX[l])))];return ts.length?`<div class="meta"><span>Vachanamrut Nondh (${ts.length} topics):</span>${ts.slice(0,6).map(i=>`<a class="chip" href="#n-${i}"><span class="gu">${esc(ND.topics[i].t.slice(0,30))}</span></a>`).join("")}</div>`:""})()}
+   <div class="meta"><span>Key Vachanamruts:</span>${g.keyVachanamruts.map(id=>`<a class="chip" href="#v-${id}" data-gl="${g.lemmas.join(",")}">${esc(id)}</a>`).join("")}</div></article>`).join("")}</div>`;
+  document.querySelectorAll("[data-gl]").forEach(a=>a.onclick=e=>{e.preventDefault();const ls=a.dataset.gl.split(",").map(Number);const forms=new Set();ls.forEach(l=>IX[l]._fk.forEach(f=>forms.add(f)));state.hl={forms,lemmas:ls,target:null};go(a.getAttribute("href").slice(1))});
+}
+/* ---- sources ---- */
+function viewSources(){
+  document.title="Sources · Vachanamrut Concordance";
+  $("#main").innerHTML=`<div class="eyebrow">Bibliography</div><h1 style="font-family:var(--f-read);font-size:40px;font-weight:600;margin:6px 0 6px">Scriptures cited in the text</h1>
+  <p class="note" style="margin-bottom:12px">Found by matching each work's names and their case endings. Generic words such as "śāstra" alone are not counted. Open a work to see every citation in context.</p>
+  ${BIB.map((b,k)=>`<details class="src" data-k="${k}"><summary><h3><span class="gu">${esc(b.gu)}</span>${esc(b.en)}</h3><span class="cnt">${b.count} mentions · ${b.vachanamruts} Vachanamruts</span><p>${esc(b.description)}</p></summary><div class="body"></div></details>`).join("")}
+  <section class="block"><header><h2>Works cited in the Vachanamrut Nondh</h2>${CREDIT}</header>
+  <p class="note">Besides the Vachanamrut itself, the Nondh draws on these sampradaya and scriptural works. Counts are Nondh topics that cite each one.</p>
+  ${ND.works.map((w,k)=>`<details class="src"><summary><h3><span class="gu">${esc(w.gu)}</span>${esc(w.en)}</h3><span class="cnt">${w.topics.length} topics</span></summary><div class="toc">${w.topics.map(topicRow).join("")}</div></details>`).join("")}</section>`;
+  document.querySelectorAll("details.src").forEach(d=>d.addEventListener("toggle",()=>{
+    if(!d.open||d.dataset.done)return;d.dataset.done=1;const b=BIB[+d.dataset.k];
+    d.querySelector(".body").innerHTML=b.key==="sanskrit"?
+      b.occurrences.map(o=>{const v=T.v[o[0]];return `<a class="kwic" href="#v-${v.id}" data-v="${o[0]}" data-p="${o[1]}" data-o="${o[2]}" data-l="" style="grid-template-columns:5.6rem minmax(0,1fr)"><span class="ref"><b>${esc(vlabel(v))}</b>p. ${o[4]}</span><span class="dev" lang="sa" style="white-space:normal">${esc(T.v[o[0]].paras[o[1]][1].substr(o[2],o[3]).slice(0,220))}</span></a>`}).join("")
+      :b.occurrences.map(o=>kwic(o[0],o[1],o[2],o[3],"")).join("");
+  }));
+}
+/* ---- full-text search (phrases, function words) ---- */
+function viewFind(q){
+  document.title=`“${q}” · Vachanamrut Concordance`;
+  const hits=[];
+  if(q){const re=new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"g");
+    T.v.forEach((v,vi)=>v.paras.forEach((p,pi)=>{let m;re.lastIndex=0;while((m=re.exec(p[1]))&&hits.length<3000){hits.push([vi,pi,m.index,m[0].length]);if(!m[0].length)re.lastIndex++}}))}
+  $("#main").innerHTML=`<div class="eyebrow">Full-text search</div><h1 style="font-family:var(--f-read);font-size:36px;font-weight:600;margin:6px 0 6px">“${esc(q)}”</h1>
+   <p class="muted">${hits.length?`${fmt(hits.length)}${hits.length>=3000?"+":""} exact matches in ${new Set(hits.map(h=>h[0])).size} sections of text.`:`No exact matches. Try Gujarati script, or a single word in the search box.`}</p>
+   <div id="fr">${hits.slice(0,600).map(h=>kwic(h[0],h[1],h[2],h[3],"").replace('class="kwic"',`class="kwic" data-q="${esc(q)}"`)).join("")}</div>`;
+}
+/* ---- Vachanamrut Nondh (compiled by Ashwin Babubhai Shah) ---- */
+const CREDIT=`<span class="credit">Vachanamrut Nondh · compiled by <b>Ashwin Babubhai Shah</b></span>`;
+function openPara(vi,pi){state.hl={forms:new Set(),lemmas:[],target:null,para:pi};go("v-"+T.v[vi].id)}
+function refChip(id,check){
+  const v=VBYID[id];if(!v)return "";
+  return `<a class="chip ref" href="#v-${id}" data-vi="${v.i}"${check&&check[1]===id?` data-pi="${check[2]}"`:""} title="${esc(v.title)}">${esc(vlabel(v))}</a>`;
+}
+function badge(c,cites){
+  if(!c)return "";
+  if(c[0]==="m")return `<span class="badge ok" title="The quoted passage was found in the cited Vachanamrut">✓ found in ${esc(c[1])}</span>`;
+  if(c[0]==="e")return `<span class="badge diff" title="The quoted passage was found in a different Vachanamrut than the one cited">Found in ${esc(c[1])}, cited as ${esc(cites.join(", "))}</span>`;
+  if(c[0]==="l")return `<span class="badge info" title="No Vachanamrut cited; passage located automatically">Located in ${esc(c[1])}</span>`;
+  return `<span class="badge none" title="Paraphrase, or not found word for word">Not located word for word</span>`;
+}
+function linkRefs(text){
+  // turn "વચ.ગ.પ્ર.12" style references in Nondh text into links
+  return esc(text).replace(/વ\s?ચ\s*\.?\s*(ગ\s*\.?\s*પ્ર|ગ\s*\.?\s*મ|ગ\s*\.?\s*અં|લોયા|લો|સા|વડ|કા|પં|અમ)\s*\.?\s*[-–]?\s*(\d+)/g,(m,sec,n)=>{
+    const k={"ગ.પ્ર":"GP","ગપ્ર":"GP","ગ.મ":"GM","ગમ":"GM","ગ.અં":"GA","ગઅં":"GA","લોયા":"L","લો":"L","સા":"S","વડ":"V","કા":"K","પં":"P","અમ":"A"}[sec.replace(/\s/g,"")];
+    const id=k+"-"+(+n);return VBYID[id]?`<a href="#v-${id}" class="inref">${m}</a>`:m});
+}
+function topicsForLemma(e){const out=[];ND.tkeys.forEach((ks,i)=>{for(const k of ks) if(e._fk.has(k)){out.push(i);break}});return out}
+function topicRow(i){const g=ND.topics[i];return `<a class="tocrow" href="#n-${i}"><b>${g.r.length}</b><span class="t">${esc(g.t)}</span><span class="p">p. ${g.p}</span></a>`}
+const NLET="અ આ ઇ ઈ ઉ ઊ ઋ એ ઐ ઓ ઔ ક ખ ગ ઘ ચ છ જ ઝ ટ ઠ ડ ઢ ણ ત થ દ ધ ન પ ફ બ ભ મ ય ર લ વ શ ષ સ હ ળ ક્ષ જ્ઞ".split(" ");
+function viewNondh(){
+  document.title="Vachanamrut Nondh · Vachanamrut Concordance";
+  const E=ND.topics.reduce((a,g)=>a+g.e.length,0);
+  const C={m:0,e:0,l:0,u:0};ND.topics.forEach(g=>g.e.forEach(e=>{if(e[4])C[e[4][0]]++}));
+  const groups={};ND.topics.forEach(g=>{let c=g.k.startsWith("ક્ષ")?"ક્ષ":g.k.startsWith("જ્ઞ")?"જ્ઞ":g.t[0];if(c==="ઈ")c="ઇ";(groups[c]||(groups[c]=[])).push(g.i)});
+  let cur=state.nletter||"અ";
+  const diffs=[];ND.topics.forEach(g=>g.e.forEach(e=>{if(e[4]&&e[4][0]==="e")diffs.push([g.i,e])}));
+  $("#main").innerHTML=`
+  <div class="nhero">
+    <div class="eyebrow">A reference index by hand</div>
+    <h1><span class="gu">વચનામૃત નોંધ</span>Vachanamrut Nondh</h1>
+    <p class="by">Compiled by <b>Ashwin Babubhai Shah</b></p>
+    <p>A topic-by-topic notebook of the Vachanamrut: ${fmt(ND.topics.length)} topics with references, quotations, cross-references, 13 appendices and an index of the parables used in each discourse. It is reproduced here from the original PDF and joined to the automatic word index. Every quotation was checked against the text, and each reference opens the passage in the reader.</p>
+    <div class="stats">
+      <div><b>${fmt(ND.topics.length)}</b><span>topics</span></div>
+      <div><b>${fmt(E)}</b><span>entries</span></div>
+      <div><b>${fmt(C.m)}</b><span>quotations verified in the cited Vachanamrut</span></div>
+      <div><b>${fmt(ND.parables.length)}</b><span>parables indexed</span></div>
+    </div>
+    <div class="chips"><a class="chip" href="#parables">Parables by Vachanamrut →</a>${ND.appendices.map(a=>`<a class="chip" href="#appx-${a.n}"><small>પરિશિષ્ટ ${a.n}</small><span class="gu">${esc(a.title)}</span></a>`).join("")}</div>
+  </div>
+  <section class="block"><header><h2>Topics</h2><input id="tf" type="search" class="filter" placeholder="Filter topics, e.g. માયા" aria-label="Filter topics"></header>
+    <div class="alpha" id="nalpha">${NLET.filter(l=>groups[l]).map(l=>`<button data-l="${l}" class="${l===cur?"on":""}">${l}</button>`).join("")}</div>
+    <div class="toc" id="tlist"></div></section>
+  <section class="block"><header><h2>Where the Nondh and the text differ</h2><span class="muted">${diffs.length} quotations found in a different Vachanamrut than the one cited</span></header>
+    <p class="note">Each line gives the topic, the reference the Nondh gives, and where the quoted words were actually found in this edition. Some may be the numbering of a different edition, or a passage that occurs in both.</p>
+    <div class="toc">${diffs.map(([i,e])=>`<a class="tocrow" href="#n-${i}"><b>${esc(e[4][1])}</b><span class="t">${esc(ND.topics[i].t)} <small class="muted">· cited ${esc(e[1].join(", "))}</small></span><span class="p">p. ${e[3]}</span></a>`).join("")}</div></section>`;
+  const draw=()=>{const q=$("#tf").value.trim();let ids;
+    if(q){const k=nkey(q);ids=ND.topics.filter(g=>g.k.includes(k)).map(g=>g.i).slice(0,400)}else ids=groups[cur]||[];
+    $("#tlist").innerHTML=ids.map(topicRow).join("")||`<p class="muted">No topics match.</p>`};
+  $("#nalpha").onclick=e=>{const b=e.target.closest("button");if(!b)return;cur=state.nletter=b.dataset.l;$("#tf").value="";$("#nalpha").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));draw()};
+  $("#tf").oninput=draw;draw();
+}
+function viewTopic(i){
+  const g=ND.topics[i];document.title=`${g.t} · Vachanamrut Nondh`;
+  const lem=[...ND.tkeys[i]].map(k=>FORM2L.get(k)).filter(x=>x!=null&&IX[x].c>2);
+  const see=g.s.map(s=>{const j=ND.bykey.get(nkey(s));return j!=null?`<a class="chip" href="#n-${j}"><span class="gu">${esc(s)}</span></a>`:`<span class="chip"><span class="gu">${esc(s)}</span></span>`}).join("");
+  $("#main").innerHTML=`<div class="eyebrow">${CREDIT} · PDF page ${g.p}</div>
+   <h1 class="ttitle">${esc(g.t)}</h1>
+   ${g.r.length?`<div class="chips" style="margin-top:12px"><span class="muted">Vachanamruts:</span>${g.r.map(r=>refChip(r)).join("")}</div>`:""}
+   ${see?`<div class="chips" style="margin-top:8px"><span class="muted">See also:</span>${see}</div>`:""}
+   ${lem.length?`<div class="chips" style="margin-top:8px"><span class="muted">In the word index:</span>${[...new Set(lem)].map(l=>`<a class="chip" href="#w-${l}"><span class="gu">${esc(IX[l].h)}</span><small>${IX[l].c}</small></a>`).join("")}</div>`:""}
+   <div class="nentries">${g.e.map(e=>`<article class="nentry k-${e[0]}">
+     <div class="nmeta">${e[1].map(r=>refChip(r,e[4])).join("")}${e[5]?`<span class="chip src2">${esc(e[5])}</span>`:""}${badge(e[4],e[1])}<span class="p">p. ${e[3]}</span></div>
+     ${e[2]?`<div class="ntext">${linkRefs(e[2])}</div>`:""}
+     ${e[4]&&e[4][0]!=="u"?`<button class="more openp" data-v="${esc(e[4][1])}" data-pi="${e[4][2]}">Read this passage in ${esc(e[4][1])} →</button>`:""}</article>`).join("")}</div>
+   <div class="pager">${ND.topics[i-1]?`<a href="#n-${i-1}">← ${esc(ND.topics[i-1].t.slice(0,40))}</a>`:"<span></span>"}${ND.topics[i+1]?`<a href="#n-${i+1}">${esc(ND.topics[i+1].t.slice(0,40))} →</a>`:""}</div>`;
+  wireNondhLinks($("#main"));
+}
+function wireNondhLinks(root){
+  root.querySelectorAll(".openp").forEach(b=>b.onclick=()=>openPara(VBYID[b.dataset.v].i,+b.dataset.pi));
+  root.querySelectorAll("a.ref[data-pi]").forEach(a=>a.onclick=ev=>{ev.preventDefault();openPara(+a.dataset.vi,+a.dataset.pi)});
+}
+function viewParables(){
+  document.title="Parables · Vachanamrut Nondh";
+  $("#main").innerHTML=`<div class="eyebrow">${CREDIT}</div><h1 class="ttitle">દ્રષ્ટાંત · Parables by Vachanamrut</h1>
+  <p class="note">The Nondh's closing index of the examples and parables (dṛṣṭānt) used in each discourse, in book order.</p>
+  <div class="nentries">${ND.parables.map(p=>`<article class="nentry"><div class="nmeta">${p[0]?refChip(p[0]):""}<span class="p">p. ${p[2]}</span></div><div class="ntext">${esc(p[1])}</div></article>`).join("")}</div>`;
+}
+function viewAppendix(n){
+  const a=ND.appendices.find(x=>x.n===n);if(!a){viewNondh();return}
+  document.title=`પરિશિષ્ટ ${n} · Vachanamrut Nondh`;
+  $("#main").innerHTML=`<div class="eyebrow">${CREDIT} · પરિશિષ્ટ ${n} · PDF page ${a.p}</div><h1 class="ttitle">${esc(a.title)}</h1>
+   <div class="chips" style="margin:12px 0">${ND.appendices.map(x=>`<a class="chip ${x.n===n?"on":""}" href="#appx-${x.n}">${x.n}</a>`).join("")}</div>
+   <div class="appx">${linkRefs(a.text)}</div>`;
+}
+function nondhPanelForWord(e){
+  const tops=topicsForLemma(e);if(!tops.length)return "";
+  const cited=new Set();tops.forEach(i=>ND.topics[i].r.forEach(r=>cited.add(r)));
+  const has=new Set();for(let j=0;j<e.o.length;j+=4)has.add(T.v[e.o[j]].id);
+  const adds=[...cited].filter(id=>!has.has(id));
+  const cnt={};for(let j=0;j<e.o.length;j+=4){const id=T.v[e.o[j]].id;cnt[id]=(cnt[id]||0)+1}
+  const missing=Object.entries(cnt).filter(([id])=>!cited.has(id)&&MAIN.includes(VBYID[id].sec)).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  return `<section class="block nondhblock"><header><h2>In the Vachanamrut Nondh</h2>${CREDIT}</header>
+   <div class="toc">${tops.slice(0,14).map(topicRow).join("")}</div>${tops.length>14?`<p class="muted">${tops.length-14} more topics contain this word. <a href="#nondh">Browse the Nondh →</a></p>`:""}
+   <div class="twocol">
+    <div class="panel"><div class="eyebrow">The Nondh adds</div><p class="note">Vachanamruts cited under these topics in which the word itself does not occur: the Nondh links them by meaning.</p><div class="chips">${adds.slice(0,40).map(id=>refChip(id)).join("")||'<span class="muted">None</span>'}</div></div>
+    <div class="panel"><div class="eyebrow">Not cited in these topics</div><p class="note">Vachanamruts where the word occurs most, but which none of these Nondh topics cite.</p><div class="chips">${missing.map(([id,c])=>`${refChip(id).replace("</a>",` <small>${c}×</small></a>`)}`).join("")||'<span class="muted">None</span>'}</div></div>
+   </div></section>`;
+}
+/* ---- top search box ---- */
+(function(){
+  const inp=$("#q"),box=$("#sugg");let sel=-1,items=[];
+  const draw=()=>{const q=inp.value.trim();if(!q||!IX){box.hidden=true;return}
+    items=search(q,10);sel=items.length?0:-1;
+    box.innerHTML=items.map((i,k)=>{const e=IX[i];return `<button role="option" aria-selected="${k===sel}" data-i="${i}"><span><span class="h">${esc(e.h)}</span><span class="r">${esc(e.r)}</span></span><span class="c">${fmt(e.c)}</span></button>`}).join("")+
+      `<button class="full" data-full="1">Full-text search for “${esc(q)}”</button>`;
+    box.hidden=false};
+  inp.addEventListener("input",draw);
+  inp.addEventListener("focus",draw);
+  inp.addEventListener("keydown",e=>{
+    const bs=[...box.querySelectorAll("button")];
+    if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();sel=(sel+(e.key==="ArrowDown"?1:-1)+bs.length)%bs.length;bs.forEach((b,k)=>b.setAttribute("aria-selected",k===sel))}
+    else if(e.key==="Enter"){e.preventDefault();const b=bs[sel];if(b)b.click();else if(inp.value.trim()){state.find=inp.value.trim();go("find")}}
+    else if(e.key==="Escape"){box.hidden=true;inp.blur()}});
+  box.addEventListener("mousedown",e=>e.preventDefault());
+  box.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;box.hidden=true;
+    if(b.dataset.full){state.find=inp.value.trim();go("find")}else{go("w-"+b.dataset.i)}inp.blur()});
+  inp.addEventListener("blur",()=>setTimeout(()=>box.hidden=true,150));
+  document.addEventListener("keydown",e=>{if(e.key==="/"&&document.activeElement!==inp&&!/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();inp.focus()}});
+})();
+/* ---- theme ---- */
+(function(){
+  const modes=["system","light","dark"],icons={system:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>',light:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',dark:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z"/></svg>'};
+  let m="system";try{m=localStorage.getItem("vc-theme")||"system"}catch(e){}
+  const apply=()=>{if(m==="system")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",m);
+    $("#theme").innerHTML=icons[m];$("#theme").title="Theme: "+m};
+  $("#theme").onclick=()=>{m=modes[(modes.indexOf(m)+1)%3];try{localStorage.setItem("vc-theme",m)}catch(e){}apply()};
+  apply();
+})();
+load().then(route).catch(err=>{$("#main").innerHTML=`<div class="loading">Could not load the data files (${esc(err.message)}). If you opened this file directly from disk, serve the folder over HTTP instead, for example with <code>python3 -m http.server</code> inside the site folder.</div>`});
+</script>
+
+</body>
+</html>
