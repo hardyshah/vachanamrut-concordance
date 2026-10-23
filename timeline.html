@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="gu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Shriji Maharaj Logbook</title>
+<meta name="description" content="A day-by-day logbook of Bhagwan Shri Swaminarayan from the Vachanamrut, 1819–1829: where he was, when, what he wore and where he sat, with every date converted to the calendar and checked for anomalies.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anek+Gujarati:wght@400;500;600;700&family=Rasa:wght@400;500;600&family=Shrikhand&display=swap">
+<style>
+/* Layout: hero stats; "where he was" swimlane (time × place); a calendar logbook (one grid per year);
+   patterns (small bar charts); findings & checks; then the day-by-day log with filters. */
+:root{
+  --paper:#f3f4ee; --surface:#ffffff; --sunk:#e9ebe3; --ink:#15211f; --ink-2:#55625f; --ink-3:#86918d; --line:#d8dcd1; --grid:#e6e8e0;
+  --saffron:#b9560c; --saffron-strong:#9a4507; --saffron-soft:#f8e2cb; --peacock:#0e5a61; --peacock-soft:#d6e7e6;
+  --shadow:0 1px 2px rgba(20,33,31,.06),0 8px 24px rgba(20,33,31,.06);
+  --f-read:"Rasa","Noto Serif Gujarati",Georgia,serif;
+  --f-ui:"Anek Gujarati","Noto Sans Gujarati",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-display:"Shrikhand","Anek Gujarati",serif;
+  --r:10px; --maxw:1120px; color-scheme:light;
+  /* place groups: categorical slots 1-7 in fixed order */
+  --g1:#2a78d6; --g2:#eb6834; --g3:#1baf7a; --g4:#eda100; --g5:#e87ba4; --g6:#008300; --g7:#6250d6;
+  --bar:#b9560c; --empty:#eceee6;
+  --warn:#b45309; --warn-soft:#fdf0dc; --ok:#1f7a3a; --ok-soft:#e3f3e7;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0e1416; --surface:#151e21; --sunk:#1b262a; --ink:#e6e8e1; --ink-2:#a3aeaa; --ink-3:#71807c; --line:#273439; --grid:#202c30;
+  --saffron:#f0974a; --saffron-strong:#ffb06a; --saffron-soft:#3a2615; --peacock:#6cbcbc; --peacock-soft:#18363a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark;
+  --g1:#3987e5; --g2:#d95926; --g3:#199e70; --g4:#c98500; --g5:#d55181; --g6:#008300; --g7:#9085e9;
+  --bar:#f0974a; --empty:#1d292d; --warn:#f2b158; --warn-soft:#3a2a12; --ok:#6ccf8a; --ok-soft:#163a23}}
+:root[data-theme="dark"]{
+  --paper:#0e1416; --surface:#151e21; --sunk:#1b262a; --ink:#e6e8e1; --ink-2:#a3aeaa; --ink-3:#71807c; --line:#273439; --grid:#202c30;
+  --saffron:#f0974a; --saffron-strong:#ffb06a; --saffron-soft:#3a2615; --peacock:#6cbcbc; --peacock-soft:#18363a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark;
+  --g1:#3987e5; --g2:#d95926; --g3:#199e70; --g4:#c98500; --g5:#d55181; --g6:#008300; --g7:#9085e9;
+  --bar:#f0974a; --empty:#1d292d; --warn:#f2b158; --warn-soft:#3a2a12; --ok:#6ccf8a; --ok-soft:#163a23}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-ui);font-size:16px;line-height:1.5;margin:0;-webkit-font-smoothing:antialiased}
+a{color:var(--peacock);text-decoration:none}
+a:hover{text-decoration:underline}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--saffron);outline-offset:2px;border-radius:4px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:14px;padding-block:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:8px;color:var(--ink);white-space:nowrap;margin-right:auto}
+.brand:hover{text-decoration:none}
+.brand .gu{font-family:var(--f-display);font-size:24px;color:var(--saffron);line-height:1}
+.brand .en{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.nav{display:flex;gap:2px;flex-wrap:wrap}
+.nav a{color:var(--ink-2);padding:6px 10px;border-radius:999px;font-size:14px;font-weight:500}
+.nav a:hover{text-decoration:none;background:var(--sunk);color:var(--ink)}
+.nav a.on{background:var(--ink);color:var(--paper)}
+.theme{border:1px solid var(--line);background:none;border-radius:999px;width:34px;height:34px;display:grid;place-items:center;cursor:pointer;color:var(--ink-2)}
+main{padding-block:28px 80px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.muted{color:var(--ink-3);font-size:14px}
+.hero h1{font-family:var(--f-display);font-weight:400;color:var(--saffron);font-size:clamp(36px,7vw,60px);line-height:1.15;margin:8px 0 2px}
+.hero .en{font-family:var(--f-read);font-size:24px;font-weight:600;margin:0 0 10px}
+.hero p{max-width:68ch;color:var(--ink-2);margin:0 0 8px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:20px 0 6px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.tile b{display:block;font-size:30px;font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums}
+.tile span{color:var(--ink-2);font-size:13.5px}
+section.block{margin-top:38px}
+section.block>header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:14px}
+section.block h2{font-family:var(--f-read);font-size:25px;font-weight:600;margin:0}
+section.block h2 span{color:var(--saffron)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;box-shadow:var(--shadow)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13.5px;color:var(--ink-2);margin:0 0 10px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+svg text{font-family:var(--f-ui);fill:var(--ink-2);font-size:12px}
+svg .axis line,svg .gridl{stroke:var(--grid);stroke-width:1}
+svg .lane-l{font-size:12.5px;fill:var(--ink-2)}
+.dot{cursor:pointer}
+.gapband{fill:var(--sunk)}
+.tip{position:fixed;z-index:50;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);padding:8px 10px;font-size:13px;max-width:300px;line-height:1.35}
+.tip b{font-weight:600}
+.tip .t{font-family:var(--f-read);font-size:15px;margin-top:2px}
+/* calendar */
+.cal{display:grid;gap:6px;min-width:760px}
+.cal .yr{display:grid;grid-template-columns:44px 1fr;align-items:center;gap:8px}
+.cal .yr>b{font-size:13px;color:var(--ink-2);font-weight:600;font-variant-numeric:tabular-nums}
+.cal .yr .gridc{display:grid;grid-template-rows:repeat(7,10px);grid-auto-flow:column;grid-auto-columns:10px;gap:2px}
+.cal .c{border-radius:2px;background:var(--empty)}
+.cal .c.x{background:transparent}
+.cal .c.on{cursor:pointer}
+.cal .c.on:hover{outline:2px solid var(--ink);outline-offset:0}
+.cal .months{display:grid;grid-template-columns:44px 1fr;gap:8px;font-size:11.5px;color:var(--ink-3)}
+.cal .months div{position:relative;height:14px}
+.cal .months span{position:absolute;top:0}
+/* small charts */
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:14px}
+.charts h3{font-size:15px;font-weight:600;margin:0 0 2px}
+.charts .sub{font-size:12.5px;color:var(--ink-3);margin:0 0 10px}
+.hb{display:grid;grid-template-columns:minmax(90px,38%) 1fr auto;align-items:center;gap:4px 8px;font-size:13px}
+.hb .l{color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hb .b{height:12px;background:var(--bar);border-radius:0 4px 4px 0;min-width:2px}
+.hb .v{color:var(--ink-2);font-variant-numeric:tabular-nums;font-size:12.5px}
+.hb .row{display:contents}
+.hb .row:hover .l{color:var(--ink)}
+.months12{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;align-items:end;height:110px;border-bottom:1px solid var(--line)}
+.months12 i{display:block;background:var(--bar);border-radius:4px 4px 0 0;min-height:1px;cursor:default}
+.months12.warm i{background:var(--peacock)}
+.mlab{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;font-size:11px;color:var(--ink-3);text-align:center;margin-top:3px}
+/* findings */
+.find{display:grid;gap:10px}
+.fx{border:1px solid var(--line);border-left:4px solid var(--warn);background:var(--surface);border-radius:8px;padding:12px 14px}
+.fx.ok{border-left-color:var(--ok)}
+.fx h3{font-size:16px;font-weight:600;margin:0 0 4px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.fx h3 .tag{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--warn);background:var(--warn-soft);border-radius:999px;padding:1px 8px}
+.fx.ok h3 .tag{color:var(--ok);background:var(--ok-soft)}
+.fx p{margin:0 0 6px;color:var(--ink-2);font-size:14.5px}
+.fx ul{margin:4px 0 0;padding-left:18px;color:var(--ink-2);font-size:14px}
+.fx li{margin:2px 0}
+.ids a{font-weight:600}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:14px}
+/* log */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px;position:sticky;top:57px;z-index:10;background:var(--paper);padding:8px 0}
+.filters select,.filters input[type=search]{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:14px;max-width:100%}
+.filters input[type=search]{flex:1 1 200px;min-width:0}
+.filters label{font-size:14px;color:var(--ink-2);display:inline-flex;gap:6px;align-items:center}
+.month{margin-top:20px}
+.month>h3{font-family:var(--f-read);font-size:20px;font-weight:600;margin:0 0 8px;display:flex;gap:10px;align-items:baseline}
+.month>h3 small{font-family:var(--f-ui);font-size:13px;color:var(--ink-3);font-weight:400}
+.entry{display:grid;grid-template-columns:92px 1fr;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;scroll-margin-top:130px}
+.entry.flash{animation:fl 2.2s ease-out}
+@keyframes fl{0%{box-shadow:0 0 0 3px var(--saffron)}100%{box-shadow:0 0 0 0 transparent}}
+@media (prefers-reduced-motion:reduce){.entry.flash{animation:none;box-shadow:0 0 0 3px var(--saffron)}}
+.entry .d{border-right:1px solid var(--line);padding-right:10px}
+.entry .d b{display:block;font-size:26px;line-height:1;font-weight:600;font-variant-numeric:tabular-nums}
+.entry .d span{display:block;font-size:12.5px;color:var(--ink-2)}
+.entry .d .pl{display:flex;align-items:center;gap:5px;margin-top:6px;font-weight:600;color:var(--ink)}
+.entry .d .pl i{width:9px;height:9px;border-radius:50%;flex:none}
+.entry h4{margin:0;font-family:var(--f-read);font-size:19px;font-weight:600;line-height:1.25}
+.entry .meta{font-size:13px;color:var(--ink-2);margin:2px 0 6px;display:flex;gap:4px 12px;flex-wrap:wrap}
+.entry .scene{font-family:var(--f-read);font-size:16px;color:var(--ink);margin:4px 0 6px;line-height:1.55}
+.entry .scene.clip{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{font-size:12.5px;border:1px solid var(--line);border-radius:999px;padding:1px 9px;color:var(--ink-2);background:var(--paper)}
+.chip.an{border-color:var(--warn);color:var(--warn);background:var(--warn-soft);font-weight:600}
+.entry .acts{display:flex;gap:12px;margin-top:6px;font-size:14px;flex-wrap:wrap}
+.linkbtn{background:none;border:0;padding:0;color:var(--peacock);cursor:pointer;font-size:14px}
+.table-toggle{font-size:14px}
+table.data{border-collapse:collapse;width:100%;font-size:13px}
+table.data th,table.data td{border-bottom:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+table.data th{color:var(--ink-3);font-weight:600;position:sticky;top:0;background:var(--surface)}
+footer{border-top:1px solid var(--line);padding-block:22px 40px;color:var(--ink-3);font-size:13px}
+@media (max-width:560px){.entry{grid-template-columns:1fr}.entry .d{border-right:0;border-bottom:1px solid var(--line);padding:0 0 8px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}.entry .d .pl{margin:0}.top{position:static}.filters{position:static}.entry{scroll-margin-top:12px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="timeline.html"><span class="gu">દૈનંદિની</span><span class="en">Logbook</span></a>
+  <nav class="nav" aria-label="Site">
+    <a href="library.html">Library</a>
+    <a href="index.html">Vachanamrut</a>
+    <a href="index.html#nondh">Nondh</a>
+    <a href="timeline.html" class="on">Timeline</a>
+  </nav>
+  <button class="theme" id="theme" aria-label="Switch light or dark theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg></button>
+</div></header>
+<main class="wrap" id="main">
+  <div class="hero">
+    <div class="eyebrow">From the Vachanamrut · સંવત્ ૧૮૭૬–૧૮૮૫</div>
+    <h1>શ્રીજી મહારાજની દૈનંદિની</h1>
+    <div class="en">Logbook of Shriji Maharaj, 1819–1829</div>
+    <p>Every Vachanamrut opens with the day it was spoken: the Samvat date, the village, the darbar, the time, where Maharaj sat and what he wore. Read together, the 273 discourses become a dated record of nearly ten years. Each date here has been converted to the calendar and checked against the others.</p>
+    <p class="muted">A day appears in this log only if a Vachanamrut was spoken on it. The other books in the library are not yet machine-readable text, so they are not part of this timeline.</p>
+  </div>
+  <div class="tiles" id="tiles"></div>
+
+  <section class="block" id="where"><header><h2><span>ક્યાં</span> · Where he was</h2><span class="muted">Each dot is one Vachanamrut. Shaded bands are two months or more with none.</span></header>
+    <div class="card"><div class="legend" id="leg1"></div><div class="scroll"><div id="swim" style="min-width:720px"></div></div></div>
+  </section>
+
+  <section class="block" id="cal"><header><h2><span>દિવસ</span> · The logbook, day by day</h2><span class="muted">One square per day; coloured days have a Vachanamrut. Click one to open it below.</span></header>
+    <div class="card"><div class="legend" id="leg2"></div><div class="scroll"><div class="cal" id="calgrid"></div></div></div>
+  </section>
+
+  <section class="block" id="patterns"><header><h2><span>રીત</span> · Patterns</h2><span class="muted">Counts of the 273 openings</span></header>
+    <div class="charts" id="charts"></div>
+  </section>
+
+  <section class="block" id="anomalies"><header><h2><span>વિસંગતિ</span> · Anomalies and checks</h2><span class="muted">What stands out, and what holds up</span></header>
+    <div class="two"><div><div class="eyebrow" style="margin-bottom:8px">Anomalies found</div><div class="find" id="finds"></div></div>
+    <div><div class="eyebrow" style="margin-bottom:8px">Checks that passed</div><div class="find" id="checks"></div></div></div>
+  </section>
+
+  <section class="block" id="log"><header><h2><span>નોંધ</span> · Day-by-day log</h2><span class="muted" id="logcount"></span></header>
+    <div class="filters" role="search">
+      <input type="search" id="fq" placeholder="Search: a word, a title, GP-12, 1823…" aria-label="Search the log">
+      <select id="fplace" aria-label="Place"><option value="">All places</option></select>
+      <select id="fyear" aria-label="Year"><option value="">All years</option></select>
+      <select id="ftod" aria-label="Time of day"><option value="">Any time</option></select>
+      <select id="ftag" aria-label="Detail"><option value="">Any detail</option></select>
+      <label><input type="checkbox" id="fan"> Only anomalies</label>
+      <button class="linkbtn table-toggle" id="ftable" aria-pressed="false">Table view</button>
+    </div>
+    <div id="logbody"></div>
+  </section>
+  <section class="block"><header><h2>How the dates were worked out</h2></header>
+    <p class="muted" id="method" style="max-width:80ch"></p>
+  </section>
+</main>
+<footer class="wrap">Built from the Gujarati Vachanamrut (Shree Swaminarayan Mandir, Bhuj edition). Dates are calculated, not taken from a printed almanac; allow ±1 day where a tithi began near sunrise.</footer>
+<div class="tip" id="tip" hidden></div>
+<script>
+"use strict";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const GROUPS=["Gadhada","Sarangpur","Kariyani","Loya","Panchala","Vartal","Amdavad area"];
+const GCOL=g=>`var(--g${GROUPS.indexOf(g)+1})`;
+const GU={"Gadhada":"ગઢડા","Sarangpur":"સારંગપુર","Kariyani":"કારિયાણી","Loya":"લોયા","Panchala":"પંચાળા","Vartal":"વરતાલ","Amdavad area":"અમદાવાદ પ્રદેશ"};
+const LANES=["Panchala","Gadhada","Kariyani","Sarangpur","Kundal","Khambhda","Loya","Amdavad","Ashlali","Jetalpur","Vartal"];
+const TOD={"pre-dawn":"Before dawn","morning":"Morning","midday":"Midday","afternoon":"Afternoon","evening":"Evening","night":"Night"};
+const AN={"kshaya-tithi":"Skipped tithi","place-vs-section":"Not at the section's village","out-of-order":"Out of order","same-day-two-places":"Two places, one day","fast-travel":"Fast journey","festival-date":"Festival on wrong day","adhik-wrong":"Adhik month wrong","adhik-unstated":"Adhik month unstated","date-impossible":"Date does not exist","season":"Out of season"};
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const MONL=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const WD={Sunday:"Sun",Monday:"Mon",Tuesday:"Tue",Wednesday:"Wed",Thursday:"Thu",Friday:"Fri",Saturday:"Sat"};
+const dObj=s=>{const [y,m,d]=s.split("-").map(Number);return new Date(Date.UTC(y,m-1,d))};
+const fmtD=s=>{const d=dObj(s);return `${d.getUTCDate()} ${MON[d.getUTCMonth()]} ${d.getUTCFullYear()}`};
+const DAY=864e5;
+let D,E,BYID={},BYDATE={};
+const tip=$("#tip");
+function showTip(ev,html){tip.innerHTML=html;tip.hidden=false;const r=tip.getBoundingClientRect();let x=ev.clientX+14,y=ev.clientY+14;if(x+r.width>innerWidth-8)x=ev.clientX-r.width-14;if(y+r.height>innerHeight-8)y=ev.clientY-r.height-14;tip.style.left=Math.max(8,x)+"px";tip.style.top=Math.max(8,y)+"px"}
+function hideTip(){tip.hidden=true}
+function tipFor(e){return `<b>${esc(e.id)}</b> · ${esc(WD[e.wd]||"")} ${esc(fmtD(e.date))}<br><span style="color:var(--ink-2)">${esc(e.vsd)} · ${esc(e.place_en)}${e.tod?" · "+TOD[e.tod]:""}</span><div class="t">${esc(e.title)}</div>`}
+function legend(el){el.innerHTML=GROUPS.map(g=>`<span><i style="background:${GCOL(g)}"></i>${esc(g)} <small class="muted">${esc(GU[g])}</small></span>`).join("")}
+function openEntry(id){
+  // clear filters that would hide it, then scroll to and flash its card
+  const e=BYID[id];if(!e)return;
+  F.q="";F.place="";F.year="";F.tod="";F.tag="";F.an=false;F.table=false;syncFilters();renderLog();
+  const el=document.getElementById("e-"+id);if(!el)return;
+  el.scrollIntoView({block:"start",behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"});
+  el.classList.remove("flash");void el.offsetWidth;el.classList.add("flash");
+  history.replaceState(null,"","#e-"+id);
+}
+/* ---------- tiles ---------- */
+function tiles(){
+  const n=E.length,first=E[0],last=E[E.length-1];
+  const g=E.filter(e=>e.grp==="Gadhada").length;
+  const yrs=((dObj(last.date)-dObj(first.date))/DAY/365.25);
+  const places=new Set(E.map(e=>e.place)).size;
+  const an=new Set(D.anomalies.filter(a=>a.sev!=="low"||a.kind==="kshaya-tithi").flatMap(a=>a.ids)).size;
+  $("#tiles").innerHTML=[[n,"dated sabhas, from GP-1 to GA-39"],[`${Math.floor(yrs)} y ${Math.round((yrs%1)*12)} m`,`${fmtD(first.date)} to ${fmtD(last.date)}`],[places,"villages named in the openings"],[`${Math.round(g/n*100)}%`,`in Gadhada (${g} of ${n})`],[an,"Vachanamruts with an anomaly"]]
+    .map(([b,s])=>`<div class="tile"><b>${esc(b)}</b><span>${esc(s)}</span></div>`).join("");
+}
+/* ---------- swimlane ---------- */
+function swim(){
+  const host=$("#swim"),W=Math.max(720,host.clientWidth||720),L=96,Rm=12,T=8,lh=26,H=T+LANES.length*lh+28;
+  const t0=Date.UTC(1819,9,1),t1=Date.UTC(1829,9,1);
+  const x=t=>L+(t-t0)/(t1-t0)*(W-L-Rm),y=p=>T+LANES.indexOf(p)*lh+lh/2;
+  let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Timeline of places, 1819 to 1829">`;
+  // gaps
+  for(const g of D.gaps){const a=x(dObj(g.d0).getTime()+DAY),b=x(dObj(g.d1).getTime());s+=`<rect class="gapband" x="${a}" y="${T}" width="${Math.max(1,b-a)}" height="${LANES.length*lh}"><title>${g.days} days with no Vachanamrut: ${g.from} → ${g.to}</title></rect>`;
+    if(b-a>46)s+=`<text x="${(a+b)/2}" y="${T+LANES.length*lh-6}" text-anchor="middle" style="font-size:11px;fill:var(--ink-3)">${g.days} d</text>`}
+  // lanes + year grid
+  LANES.forEach(p=>{s+=`<line class="gridl" x1="${L}" x2="${W-Rm}" y1="${y(p)}" y2="${y(p)}"/><text class="lane-l" x="${L-8}" y="${y(p)+4}" text-anchor="end">${esc(p)}</text>`});
+  for(let yr=1820;yr<=1829;yr++){const xx=x(Date.UTC(yr,0,1));s+=`<line class="gridl" x1="${xx}" x2="${xx}" y1="${T}" y2="${T+LANES.length*lh}"/><text x="${xx}" y="${H-8}" text-anchor="middle">${yr}</text>`}
+  // movement path (chronological)
+  const pts=E.map(e=>[x(dObj(e.date).getTime()),y(e.place_en)]);
+  s+=`<path d="M${pts.map(p=>p.join(",")).join("L")}" fill="none" stroke="var(--ink-3)" stroke-width="1" stroke-opacity=".55"/>`;
+  // dots, 2px surface ring
+  E.forEach(e=>{s+=`<circle class="dot" data-id="${e.id}" cx="${x(dObj(e.date).getTime())}" cy="${y(e.place_en)}" r="4.5" fill="${GCOL(e.grp)}" stroke="var(--surface)" stroke-width="2"/>`});
+  // hit targets bigger than the marks
+  E.forEach(e=>{s+=`<circle class="dot hit" data-id="${e.id}" cx="${x(dObj(e.date).getTime())}" cy="${y(e.place_en)}" r="10" fill="transparent"/>`});
+  host.innerHTML=s+"</svg>";
+  host.querySelectorAll(".hit").forEach(c=>{const e=BYID[c.dataset.id];
+    c.addEventListener("mousemove",ev=>showTip(ev,tipFor(e)));c.addEventListener("mouseleave",hideTip);c.addEventListener("click",()=>{hideTip();openEntry(e.id)})});
+}
+/* ---------- calendar ---------- */
+function calendar(){
+  const ys=[...new Set(E.map(e=>+e.date.slice(0,4)))];
+  let h=`<div class="months"><div></div><div>${MON.map((m,i)=>`<span style="left:${Math.round((Date.UTC(1821,i,1)-Date.UTC(1821,0,1))/DAY/7)*12}px">${m}</span>`).join("")}</div></div>`;
+  for(const yr of ys){
+    const start=Date.UTC(yr,0,1),pad=new Date(start).getUTCDay(),days=((Date.UTC(yr+1,0,1)-start)/DAY);
+    let cells="";for(let i=0;i<pad;i++)cells+=`<i class="c x"></i>`;
+    for(let k=0;k<days;k++){const dt=new Date(start+k*DAY).toISOString().slice(0,10),es=BYDATE[dt];
+      if(es){const e=es[0];cells+=`<i class="c on" data-d="${dt}" style="background:${GCOL(e.grp)}" role="button" tabindex="0" aria-label="${esc(fmtD(dt))}: ${esc(es.map(x=>x.id).join(", "))} at ${esc(e.place_en)}"></i>`}
+      else cells+=`<i class="c"></i>`}
+    h+=`<div class="yr"><b>${yr}</b><div class="gridc">${cells}</div></div>`;
+  }
+  const g=$("#calgrid");g.innerHTML=h;
+  g.querySelectorAll(".c.on").forEach(c=>{const es=BYDATE[c.dataset.d];
+    const html=es.map(tipFor).join('<hr style="border:0;border-top:1px solid var(--line);margin:6px 0">');
+    c.addEventListener("mousemove",ev=>showTip(ev,html));c.addEventListener("mouseleave",hideTip);
+    const go=()=>{hideTip();openEntry(es[0].id)};c.addEventListener("click",go);c.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();go()}})});
+}
+/* ---------- patterns ---------- */
+function hbars(title,sub,rows){
+  const max=Math.max(...rows.map(r=>r[1]),1);
+  return `<div class="card"><h3>${esc(title)}</h3><p class="sub">${esc(sub)}</p><div class="hb">${rows.map(([l,v,g])=>`<div class="row" title="${esc(l)}: ${v}"><span class="l">${esc(l)}</span><span class="b" style="width:${(v/max*100).toFixed(1)}%"></span><span class="v">${v}</span></div>`).join("")}</div></div>`;
+}
+function monthBars(title,sub,counts,cls){
+  const max=Math.max(...counts,1);
+  return `<div class="card"><h3>${esc(title)}</h3><p class="sub">${esc(sub)}</p><div class="months12 ${cls||""}">${counts.map((c,i)=>`<i style="height:${(c/max*100).toFixed(1)}%" title="${MONL[i]}: ${c}"></i>`).join("")}</div><div class="mlab">${MON.map(m=>`<span>${m[0]}</span>`).join("")}</div></div>`;
+}
+function patterns(){
+  const cnt=f=>{const m=new Map();E.forEach(e=>{const k=f(e);if(k!=null)m.set(k,(m.get(k)||0)+1)});return [...m].sort((a,b)=>b[1]-a[1])};
+  const pl=cnt(e=>e.place_en);
+  const tod=["pre-dawn","morning","midday","afternoon","evening","night"].map(k=>[TOD[k],E.filter(e=>e.tod===k).length]);
+  const nots=E.filter(e=>!e.tod).length;
+  const seat=[["dholiyo"],["gadi"],["singhasan"],["chaklo"]].map(([t])=>[D.tags[t],E.filter(e=>e.tags.includes(t)).length]);
+  const spot=[["ordo"],["mandir"],["neem"]].map(([t])=>[D.tags[t],E.filter(e=>e.tags.includes(t)).length]);
+  const byM=t=>{const c=Array(12).fill(0);E.forEach(e=>{if(!t||e.tags.includes(t))c[+e.date.slice(5,7)-1]++});return c};
+  const ask=cnt(e=>e.asker).slice(0,8);
+  $("#charts").innerHTML=
+    hbars("Villages","Number of Vachanamruts at each",pl)+
+    hbars("Time of day",`Where the opening says. ${nots} do not say.`,tod)+
+    monthBars("Vachanamruts by month","All years together; most in December and January",byM(null))+
+    monthBars("Warm wrap or quilt","રજાઈ, ગરમ ડગલી, ચોફાળ, શાલ: only from November to March",byM("warm"),"warm")+
+    hbars("Where he sat","Seat named in the opening",seat)+
+    hbars("The setting","A Vachanamrut can name more than one",spot)+
+    hbars("Who asked first","Where the first questioner is named (" + E.filter(e=>e.asker).length + " openings)",ask)+
+    hbars("What he wore","Named in the opening",["white","pagh","fento","dagli","kesar","flowers"].map(t=>[D.tags[t],E.filter(e=>e.tags.includes(t)).length]));
+}
+/* ---------- findings ---------- */
+const idl=ids=>ids.map(i=>`<a href="#e-${i}" data-open="${i}">${esc(i)}</a>`).join(", ");
+function findings(){
+  const A=D.anomalies,by=k=>A.filter(a=>a.kind===k);
+  const ks=by("kshaya-tithi"),pv=by("place-vs-section"),gaps=[...D.gaps].sort((a,b)=>b.days-a.days);
+  const multi=D.multi.filter(m=>m.some(id=>BYID[id].cal==="kshaya"));
+  const f=[];
+  if(pv.length)f.push({h:"Two “Sarangpur” Vachanamruts were not spoken at Sarangpur",tag:"Place",p:"The Sarangpur section includes two discourses from a short journey. S-9 was at Kundal, after Maharaj “left Sarangpur”; S-10 was under a pipal tree at Khambhda, on the way back from Kundal. The next day, S-11, he is back at Sarangpur.",ids:pv.flatMap(a=>a.ids)});
+  if(ks.length)f.push({h:`${ks.length} dates fall on a skipped (kṣaya) tithi`,tag:"Calendar",p:"On these days no sunrise fell within the stated tithi, so an almanac would print the previous or next tithi for that day. Either the tithi was counted by when it began, or the date was written from memory. Each is placed on the day the tithi ran.",ids:ks.flatMap(a=>a.ids),extra:multi.length?`Because of this, ${multi.length} pairs of consecutive tithis fall on the same calendar day: ${multi.map(m=>m.join(" & ")).join("; ")}.`:""});
+  f.push({h:`${gaps.length} silences of two months or more`,tag:"Gaps",p:`The record is not continuous. The longest stretch with no Vachanamrut is ${gaps[0].days} days (${fmtD(gaps[0].d0)} to ${fmtD(gaps[0].d1)}, between ${gaps[0].from} and ${gaps[0].to}). The Vachanamrut records nothing in these periods.`,list:gaps.slice(0,6).map(g=>`${g.days} days · ${g.from} (${g.p0}, ${fmtD(g.d0)}) → ${g.to} (${g.p1}, ${fmtD(g.d1)})`)});
+  const twice=D.multi.filter(m=>!m.some(id=>BYID[id].cal==="kshaya"));
+  if(twice.length)f.push({h:`${twice.length} days with two Vachanamruts`,tag:"Note",p:"The same date is written for two discourses, at the same place. Two sabhas in one day is not an error.",ids:twice.flat()});
+  $("#finds").innerHTML=f.map(x=>`<div class="fx"><h3><span class="tag">${esc(x.tag)}</span>${esc(x.h)}</h3><p>${esc(x.p)}</p>${x.ids?`<p class="ids">${idl(x.ids)}</p>`:""}${x.extra?`<p>${esc(x.extra)}</p>`:""}${x.list?`<ul>${x.list.map(l=>`<li>${esc(l)}</li>`).join("")}</ul>`:""}</div>`).join("");
+  const moves=[];for(let i=1;i<E.length;i++){const a=E[i-1],b=E[i];if(a.place!==b.place)moves.push([a,b])}
+  const C=[
+    ["Dates follow the numbering","In every section, each Vachanamrut is dated on or after the one before it. Not one of the 273 is out of order."],
+    ["The year turns at Ashadh","GP-77 (1876, second Jyeshtha) is followed by GP-78 (1877, Ashadh). The Vachanamrut counts the Samvat from Ashadh sud 1, the Ashadhi year of Kathiawar. Read this way, every date falls into place."],
+    ["Adhik months are named correctly",`The text names “first” and “second” Jyeshtha in 1876 (GP-76, GP-77) and “second” Chaitra in 1879 (GM-30). The astronomy gives an extra Jyeshtha in 1820 and an extra Chaitra in 1823: both match.`],
+    ["The year with a lost month","1822–23 was a kṣaya year: Magshar and Posh merged into one month, with two adhik months either side. No Vachanamrut is dated in the merged month."],
+    ["Never in two places at once",`Maharaj changes village ${moves.length} times between dated discourses. No two places share a day, and the quickest move, Khambhda to Sarangpur, is about 21 km in a day.`],
+    ["Clothes match the season","Every warm wrap or quilt (રજાઈ, ગરમ પોસની ડગલી, ચોફાળ, શાલ) falls between November and March, never in the hot months."],
+    ["Diwali is on Diwali","K-6 is dated Aso vad amas “which is Diwali”, with lamps lit; K-7, the next night (Kartik sud 1), still has the lamps. Both fall on 5–6 November 1820."],
+    ["Anchored to known dates","The conversion gives 21 November 1819 for GP-1 and 1 June 1830 for Jyeshtha sud 10, 1886, the day Maharaj passed away, matching the accepted dates."]];
+  $("#checks").innerHTML=C.map(([h,p])=>`<div class="fx ok"><h3><span class="tag">Holds</span>${esc(h)}</h3><p>${esc(p)}</p></div>`).join("");
+  document.querySelectorAll("[data-open]").forEach(a=>a.addEventListener("click",ev=>{ev.preventDefault();openEntry(a.dataset.open)}));
+}
+/* ---------- log ---------- */
+const F={q:"",place:"",year:"",tod:"",tag:"",an:false,table:false};
+function syncFilters(){$("#fq").value=F.q;$("#fplace").value=F.place;$("#fyear").value=F.year;$("#ftod").value=F.tod;$("#ftag").value=F.tag;$("#fan").checked=F.an;$("#ftable").setAttribute("aria-pressed",F.table);$("#ftable").textContent=F.table?"Card view":"Table view"}
+function match(e){
+  if(F.place&&e.place_en!==F.place)return false;
+  if(F.year&&!e.date.startsWith(F.year))return false;
+  if(F.tod&&(F.tod==="none"?e.tod:e.tod!==F.tod))return false;
+  if(F.tag&&!e.tags.includes(F.tag))return false;
+  if(F.an&&!e.anom.length)return false;
+  if(F.q){const q=F.q.toLowerCase();if(![e.id,e.title,e.scene,e.vsd,e.place_en,e.place,e.date,fmtD(e.date),e.asker||""].join(" ").toLowerCase().includes(q))return false}
+  return true;
+}
+function card(e){
+  const d=dObj(e.date);
+  return `<article class="entry" id="e-${e.id}">
+   <div class="d"><b>${d.getUTCDate()}</b><span>${MON[d.getUTCMonth()]} ${d.getUTCFullYear()} · ${esc(WD[e.wd]||"")}</span><span class="pl"><i style="background:${GCOL(e.grp)}"></i>${esc(e.place_en)}</span></div>
+   <div><h4>${esc(e.title)}</h4>
+    <div class="meta"><span><b>${esc(e.id)}</b></span><span>${esc(e.vsd)}</span>${e.tod?`<span>${TOD[e.tod]}</span>`:""}${e.host?`<span>${esc(e.host)}ના દરબારમાં</span>`:""}${e.asker?`<span>Asked first: ${esc(e.asker)}</span>`:""}</div>
+    <div class="scene clip">${esc(e.scene)}</div>
+    <div class="chips">${e.anom.map(a=>`<span class="chip an">${esc(AN[a]||a)}</span>`).join("")}${e.tags.map(t=>`<span class="chip">${esc(D.tags[t])}</span>`).join("")}</div>
+    <div class="acts"><button class="linkbtn more">Show the full opening</button><a href="index.html#v-${e.id}">Read ${esc(e.id)} →</a></div>
+   </div></article>`;
+}
+function renderLog(){
+  const list=E.filter(match);
+  $("#logcount").textContent=`${list.length} of ${E.length} Vachanamruts`;
+  const body=$("#logbody");
+  if(!list.length){body.innerHTML=`<p class="muted">Nothing matches. Clear a filter or the search.</p>`;return}
+  if(F.table){
+    body.innerHTML=`<div class="card scroll"><table class="data"><thead><tr><th>Date</th><th>Day</th><th>Samvat</th><th>ID</th><th>Place</th><th>Time</th><th>Title</th><th>Anomaly</th></tr></thead><tbody>${list.map(e=>`<tr><td style="white-space:nowrap">${esc(e.date)}</td><td>${esc(WD[e.wd]||"")}</td><td style="white-space:nowrap">${esc(e.vsd)}</td><td><a href="index.html#v-${e.id}">${esc(e.id)}</a></td><td>${esc(e.place_en)}</td><td>${e.tod?TOD[e.tod]:""}</td><td>${esc(e.title)}</td><td>${e.anom.map(a=>esc(AN[a]||a)).join(", ")}</td></tr>`).join("")}</tbody></table></div>`;return}
+  const groups=[];let cur=null;
+  for(const e of list){const k=e.date.slice(0,7);if(!cur||cur.k!==k){cur={k,es:[]};groups.push(cur)}cur.es.push(e)}
+  body.innerHTML=groups.map(g=>{const [y,m]=g.k.split("-");const vs=g.es[0].vsd.replace(/ (સુદિ|વદિ).*/,"");
+    return `<div class="month"><h3>${MONL[+m-1]} ${y} <small>${esc(vs)}${g.es.length>1?` · ${g.es.length} Vachanamruts`:""}</small></h3>${g.es.map(card).join("")}</div>`}).join("");
+  body.querySelectorAll(".more").forEach(b=>b.onclick=()=>{const s=b.closest(".entry").querySelector(".scene");const open=s.classList.toggle("clip");b.textContent=open?"Show the full opening":"Show less"});
+}
+function filters(){
+  const opt=(sel,vals)=>sel.insertAdjacentHTML("beforeend",vals.map(([v,l])=>`<option value="${esc(v)}">${esc(l)}</option>`).join(""));
+  opt($("#fplace"),LANES.filter(p=>E.some(e=>e.place_en===p)).map(p=>[p,p]));
+  opt($("#fyear"),[...new Set(E.map(e=>e.date.slice(0,4)))].map(y=>[y,y]));
+  opt($("#ftod"),[...Object.entries(TOD),["none","Not stated"]]);
+  opt($("#ftag"),Object.entries(D.tags).filter(([t])=>E.some(e=>e.tags.includes(t))));
+  const on=(id,k,ev="change",val=el=>el.value)=>$(id).addEventListener(ev,()=>{F[k]=val($(id));renderLog()});
+  on("#fq","q","input");on("#fplace","place");on("#fyear","year");on("#ftod","tod");on("#ftag","tag");on("#fan","an","change",el=>el.checked);
+  $("#ftable").onclick=()=>{F.table=!F.table;syncFilters();renderLog()};
+}
+async function boot(){
+  try{D=await fetch("data/timeline.json").then(r=>{if(!r.ok)throw new Error(r.status);return r.json()})}
+  catch(err){$("#main").insertAdjacentHTML("afterbegin",`<p class="card">Could not load the timeline data (${esc(err.message)}). Please reload the page.</p>`);return}
+  E=D.entries.filter(e=>e.date).sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:a.ci-b.ci);
+  E.forEach(e=>{BYID[e.id]=e;(BYDATE[e.date]||(BYDATE[e.date]=[])).push(e)});
+  legend($("#leg1"));legend($("#leg2"));tiles();swim();calendar();patterns();findings();filters();renderLog();
+  $("#method").textContent=D.note+" Places are the villages named in each opening; their positions on the chart are approximate.";
+  let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(swim,150)});
+  const h=location.hash.match(/^#e-(.+)$/);if(h&&BYID[decodeURIComponent(h[1])])requestAnimationFrame(()=>openEntry(decodeURIComponent(h[1])));
+}
+boot();
+(function(){const r=document.documentElement;let t=null;try{t=localStorage.getItem("vc-theme")}catch(e){}if(t==="light"||t==="dark")r.dataset.theme=t;
+  document.getElementById("theme").onclick=()=>{const dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=dark?"light":"dark";try{localStorage.setItem("vc-theme",r.dataset.theme)}catch(e){}}})();
+</script>
+</body>
+</html>
