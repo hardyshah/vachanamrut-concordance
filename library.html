@@ -81,6 +81,17 @@ section.shelf h2 span{color:var(--saffron)}
 .feature p{margin:6px 0 0;color:var(--ink-2);font-size:14.5px;max-width:64ch}
 .credit{font-size:13.5px;color:var(--ink-2);margin-top:6px}
 .credit b{color:var(--saffron-strong)}
+/* darshan band: Harikrishna Maharaj in the centre, Bhaiji Dada and Dadaji on either side */
+.darshan{display:grid;grid-template-columns:1fr 1.15fr 1fr;align-items:end;gap:clamp(10px,3vw,28px);max-width:760px;margin:26px auto 8px;padding:clamp(14px,3vw,24px) clamp(12px,3vw,24px) 16px;background:linear-gradient(180deg,var(--saffron-soft),var(--surface) 70%);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.darshan figure{margin:0;text-align:center}
+.darshan .ph{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:top;border-radius:12px;border:3px solid var(--surface);box-shadow:0 0 0 1px var(--line),var(--shadow);background:var(--sunk)}
+.darshan .main .ph{aspect-ratio:9/20;border-radius:999px 999px 14px 14px;object-position:center top;box-shadow:0 0 0 2px var(--saffron),var(--shadow)}
+.darshan figcaption{margin-top:8px;line-height:1.25}
+.darshan figcaption b{display:block;font-family:var(--f-read);font-size:clamp(15px,2.6vw,20px);font-weight:600;color:var(--ink)}
+.darshan figcaption span{display:block;font-size:clamp(11.5px,1.9vw,13.5px);color:var(--ink-2)}
+.darshan .main figcaption b{color:var(--saffron-strong);font-size:clamp(17px,3vw,23px)}
+.darshan .cr{grid-column:1/-1;text-align:center;font-size:11.5px;color:var(--ink-3);margin-top:2px}
+.darshan .cr a{color:var(--ink-3);text-decoration:underline}
 footer{border-top:1px solid var(--line);padding-block:22px 40px;color:var(--ink-3);font-size:13px}
 @media (max-width:520px){.feature{grid-template-columns:96px 1fr}.feature .cover,.cover{width:96px}.book{grid-template-columns:96px 1fr}.feature h3{font-size:23px}}
 </style>
@@ -103,6 +114,12 @@ footer{border-top:1px solid var(--line);padding-block:22px 40px;color:var(--ink-
     <div class="en">Satsang Library</div>
     <p>Religious texts of Bhagwan Shri Swaminarayan's sampradaya, in one place. The Vachanamrut and the Vachanamrut Nondh can be searched and read on this site. The other books open as the original PDFs, to read in the browser or download.</p>
   </div>
+  <section class="darshan" aria-label="Darshan">
+    <figure><img class="ph" src="img/bhaiji-dada.jpg" alt="Bhaiji Dada, wearing a red turban and a flower garland" width="608" height="760"><figcaption><b>ભાઈજી દાદા</b><span>Bhaiji Dada</span></figcaption></figure>
+    <figure class="main"><img class="ph" src="img/harikrishna-maharaj-vadtal.jpg" alt="Murti of Shri Harikrishna Maharaj at the Swaminarayan Mandir, Vadtal" width="309" height="688"><figcaption><b>શ્રી હરિકૃષ્ણ મહારાજ</b><span>Shri Harikrishna Maharaj · Vadtal</span></figcaption></figure>
+    <figure><img class="ph" src="img/dadaji.jpg" alt="Dadaji, wearing a black cap" width="608" height="760"><figcaption><b>દાદાજી</b><span>Dadaji</span></figcaption></figure>
+    <div class="cr">Harikrishna Maharaj photo: Swaminarayan Sampraday, <a href="https://commons.wikimedia.org/wiki/File:HariKrishna_(cropped).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a> (cropped)</div>
+  </section>
   <div class="filters" id="filters" role="toolbar" aria-label="Show"></div>
   <div id="shelves"></div>
 </main>
