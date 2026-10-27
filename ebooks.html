@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Swaminarayan E-books</title>
+<meta name="description" content="A searchable index of the 195 free e-books published by Shree Swaminarayan Temple Bhuj, by language and category, each linking to its official PDF.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anek+Gujarati:wght@400;500;600;700&family=Rasa:wght@400;500;600&family=Shrikhand&display=swap">
+<style>
+/* Layout: hero with publisher credit; one filter row (search, language chips, category, handwritten);
+   books grouped by category as compact cards, each opening the official PDF. */
+:root{
+  --paper:#f3f4ee; --surface:#ffffff; --sunk:#e9ebe3; --ink:#15211f; --ink-2:#55625f; --ink-3:#86918d; --line:#d8dcd1;
+  --saffron:#b9560c; --saffron-strong:#9a4507; --saffron-soft:#f8e2cb; --peacock:#0e5a61; --peacock-soft:#d6e7e6;
+  --shadow:0 1px 2px rgba(20,33,31,.06),0 8px 24px rgba(20,33,31,.06);
+  --f-read:"Rasa","Noto Serif Gujarati",Georgia,serif;
+  --f-ui:"Anek Gujarati","Noto Sans Gujarati",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-display:"Shrikhand","Anek Gujarati",serif;
+  --r:10px; --maxw:1120px; color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0e1416; --surface:#151e21; --sunk:#1b262a; --ink:#e6e8e1; --ink-2:#a3aeaa; --ink-3:#71807c; --line:#273439;
+  --saffron:#f0974a; --saffron-strong:#ffb06a; --saffron-soft:#3a2615; --peacock:#6cbcbc; --peacock-soft:#18363a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0e1416; --surface:#151e21; --sunk:#1b262a; --ink:#e6e8e1; --ink-2:#a3aeaa; --ink-3:#71807c; --line:#273439;
+  --saffron:#f0974a; --saffron-strong:#ffb06a; --saffron-soft:#3a2615; --peacock:#6cbcbc; --peacock-soft:#18363a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-ui);font-size:16px;line-height:1.5;margin:0;-webkit-font-smoothing:antialiased}
+a{color:var(--peacock);text-decoration:none}
+a:hover{text-decoration:underline}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--saffron);outline-offset:2px;border-radius:4px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:14px;padding-block:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:8px;color:var(--ink);white-space:nowrap;margin-right:auto}
+.brand:hover{text-decoration:none}
+.brand .gu{font-family:var(--f-display);font-size:24px;color:var(--saffron);line-height:1}
+.brand .en{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.nav{display:flex;gap:2px;flex-wrap:wrap}
+.nav a{color:var(--ink-2);padding:6px 10px;border-radius:999px;font-size:14px;font-weight:500}
+.nav a:hover{text-decoration:none;background:var(--sunk);color:var(--ink)}
+.nav a.on{background:var(--ink);color:var(--paper)}
+.theme{border:1px solid var(--line);background:none;border-radius:999px;width:34px;height:34px;display:grid;place-items:center;cursor:pointer;color:var(--ink-2)}
+main{padding-block:30px 80px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.muted{color:var(--ink-3);font-size:14px}
+.hero h1{font-family:var(--f-display);font-weight:400;color:var(--saffron);font-size:clamp(38px,7.5vw,64px);line-height:1.15;margin:8px 0 2px}
+.hero .en{font-family:var(--f-read);font-size:26px;font-weight:600;margin:0 0 10px}
+.hero p{max-width:66ch;color:var(--ink-2);margin:0 0 8px}
+.credit{display:flex;gap:12px;align-items:flex-start;max-width:760px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--saffron);border-radius:8px;padding:12px 14px;margin:16px 0 4px;font-size:14.5px;color:var(--ink-2)}
+.credit b{color:var(--ink)}
+.stats{display:flex;flex-wrap:wrap;gap:8px 22px;margin:16px 0 0;font-size:14px;color:var(--ink-2)}
+.stats b{font-size:22px;color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums;margin-right:4px}
+.filters{position:sticky;top:57px;z-index:10;background:var(--paper);padding:12px 0 10px;margin-top:22px;border-bottom:1px solid var(--line);display:grid;gap:10px}
+.frow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.filters input[type=search],.filters select{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:14.5px;max-width:100%}
+.filters input[type=search]{flex:1 1 240px;min-width:0}
+.filters input[type=search]:focus{outline:none;border-color:var(--saffron);box-shadow:0 0 0 3px var(--saffron-soft)}
+.filters label{font-size:14px;color:var(--ink-2);display:inline-flex;gap:6px;align-items:center;white-space:nowrap}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:13.5px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:4px 11px;cursor:pointer}
+.chip small{color:var(--ink-3);margin-left:4px;font-variant-numeric:tabular-nums}
+.chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip.on small{color:var(--paper);opacity:.75}
+.count{font-size:14px;color:var(--ink-3)}
+.reset{background:none;border:0;color:var(--peacock);cursor:pointer;font-size:14px;padding:0}
+section.shelf{margin-top:30px;scroll-margin-top:190px}
+section.shelf>header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:6px;margin-bottom:12px}
+section.shelf h2{font-family:var(--f-read);font-size:23px;font-weight:600;margin:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:10px}
+a.book{display:grid;grid-template-columns:52px 1fr;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;color:var(--ink);min-height:76px}
+a.book:hover{text-decoration:none;border-color:var(--saffron);box-shadow:var(--shadow)}
+a.book .cv{width:52px;aspect-ratio:3/4;border-radius:4px;display:grid;place-items:center;background:linear-gradient(160deg,var(--saffron-soft),var(--surface));border:1px solid var(--line);color:var(--saffron-strong);font-family:var(--f-ui);font-weight:700;font-size:18px;line-height:1}
+a.book .cv.hw{background:linear-gradient(160deg,var(--peacock-soft),var(--surface));color:var(--peacock)}
+a.book b{display:block;font-family:var(--f-read);font-size:17px;font-weight:600;line-height:1.25}
+a.book .meta{display:flex;flex-wrap:wrap;gap:2px 8px;font-size:12.5px;color:var(--ink-2);margin-top:3px}
+a.book .meta .lg{font-weight:600;color:var(--ink-2)}
+a.book .meta .ext{color:var(--peacock)}
+.empty{padding:40px 0;text-align:center;color:var(--ink-3)}
+footer{border-top:1px solid var(--line);padding-block:22px 40px;color:var(--ink-3);font-size:13px}
+@media (max-width:560px){.top{position:static}.filters{position:static}section.shelf{scroll-margin-top:12px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="ebooks.html"><span class="gu">ઈ-પુસ્તકો</span><span class="en">E-books</span></a>
+  <nav class="nav" aria-label="Site">
+    <a href="library.html">Library</a>
+    <a href="ebooks.html" class="on">E-books</a>
+    <a href="index.html">Vachanamrut</a>
+    <a href="index.html#nondh">Nondh</a>
+    <a href="timeline.html">Timeline</a>
+  </nav>
+  <button class="theme" id="theme" aria-label="Switch light or dark theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg></button>
+</div></header>
+<main class="wrap">
+  <div class="hero">
+    <div class="eyebrow">શ્રી સ્વામિનારાયણો વિજયતેતરામ્</div>
+    <h1>ઈ-પુસ્તકો</h1>
+    <div class="en">E-books</div>
+    <p>Free e-books of the Swaminarayan sampradaya: scriptures, kirtan, the life of Shriji Maharaj, rites and children's books, in ten languages, including handwritten Sanskrit manuscripts. Search them by title or filter by language and category.</p>
+    <div class="credit"><div>These books are published by <b>Shree Swaminarayan Temple Bhuj</b>, who hold all rights. They are not copied here: each card opens the PDF on their site, <a href="https://www.swaminarayan.faith/scriptures/ebooks" target="_blank" rel="noopener">swaminarayan.faith/scriptures/ebooks</a>.</div></div>
+    <div class="stats" id="stats"></div>
+  </div>
+  <div class="filters" role="search">
+    <div class="frow">
+      <input type="search" id="q" placeholder="Search a title, e.g. Shikshapatri, Kirtan, Leela" aria-label="Search the e-books">
+      <select id="cat" aria-label="Category"><option value="">All categories</option></select>
+      <label><input type="checkbox" id="hw"> Handwritten only</label>
+    </div>
+    <div class="frow"><div class="chips" id="langs" role="group" aria-label="Language"></div><span class="count" id="count" aria-live="polite"></span><button class="reset" id="reset" hidden>Clear filters</button></div>
+  </div>
+  <div id="shelves"></div>
+  <p class="muted" style="margin-top:28px">Languages and series names are as listed by the publisher. The categories are an index added here, grouped by title.</p>
+</main>
+<footer class="wrap">E-books © Shree Swaminarayan Temple Bhuj, all rights reserved; linked from <a href="https://www.swaminarayan.faith/scriptures/ebooks" target="_blank" rel="noopener">swaminarayan.faith</a>. This page is only an index to them.</footer>
+<script>
+"use strict";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const LCODE={Gujarati:"ગુ",English:"En",Sanskrit:"सं",Hindi:"हि",Swahili:"Sw",French:"Fr",German:"De",Kannada:"ಕ",Latin:"La",Spanish:"Es"};
+const F={q:"",lang:"",cat:"",hw:false};
+let D,B;
+function card(b){
+  return `<a class="book" href="${esc(b.u)}" target="_blank" rel="noopener" aria-label="${esc(b.t)}, ${esc(b.l)}${b.hw?", handwritten":""}: opens the PDF on swaminarayan.faith">
+    <span class="cv${b.hw?" hw":""}" aria-hidden="true">${esc(LCODE[b.l]||b.l.slice(0,2))}</span>
+    <span><b>${esc(b.t)}</b><span class="meta"><span class="lg">${esc(b.l)}</span>${b.hw?"<span>Handwritten</span>":""}${b.s&&b.s!==b.t?`<span>${esc(b.s)}</span>`:""}<span class="ext">PDF ↗</span></span></span></a>`;
+}
+function match(b){
+  if(F.lang&&b.l!==F.lang)return false;
+  if(F.cat&&b.c!==F.cat)return false;
+  if(F.hw&&!b.hw)return false;
+  if(F.q){const q=F.q.toLowerCase();if(![b.t,b.s||"",b.l,b.c].join(" ").toLowerCase().includes(q))return false}
+  return true;
+}
+function draw(){
+  const list=B.filter(match);
+  // language chips show how many books each language has under the other filters
+  const base=B.filter(b=>{const l=F.lang;F.lang="";const ok=match(b);F.lang=l;return ok});
+  const lc={};base.forEach(b=>lc[b.l]=(lc[b.l]||0)+1);
+  const langs=[...new Set(B.map(b=>b.l))].sort((a,b)=>(B.filter(x=>x.l===b).length-B.filter(x=>x.l===a).length));
+  $("#langs").innerHTML=`<button class="chip ${F.lang?"":"on"}" data-l="" aria-pressed="${!F.lang}">All languages<small>${base.length}</small></button>`+
+    langs.map(l=>`<button class="chip ${F.lang===l?"on":""}" data-l="${esc(l)}" aria-pressed="${F.lang===l}"${lc[l]?"":" disabled style=\"opacity:.45\""}>${esc(l)}<small>${lc[l]||0}</small></button>`).join("");
+  $("#count").textContent=list.length===B.length?`${B.length} books`:`${list.length} of ${B.length} books`;
+  $("#reset").hidden=!(F.q||F.lang||F.cat||F.hw);
+  if(!list.length){$("#shelves").innerHTML=`<p class="empty">No books match. Try another word, or clear the filters.</p>`;return}
+  $("#shelves").innerHTML=D.cats.map(c=>{const bs=list.filter(b=>b.c===c).sort((a,b)=>a.t.localeCompare(b.t)||a.l.localeCompare(b.l));if(!bs.length)return "";
+    return `<section class="shelf" id="${esc(c.replace(/\W+/g,"-").toLowerCase())}"><header><h2>${esc(c)}</h2><span class="muted">${bs.length} ${bs.length===1?"book":"books"}</span></header><div class="grid">${bs.map(card).join("")}</div></section>`}).join("");
+}
+async function boot(){
+  try{D=await fetch("data/ebooks.json").then(r=>{if(!r.ok)throw new Error(r.status);return r.json()})}
+  catch(err){$("#shelves").innerHTML=`<p class="empty">Could not load the list of books (${esc(err.message)}). Please reload the page.</p>`;return}
+  B=D.books;
+  const langs=new Set(B.map(b=>b.l)).size,hw=B.filter(b=>b.hw).length;
+  $("#stats").innerHTML=`<span><b>${B.length}</b>e-books</span><span><b>${langs}</b>languages</span><span><b>${hw}</b>handwritten manuscripts</span><span><b>${D.cats.filter(c=>B.some(b=>b.c===c)).length}</b>categories</span>`;
+  $("#cat").insertAdjacentHTML("beforeend",D.cats.filter(c=>B.some(b=>b.c===c)).map(c=>`<option value="${esc(c)}">${esc(c)} (${B.filter(b=>b.c===c).length})</option>`).join(""));
+  $("#q").addEventListener("input",e=>{F.q=e.target.value.trim();draw()});
+  $("#cat").addEventListener("change",e=>{F.cat=e.target.value;draw()});
+  $("#hw").addEventListener("change",e=>{F.hw=e.target.checked;draw()});
+  $("#langs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b||b.disabled)return;F.lang=b.dataset.l;draw()});
+  $("#reset").addEventListener("click",()=>{F.q="";F.lang="";F.cat="";F.hw=false;$("#q").value="";$("#cat").value="";$("#hw").checked=false;draw()});
+  draw();
+}
+boot();
+(function(){const r=document.documentElement;let t=null;try{t=localStorage.getItem("vc-theme")}catch(e){}if(t==="light"||t==="dark")r.dataset.theme=t;
+  document.getElementById("theme").onclick=()=>{const dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=dark?"light":"dark";try{localStorage.setItem("vc-theme",r.dataset.theme)}catch(e){}}})();
+</script>
+</body>
+</html>
