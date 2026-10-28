@@ -2,6 +2,7 @@
 <html lang="gu">
 <head>
 <meta charset="utf-8">
+<script src="theme.js"></script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Satsang Library</title>
 <meta name="description" content="Religious texts of the Bhagwan Shri Swaminarayan sampradaya: the Vachanamrut, Vachanamrut Nondh, Shrimad Bhagwat, Nimit Matra, Amrutvarsha, Satsang Prabha and more.">
@@ -193,9 +194,6 @@ function draw(){
 }
 document.getElementById("filters").onclick=e=>{const b=e.target.closest("button");if(!b)return;show=b.dataset.k;draw()};
 draw();
-// theme toggle, shared with the Vachanamrut pages
-(function(){const r=document.documentElement;let t=null;try{t=localStorage.getItem("vc-theme")}catch(e){}if(t==="light"||t==="dark")r.dataset.theme=t;
-  document.getElementById("theme").onclick=()=>{const dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=dark?"light":"dark";try{localStorage.setItem("vc-theme",r.dataset.theme)}catch(e){}}})();
 </script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 <html lang="gu">
 <head>
 <meta charset="utf-8">
+<script src="theme.js"></script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Shriji Maharaj Logbook</title>
 <meta name="description" content="A day-by-day logbook of Bhagwan Shri Swaminarayan from the Vachanamrut, 1819–1829: where he was, when, what he wore and where he sat, with every date converted to the calendar and checked for anomalies.">
@@ -403,8 +404,6 @@ async function boot(){
   const h=location.hash.match(/^#e-(.+)$/);if(h&&BYID[decodeURIComponent(h[1])])requestAnimationFrame(()=>openEntry(decodeURIComponent(h[1])));
 }
 boot();
-(function(){const r=document.documentElement;let t=null;try{t=localStorage.getItem("vc-theme")}catch(e){}if(t==="light"||t==="dark")r.dataset.theme=t;
-  document.getElementById("theme").onclick=()=>{const dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=dark?"light":"dark";try{localStorage.setItem("vc-theme",r.dataset.theme)}catch(e){}}})();
 </script>
 </body>
 </html>
