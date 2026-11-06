@@ -269,6 +269,7 @@ footer{border-top:1px solid var(--line);padding-block:20px 40px;color:var(--ink-
       <a href="#glossary" data-v="glossary">Glossary</a>
       <a href="#sources" data-v="sources">Sources</a>
       <a href="#nondh" data-v="n">Nondh</a>
+      <a href="differences.html">Differences</a>
       <a href="library.html">Library</a>
       <a href="ebooks.html">E-books</a>
       <a href="timeline.html">Timeline</a>
@@ -702,7 +703,8 @@ function viewNondh(){
   <section class="block"><header><h2>Topics</h2><input id="tf" type="search" class="filter" placeholder="Filter topics, e.g. માયા" aria-label="Filter topics"></header>
     <div class="alpha" id="nalpha">${NLET.filter(l=>groups[l]).map(l=>`<button data-l="${l}" class="${l===cur?"on":""}">${l}</button>`).join("")}</div>
     <div class="toc" id="tlist"></div></section>
-  <section class="block"><header><h2>Where the Nondh and the text differ</h2><span class="muted">${diffs.length} quotations found in a different Vachanamrut than the one cited</span></header>
+  <section class="block"><header><h2>Where the Nondh and the text differ</h2><a href="differences.html">Review all ${diffs.length} with full context →</a></header>
+    <p class="muted" style="margin-top:-4px">${diffs.length} quotations found in a different Vachanamrut than the one cited.</p>
     <p class="note">Each line gives the topic, the reference the Nondh gives, and where the quoted words were actually found in this edition. Some may be the numbering of a different edition, or a passage that occurs in both.</p>
     <div class="toc">${diffs.map(([i,e])=>`<a class="tocrow" href="#n-${i}"><b>${esc(e[4][1])}</b><span class="t">${esc(ND.topics[i].t)} <small class="muted">· cited ${esc(e[1].join(", "))}</small></span><span class="p">p. ${e[3]}</span></a>`).join("")}</div></section>`;
   const draw=()=>{const q=$("#tf").value.trim();let ids;

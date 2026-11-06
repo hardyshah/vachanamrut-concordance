@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="gu">
+<head>
+<meta charset="utf-8">
+<script src="theme.js"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Nondh Differences</title>
+<meta name="description" content="The 28 places where a Vachanamrut Nondh reference and the Vachanamrut text differ, with full context for review.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anek+Gujarati:wght@400;500;600;700&family=Rasa:wght@400;500;600&family=Shrikhand&display=swap">
+<style>
+:root{
+  --paper:#f3f4ee; --surface:#ffffff; --sunk:#e9ebe3; --ink:#15211f; --ink-2:#55625f; --ink-3:#86918d; --line:#d8dcd1;
+  --saffron:#b9560c; --saffron-strong:#9a4507; --saffron-soft:#f8e2cb; --peacock:#0e5a61; --peacock-soft:#d6e7e6;
+  --shadow:0 1px 2px rgba(20,33,31,.06),0 8px 24px rgba(20,33,31,.06);
+  --f-read:"Rasa","Noto Serif Gujarati",Georgia,serif;
+  --f-ui:"Anek Gujarati","Noto Sans Gujarati",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-display:"Shrikhand","Anek Gujarati",serif;
+  --r:10px; --maxw:1080px; color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0e1416; --surface:#151e21; --sunk:#1b262a; --ink:#e6e8e1; --ink-2:#a3aeaa; --ink-3:#71807c; --line:#273439;
+  --saffron:#f0974a; --saffron-strong:#ffb06a; --saffron-soft:#3a2615; --peacock:#6cbcbc; --peacock-soft:#18363a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0e1416; --surface:#151e21; --sunk:#1b262a; --ink:#e6e8e1; --ink-2:#a3aeaa; --ink-3:#71807c; --line:#273439;
+  --saffron:#f0974a; --saffron-strong:#ffb06a; --saffron-soft:#3a2615; --peacock:#6cbcbc; --peacock-soft:#18363a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-ui);font-size:16px;line-height:1.5;margin:0;-webkit-font-smoothing:antialiased}
+a{color:var(--peacock);text-decoration:none} a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--saffron);outline-offset:2px;border-radius:4px}
+.wrap{max-width:900px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:14px;padding-block:10px;flex-wrap:wrap;max-width:1080px}
+.brand{display:flex;align-items:baseline;gap:8px;color:var(--ink);white-space:nowrap;margin-right:auto} .brand:hover{text-decoration:none}
+.brand .gu{font-family:var(--f-display);font-size:24px;color:var(--saffron);line-height:1}
+.brand .en{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.nav{display:flex;gap:2px;flex-wrap:wrap} .nav a{color:var(--ink-2);padding:6px 10px;border-radius:999px;font-size:14px;font-weight:500}
+.nav a:hover{text-decoration:none;background:var(--sunk);color:var(--ink)} .nav a.on{background:var(--ink);color:var(--paper)}
+.theme{border:1px solid var(--line);background:none;border-radius:999px;width:34px;height:34px;display:grid;place-items:center;cursor:pointer;color:var(--ink-2)}
+main{padding-block:32px 80px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+h1{font-family:var(--f-read);font-size:clamp(30px,6vw,42px);font-weight:600;line-height:1.15;margin:8px 0 10px}
+h1 .gu{display:block;font-family:var(--f-display);font-weight:400;color:var(--saffron);font-size:.9em}
+.lead{color:var(--ink-2);max-width:66ch} .credit b{color:var(--saffron-strong)}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px 18px;margin:22px 0}
+.box h3{margin:0 0 8px;font-family:var(--f-read);font-size:20px}
+.box ol{margin:0;padding-left:20px;color:var(--ink-2)}
+.tbl{overflow-x:auto} table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top} th{color:var(--ink-3);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px;margin:18px 0;scroll-margin-top:80px}
+.item header{display:flex;gap:14px;align-items:flex-start}
+.num{flex:none;width:36px;height:36px;border-radius:999px;background:var(--saffron-soft);color:var(--saffron-strong);display:grid;place-items:center;font-weight:700}
+.item h2{font-family:var(--f-read);font-size:23px;font-weight:600;margin:0;line-height:1.2}
+.meta{font-size:13.5px;color:var(--ink-2);margin-top:2px}
+.tag{background:var(--peacock-soft);color:var(--peacock);border-radius:999px;padding:1px 8px;font-size:12.5px;font-weight:600}
+.refs{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:14px 0 6px;font-size:15px}
+.refs dt{color:var(--ink-3);font-size:13px;padding-top:2px} .refs dd{margin:0} .ttl{color:var(--ink-2);font-size:14px}
+.lbl{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin-top:14px}
+blockquote{margin:6px 0 0;padding:10px 14px;background:var(--sunk);border-left:3px solid var(--saffron);border-radius:0 8px 8px 0;font-family:var(--f-read);font-size:17.5px;line-height:1.6}
+blockquote.src{border-left-color:var(--peacock)}
+mark{background:color-mix(in srgb,var(--saffron) 25%,transparent);color:inherit;border-radius:3px;padding:0 1px}
+.why{font-size:14px;color:var(--ink-2);margin:12px 0 0}
+footer{border-top:1px solid var(--line);padding-block:22px 40px;color:var(--ink-3);font-size:13px}
+@media (max-width:520px){.refs{grid-template-columns:1fr}.refs dt{padding-top:6px}}
+@media print{.top,.theme{display:none}.item{break-inside:avoid;box-shadow:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="library.html"><span class="gu">ગ્રંથાલય</span><span class="en">Satsang Library</span></a>
+  <nav class="nav" aria-label="Site">
+    <a href="library.html">Library</a>
+    <a href="ebooks.html">E-books</a>
+    <a href="index.html">Vachanamrut</a>
+    <a href="index.html#nondh">Nondh</a>
+    <a href="differences.html" class="on">Differences</a>
+    <a href="timeline.html">Timeline</a>
+  </nav>
+  <button class="theme" id="theme" aria-label="Switch light or dark theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg></button>
+</div></header>
+<main class="wrap">
+  <div class="eyebrow">For review</div>
+  <h1><span class="gu">નોંધ અને વચનામૃત વચ્ચેના તફાવત</span>Where the Nondh and the text differ</h1>
+  <p class="lead credit">The <b>Vachanamrut Nondh</b>, compiled by <b>Ashwin Babubhai Shah</b>, gives a Vachanamrut reference for each entry. When the Nondh was joined to the text, every quotation was searched for in the Vachanamrut. In 28 entries the words were found, but in a different Vachanamrut than the one cited. Nobody has reviewed these yet.</p>
+  <div class="box"><h3>How to review</h3><ol>
+    <li>Read what the Nondh says, then the highlighted passage where those words actually appear.</li>
+    <li>Decide whether the Nondh reference should change, or whether it is right and refers to another edition or a passage that occurs twice.</li>
+    <li>Note the number of the entry (1 to 28) with your decision.</li></ol>
+    <p class="why" style="margin-top:10px">Kinds of difference: 11 same section, different number · 7 same section, nearby number · 7 same number, different section · 3 different section and number. The text is the Bhuj edition of the Gujarati Vachanamrut; page numbers are PDF pages.</p></div>
+  <div class="box"><h3>All 28 at a glance</h3><div class="tbl"><table><thead><tr><th>#</th><th>Topic</th><th>Nondh cites</th><th>Found in</th><th>Nondh p.</th></tr></thead><tbody><tr><td>1</td><td class="gu"><a href="#d1">ઉપાસનાનું બળ</a></td><td>Gadhada Pratham 63</td><td>Gadhada Pratham 56</td><td>120</td></tr><tr><td>2</td><td class="gu"><a href="#d2">એકદશી - સર્વદેશી</a></td><td>Vartal 12</td><td>Vartal 13</td><td>125</td></tr><tr><td>3</td><td class="gu"><a href="#d3">કૃતાર્થ</a></td><td>Loya 1</td><td>Gadhada Pratham 78</td><td>180</td></tr><tr><td>4</td><td class="gu"><a href="#d4">ગૃહસ્થાશ્રમ</a></td><td>Gadhada Madhya 5</td><td>Gadhada Madhya 52</td><td>212</td></tr><tr><td>5</td><td class="gu"><a href="#d5">ચિદાકાશ</a></td><td>Gadhada Pratham 23</td><td>Gadhada Pratham 21</td><td>220</td></tr><tr><td>6</td><td class="gu"><a href="#d6">જાણપણું</a></td><td>Gadhada Antya 9</td><td>Vartal 10</td><td>227</td></tr><tr><td>7</td><td class="gu"><a href="#d7">દેહબુધ્ધિ</a></td><td>Gadhada Antya 2</td><td>Gadhada Antya 21</td><td>277</td></tr><tr><td>8</td><td class="gu"><a href="#d8">નિર્વિકલ્પ સમાધિ - બાધિતાનુવૃત્તિ</a></td><td>Gadhada Antya 3</td><td>Gadhada Antya 4</td><td>334</td></tr><tr><td>9</td><td class="gu"><a href="#d9">પવિત્રપણે રહેવું</a></td><td>Vartal 18</td><td>Vartal 8</td><td>364</td></tr><tr><td>10</td><td class="gu"><a href="#d10">પંચમસ્કંધ રહસ્ય</a></td><td>Gadhada Antya 39</td><td>Gadhada Madhya 39</td><td>366</td></tr><tr><td>11</td><td class="gu"><a href="#d11">પાયો કાચો</a></td><td>Gadhada Madhya 56</td><td>Gadhada Madhya 35</td><td>372</td></tr><tr><td>12</td><td class="gu"><a href="#d12">પુરૂષ પ્રયત્ન કોને જાણવું</a></td><td>Gadhada Pratham 9</td><td>Gadhada Pratham 29</td><td>378</td></tr><tr><td>13</td><td class="gu"><a href="#d13">પ્રકાશના ભેદ</a></td><td>Loya 5</td><td>Loya 15</td><td>382</td></tr><tr><td>14</td><td class="gu"><a href="#d14">ભગવાન</a></td><td>Gadhada Antya 35</td><td>Gadhada Antya 26</td><td>465</td></tr><tr><td>15</td><td class="gu"><a href="#d15">માન ટાળ્યાનો ઉપાય</a></td><td>Gadhada Antya 28</td><td>Gadhada Antya 27</td><td>495</td></tr><tr><td>16</td><td class="gu"><a href="#d16">મૂર્ખતા</a></td><td>Gadhada Pratham 25</td><td>Gadhada Pratham 26</td><td>519</td></tr><tr><td>17</td><td class="gu"><a href="#d17">મોટો (મુખિયો)</a></td><td>Gadhada Madhya 47</td><td>Gadhada Madhya 48</td><td>527</td></tr><tr><td>18</td><td class="gu"><a href="#d18">યોગકળા</a></td><td>Gadhada Madhya 65</td><td>Gadhada Madhya 64</td><td>534</td></tr><tr><td>19</td><td class="gu"><a href="#d19">વાત (વાર્તા) તે આામજ છે</a></td><td>Gadhada Pratham 33</td><td>Gadhada Antya 33</td><td>579</td></tr><tr><td>20</td><td class="gu"><a href="#d20">વિકાસ અવસ્થા</a></td><td>Loya 8</td><td>Loya 7</td><td>592</td></tr><tr><td>21</td><td class="gu"><a href="#d21">વિચાર (આત્મા અનાત્મા વિવેકનું કારણ)</a></td><td>Gadhada Pratham 59</td><td>Gadhada Pratham 56</td><td>595</td></tr><tr><td>22</td><td class="gu"><a href="#d22">શાબાશ</a></td><td>Gadhada Madhya 30</td><td>Gadhada Antya 30</td><td>642</td></tr><tr><td>23</td><td class="gu"><a href="#d23">શુષ્કજ્ઞાનીનો મત</a></td><td>Gadhada Antya 19</td><td>Gadhada Madhya 19</td><td>648</td></tr><tr><td>24</td><td class="gu"><a href="#d24">શ્રીકૃષ્ણનું નિર્ગુણપણું</a></td><td>Gadhada Pratham 66</td><td>Kariyani 8</td><td>655</td></tr><tr><td>25</td><td class="gu"><a href="#d25">સિદ્ધદશા</a></td><td>Loya 1</td><td>Gadhada Madhya 1</td><td>722</td></tr><tr><td>26</td><td class="gu"><a href="#d26">સ્થૂળદેહ અને સૂક્ષ્મદેહની એકતા</a></td><td>Sarangpur 18</td><td>Sarangpur 14</td><td>743</td></tr><tr><td>27</td><td class="gu"><a href="#d27">સ્થિતપ્રજ્ઞ</a></td><td>Loya 17</td><td>Gadhada Madhya 17</td><td>757</td></tr><tr><td>28</td><td class="gu"><a href="#d28">સ્વતંત્ર</a></td><td>Gadhada Pratham 13</td><td>Gadhada Madhya 13</td><td>763</td></tr></tbody></table></div></div>
+  <article class="item" id="d1">
+ <header><span class="num">1</span><div><h2 class="gu"><a href="index.html#n-734">ઉપાસનાનું બળ</a></h2>
+  <div class="meta">Quotation · Nondh page <a href="books/vachanamrut-nondh.pdf#page=120" target="_blank" rel="noopener">120</a> · <span class="tag">Same section, different number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-GP-63">Gadhada Pratham 63</a> <span class="gu">(ગઢડા પ્રથમ 63)</span><div class="ttl gu">નિશ્ચયનું, તત્વે કરી ભગવાન જાણવાની રીત.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GP-56">Gadhada Pratham 56</a> <span class="gu">(ગઢડા પ્રથમ 56)</span> · paragraph 6, PDF page 139<div class="ttl gu">જ્ઞાની ભક્ત શ્રેષ્ઠ, આત્મા અનાત્માના વિવેકનું કારણ ને ઉપાસનાની દઢતા.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">.....“એમ માહાત્મ્ય સમજે તે સારૂ ભગવાનનો ભક્ત હોય, તેને ભગવાનની ઉપાસનાનું બળ સત્સંગ કરીને દિવસે દિવસે કરીને વૃધ્ધિ પમાડવું.”</blockquote>
+ <div class="lbl">The passage in Gadhada Pratham 56 (matching words highlighted)</div><blockquote class="gu src">…ે તો એમ સમજે જે, ‘‘ગમે તેવો પાપી હોય ને અંત સમે જો તેને ‘સ્વામિનારાયણ’ એવા નામનું ઉચ્ચારણ થાય, તો તે સર્વ પાપ થકી છુટીને બ્રહ્મમહોલને વિષે નિવાસ કરે, તો જે એ ભગવાનનો આશ્રિત હોય તે એ ભગવાનના ધામને પામે એમાં શો સંશય છે ?” <mark>એમ માહાત્મ્ય સમજે તે સારુ જે ભગવાનનો ભક્ત હોય તેને ભગવાનની ઉપાસનાનું બળ સત્સંગ કરીને દિવસે દિવસે વૃદ્ધિ પમાડવું.</mark> ઈતિ વચનામૃતમ્ ।।૫૬।।</blockquote>
+ <p class="why">Same section; a different discourse number.</p>
+</article>
+<article class="item" id="d2">
+ <header><span class="num">2</span><div><h2 class="gu"><a href="index.html#n-765">એકદશી - સર્વદેશી</a></h2>
+  <div class="meta">Note · Nondh page <a href="books/vachanamrut-nondh.pdf#page=125" target="_blank" rel="noopener">125</a> · <span class="tag">Same section, nearby number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-V-12">Vartal 12</a> <span class="gu">(વરતાલ 12)</span><div class="ttl gu">શ્રીહરિનો મહિમા સમજે, જીવ વૃદ્ધિ પામે, દોષ પરઠે ઉતરી જાય.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-V-13">Vartal 13</a> <span class="gu">(વરતાલ 13)</span> · paragraph 4, PDF page 545<div class="ttl gu">વ્યાપક હોય તે મૂર્તિમાન કહેવાય ?.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">ઊ.: બ્રહ્મ છે તે તો સર્વત્ર વ્યાપક છે, એમ સર્વે કહે છે. તે જે વ્યાપક હોય, તેને મૂર્તિમાન કેમ કહેવાય ? ને જે મૂર્તિમાન હોય તેને વ્યાપક કેમ કહેવાય ? છ.: “બ્રહ્મ તો એકદેશી છે, પણ સર્વદેશી નથી; ને તે બ્રહ્મ તે શ્રીકૃષ્ણ ભગવાન છે. તે એકદેશીથકા સર્વદેશી છે. (દ્રષ્ટાંત : સૂર્યનો ઉપાસક સિધ્ધ) તેમજે શ્રીકૃષ્ણ ભગવાન એક ઠેકાણે રહ્યાથકા પોતાની ઈચ્છાયે કરીને જ્યાં દર્શન દેવાં હોય, ત્યાં દર્શન આપે છે; અને એકરૂપ થકા અનંતરૂપે ભાસે છે. (દ્રષ્ટાંત : સિધ્ધ) અને ભગવાનને ગ્રંથમાં વ્યાપક કહ્યા છે તે તો મૂર્તિમાન છે તેજ પોતાની સામર્થીયે કરીને એક ઠેકાણે રહ્યાથકા સર્વને દર્શન આપે છે; એમ વ્યાપક કહ્યા છે. પણ આકાશની પેઠે અરૂપથકા વ્યાપક નથી. ભગવાન તો સદા મૂર્તિમાન જ છે, તે મૂર્તિમાન ભગવાન અક્ષરધામમાં રહ્યા થકાજ અનંતકોટિ બ્રહ્માંડમાં ભાસે છે.”</blockquote>
+ <div class="lbl">The passage in Vartal 13 (matching words highlighted)</div><blockquote class="gu src">પછી મુક્તાનંદસ્વામીએ પૂછ્યું જે, “<mark>બ્રહ્મ છે તે તો સર્વત્ર વ્યાપક છે એમ સર્વે કહે છે. તે જે વ્યાપક હોય તેને મૂર્તિમાન કેમ કહેવાય અને જે મૂર્તિમાન હોય તેને વ્યાપક કેમ કહેવાય ? એ પ્રશ્ન છે.” પછી શ્રીજીમહારાજ બોલ્યા જે, “બ્રહ્મ તો એકદેશી છે પણ સર્વદેશી નથી ને તે બ્રહ્મ તે શ્રીકૃષ્ણ ભગવાન છે, તે એકદેશી થકા સર્વદેશી છે જેમ કોઈક પુરુષે સૂર્યની ઉપાસના કરી હોય, પછી સૂર્ય તેને પોતાના સરખી દૃષ્ટિ આપે ત્યારે તે પુરુષ જ્યાં સુધી સૂર્યની દૃષ્ટિ પહોંચતી હોય ત્યાં સુધી દેખે અને વળી જેમ સિદ્ધાદશાવાળો પુરુષ હોય તે હજારો ને લાખો ગાઉ ઉપર કોઈક વાત કરતો હોય તેને જેમ પાસે વાર્તા કરે ને સાંભળે તેમ સાંભળે, તેમજ લાખો ગાઉ ઉપર કાંઈક વસ્તુ પડી હોય તેને મનુષ્ય જેવડા હાથ હોય તેણે કરીને પણ ઉપાડે, તેમ શ્રીકૃષ્ણ ભગવાન પણ એક ઠેકાણે રહ્યા થકા પોતાની ઈચ્છાએ કરીને જ્યાં દર્શન દેવાં હોય ત્યાં દર્શન આપે છે. અને એકરૂપ થકા અનંતરૂપે ભાસે છે, અને સિદ્ધ હોય તેમાં પણ દૂરશ્રવણ દૂરદર્શનરૂપ ચમત્કાર હોય તો પરમેશ્વરમાં હોય તેમાં શું આશ્ચર્ય છે ? અને ભગવાનને ગ્રંથમાં વ્યાપક કહ્યા છે તે તો મૂર્તિમાન છે, તે જ પોતાની સામર્થીએ કરીને એક ઠેકાણે રહ્યા થકા સર્વને દર્શન આપે છે, એમ વ્યાપક કહ્યા છે, પણ આકાશની પેઠે અરૂપ થકા વ્યાપક નથી. ભગવાન તો સદા મૂર્તિમાન જ છે. તે મૂર્તિમાન ભગવાન અક્ષરધામમાં રહ્યા થકા જ અનંત કોટિ બ્રહ્માંડમાં ભાસે છે.”</mark> ઈતિ વચના.।૧૩। ૨૧૩</blockquote>
+ <p class="why">Same section; the number is off by one or has swapped digits.</p>
+</article>
+<article class="item" id="d3">
+ <header><span class="num">3</span><div><h2 class="gu"><a href="index.html#n-1103">કૃતાર્થ</a></h2>
+  <div class="meta">Note · Nondh page <a href="books/vachanamrut-nondh.pdf#page=180" target="_blank" rel="noopener">180</a> · <span class="tag">Different section and number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-L-1">Loya 1</a> <span class="gu">(લોયા 1)</span><div class="ttl gu">ક્રોધનું દુષ્ટ સ્વરૂપ, ત્રિવિધ જ્ઞાન-વૈરાગ્ય લક્ષણ, સંપૂર્ણ સત્સંગનાં લક્ષણ.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GP-78">Gadhada Pratham 78</a> <span class="gu">(ગઢડા પ્રથમ 78)</span> · paragraph 7, PDF page 196<div class="ttl gu">દેશકાળાદિકના પ્રધાનપણાનું.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">નિત્યાનંદ સ્વામીના પ્રશ્નનો ઉત્તર (કામાદિક શત્રુનો નાશ થઈ જાય અને પોતાને ભગવાનના નિશ્ચે કરીને સંપૂર્ણ કૃતાર્થ માને)</blockquote>
+ <div class="lbl">The passage in Gadhada Pratham 78 (matching words highlighted)</div><blockquote class="gu src">…. એવો જે ભરુંસો તે ભગવાન ને ભગવાનના સંતને કેમ આવે ?’’ એક તો એ પ્રશ્ન છે. અને બીજું પ્રશ્ન એ છે જે, ‘‘જે સંતને પાસે રહેતા હોઈએ તેને જેવું આપણા ઉપર હેત હોય તેવું સમગ્ર સંતને કેમ રહે ?’’ પછી શ્રીજીમહારાજ બોલ્યા જે, જેવો શિવ<mark>ાનંદ સ્વામીના પ્રશ્નનો ઉત્તર કર્યો છે, તેવો સત્સંગનો જેને દૃઢ પક્ષ હોય તો તેને કહેતાં સાંભળતાં ભગવાન ને ભગવાનના </mark>સંતને સંશય થાય નહિ, અને એનો કોઈ રીતે કુવિશ્વાસ આવે નહિ જે, ‘આને કહેશું તો આ સત્સંગમાંથી જતો રહેશે,’ તેની કોરનો દૃઢ વિશ્વાસ જ હોય જે ‘એનો સત્સંગ તો અચળ છે માટે એને કહેશું તેની કાંઈ ફિકર નથી’ અને બીજા પ્રશ્નનો ઉત્તર એ છે જ…</blockquote>
+ <p class="why">Both the section and the number differ. Possibly the passage also appears elsewhere, or the reference belongs to a neighbouring entry.</p>
+</article>
+<article class="item" id="d4">
+ <header><span class="num">4</span><div><h2 class="gu"><a href="index.html#n-1266">ગૃહસ્થાશ્રમ</a></h2>
+  <div class="meta">Quotation · Nondh page <a href="books/vachanamrut-nondh.pdf#page=212" target="_blank" rel="noopener">212</a> · <span class="tag">Same section, different number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-GM-5">Gadhada Madhya 5</a> <span class="gu">(ગઢડા મધ્ય 5)</span><div class="ttl gu">ભગવદ્ભક્તને પાતિવ્રત્ય ને શૂરવીરપણું રાખવું. કોઈથી દબાવું નહિ.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GM-52">Gadhada Madhya 52</a> <span class="gu">(ગઢડા મધ્ય 52)</span> · paragraph 2, PDF page 485<div class="ttl gu">ગૃહસ્થને શોભા તે ત્યાગીને દૂષણ. ઈર્ષા ત્યજી શ્રદ્ધાથી ભક્તિ કરવી.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">.....“જે ગૃહસ્થાશ્રમી છે, તેને ધન દોલત, હાથી, ઘોડા, ગાય, ભેંસ, મેડી, હવેલી, સ્ત્રી, છોકરાં, ભારે ભારે વસ્ત્ર, આભૂષણ એ સર્વ પદાર્થ શોભારુપ છે અને એ જ સર્વે પદાર્થ તે જે ત્યાગી હોય એને દોષરુપ છે.”</blockquote>
+ <div class="lbl">The passage in Gadhada Madhya 52 (matching words highlighted)</div><blockquote class="gu src">…રમી ને ત્યાગી એ બેના માર્ગ જુદા જુદા છે. તે જે ગૃહસ્થને શોભા હોય તે ત્યાગીને દૂષણરૂપ હોય, અને જે ત્યાગીને શોભા હોય તે ગૃહસ્થને દૂષણરૂપ હોય. તેને બુદ્ધિમાન હોય તે જાણે, પણ બીજો જાણી શકે નહિ, માટે તેની વિક્તિ કહીએ છીએ જે, <mark>જે ગૃહસ્થાશ્રમી છે તેને ધન, દોલત, હાથી, ઘોડા, ગાય, ભેંસ, મેડી, હવેલી, સ્ત્રી, છોકરાં, ભારેભારે વસ્ત્ર, આભૂષણ એ સર્વે પદાર્થ શોભારૂપ છે. અને એજ જે સર્વે પદાર્થ તે જે ત્યાગી હોય તેને દોષર</mark>ૂપ છે. અને ત્યાગી છે તેને વનમાં રહેવું, વસ્ત્ર વિના ઉઘાડું એક કૌપીનભર રહેવું, માથામાં ટોપી ઘાલવી, દાઢી મૂછ મૂંડાવી નખાવવી, ભગવાં વસ્ત્ર રાખવાં, અને કોઈ ગાળો દે, ને કોઈ ધૂળ નાખે, તે અપમાનને સહન કરવું, એજ ત્યાગીને પરમ શોભા…</blockquote>
+ <p class="why">Same section; a different discourse number.</p>
+</article>
+<article class="item" id="d5">
+ <header><span class="num">5</span><div><h2 class="gu"><a href="index.html#n-1318">ચિદાકાશ</a></h2>
+  <div class="meta">Quotation · Nondh page <a href="books/vachanamrut-nondh.pdf#page=220" target="_blank" rel="noopener">220</a> · <span class="tag">Same section, different number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-GP-23">Gadhada Pratham 23</a> <span class="gu">(ગઢડા પ્રથમ 23)</span><div class="ttl gu">સ્થિતપ્રજ્ઞ કોણ કહેવાય. તે વિના શિવ જેવાને પણ વિધ્ન થાય.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GP-21">Gadhada Pratham 21</a> <span class="gu">(ગઢડા પ્રથમ 21)</span> · paragraph 2, PDF page 69<div class="ttl gu">સ્વધર્મ વિચાર ભગવત્પ્રસન્નતાનાં સાધન. અક્ષરનાં બે સ્વરૂપ.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">.....“તે અક્ષરના બે સ્વરૂપ છે. એક તો નિરાકાર એકરસ ચૈતન્ય છે, તેને ચિદાકાશ કહિયે, બ્રહ્મમોહોલ કહિયે.....”</blockquote>
+ <div class="lbl">The passage in Gadhada Pratham 21 (matching words highlighted)</div><blockquote class="gu src">…ખરેખરો ભગવાનનો એકાંતિક ભક્ત ન કહેવાય. એકાંતિક ભક્ત તો જેની પ્રથમ કહી એવી સમજણ હોય તેને જ કહીએ, અને એવો જે એકાંતિક ભક્ત તે દેહનો ત્યાગ કરીને સર્વે માયાના ભાવથી મુક્ત થઈને, અર્ચિમાર્ગે〔૧〕 કરીને ભગવાનના અક્ષરધામને પામે છે; <mark>તે અક્ષરનાં〔૨〕 બે સ્વરૂપ છે, એક તો નિરાકાર એકરસ ચૈતન્ય છે તેને ચિદાકાશ કહીએ, બ્રહ્મમહોલ કહ</mark>ીએ, અને એ અક્ષર બીજે રૂપે કરીને પુરુષોત્તમ નારાયણની સેવામાં રહે છે. અને એ અક્ષરધામને પામ્યો જે ભક્ત તે પણ અક્ષરના સાધર્મ્યપણાને પામે છે અને ભગવાનની અખંડ સેવામાં રહે છે. અને એ અક્ષરધામને વિષે શ્રીકૃષ્ણ પુરુષોત્તમનારાયણ તે…</blockquote>
+ <p class="why">Same section; a different discourse number.</p>
+</article>
+<article class="item" id="d6">
+ <header><span class="num">6</span><div><h2 class="gu"><a href="index.html#n-1384">જાણપણું</a></h2>
+  <div class="meta">Note · Nondh page <a href="books/vachanamrut-nondh.pdf#page=227" target="_blank" rel="noopener">227</a> · <span class="tag">Different section and number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-GA-9">Gadhada Antya 9</a> <span class="gu">(ગઢડા અંત્ય 9)</span><div class="ttl gu">જાણપણા રૂપ ભગવદ્ધામના દરવાજામાં રહી પ્રભુ વિના બીજું પેસવા ન દેવું.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-V-10">Vartal 10</a> <span class="gu">(વરતાલ 10)</span> · paragraph 4, PDF page 539<div class="ttl gu">રાજારૂપ ને સાધુરૂપ ભગવાનને ઓળખી શરણે જઈ આજ્ઞામાં રહી ભક્તિ કરવી.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">જાણપણારુપ દરવાજે રહીને ભક્તિ કરવી.(મોટા મોટા પરમહંસોની સ્થિતિ ને સમજણ વિષે)</blockquote>
+ <div class="lbl">The passage in Vartal 10 (matching words highlighted)</div><blockquote class="gu src">રાખવી ને સ્વધર્મમાં<mark> રહીને ભક્તિ કરવી</mark> તે થકી પણ જીવનું કલ્યાણ થાય છે.” ઈતિ વચનામૃતમ્ ।।૧૦।। ૨૧૦ ।।</blockquote>
+ <p class="why">Both the section and the number differ. Possibly the passage also appears elsewhere, or the reference belongs to a neighbouring entry.</p>
+</article>
+<article class="item" id="d7">
+ <header><span class="num">7</span><div><h2 class="gu"><a href="index.html#n-1731">દેહબુધ્ધિ</a></h2>
+  <div class="meta">Quotation · Nondh page <a href="books/vachanamrut-nondh.pdf#page=277" target="_blank" rel="noopener">277</a> · <span class="tag">Same section, different number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-GA-2">Gadhada Antya 2</a> <span class="gu">(ગઢડા અંત્ય 2)</span><div class="ttl gu">ભગવાનનો પૂર્ણ મહિમા ન સમજવાથી માયિક વસ્તુમાં પ્રીતિ રહે છે.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GA-21">Gadhada Antya 21</a> <span class="gu">(ગઢડા અંત્ય 21)</span> · paragraph 3, PDF page 634<div class="ttl gu">ભાગવત ધર્મ નિરૂપણ, ભક્ત સાથે વિવાદ ન કરવો.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">.....આપણે તો સત્તારૂપ રહીને ભગવાન ને ભગવાનના ભક્ત સંગાથે હેત કર્યું છે, પણ દેહબુધ્ધિએ કરીને હેત કર્યું નથી.</blockquote>
+ <div class="lbl">The passage in Gadhada Antya 21 (matching words highlighted)</div><blockquote class="gu src">…ો અવગુણ લેતો હોય તેના હાથનું તો અન્નજળ પણ ભાવે નહિ, અને દેહનો સંબંધી હોય પણ જો ભગવાનના ભક્તનો અવગુણ લે તો તે સાથે પણ અતિશય કુહેત થઈ જાય, શા માટે જે, આપણે તો આત્મા છીએ તે આપણે દેહ ને દેહનાં સંબંધી સાથે શા સારુ હેત જોઈએ ? <mark>આપણે તો સત્તારૂપ રહીને ભગવાન તથા ભગવાનના ભક્ત સંઘાથે હેત કર્યું છે, પણ દેહબુદ્ધિએ કરીને હેત કર્યું નથી</mark>, ને જે સત્તારૂપ રહી નહિ શકે તેને તો કામ, ક્રોધ, લોભ, મોહ, મદ, મત્સરાદિક જે શત્રુ તે પીડ્યા વિના રહે જ નહિ. માટે જે આત્મસત્તારૂપ થઈને ભક્તિ નહિ કરતા હોય તેનું રૂપ તો આ સત્સંગમાં ઉઘાડું થયા વિના રહે જ નહિ. શા માટે જે, આ સ…</blockquote>
+ <p class="why">Same section; a different discourse number.</p>
+</article>
+<article class="item" id="d8">
+ <header><span class="num">8</span><div><h2 class="gu"><a href="index.html#n-2112">નિર્વિકલ્પ સમાધિ - બાધિતાનુવૃત્તિ</a></h2>
+  <div class="meta">Quotation · Nondh page <a href="books/vachanamrut-nondh.pdf#page=334" target="_blank" rel="noopener">334</a> · <span class="tag">Same section, nearby number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-GA-3">Gadhada Antya 3</a> <span class="gu">(ગઢડા અંત્ય 3)</span><div class="ttl gu">ભગવાન તથા ભક્તનું માહાત્મ્ય સમજાય તો દયા ને સ્નેહ રહે.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GA-4">Gadhada Antya 4</a> <span class="gu">(ગઢડા અંત્ય 4)</span> · paragraph 2, PDF page 598<div class="ttl gu">વિશેષ અને સામાન્યપણે જીવની સ્થિતિ.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">“ભગવાનનો ભકત હોય, ને તે જ્ઞાન વૈરાગ્યે યુક્ત હોય, ને વિચારને બળે કરીને પોતાને બંધન કરે એવી જે માયિક પદાર્થમાં પ્રીતિ એને ટાળી નાખી હોય, તો પણ એ ભક્તને જ્યાં સુધી નિર્વિકલ્પ સમાધિ થાય નહિ, ત્યાં સુધી બાધિતાનુવૃત્તિ રહી જાય છે.”</blockquote>
+ <div class="lbl">The passage in Gadhada Antya 4 (matching words highlighted)</div><blockquote class="gu src">પછી શ્રીજીમહારાજ બોલ્યા જે, ‘‘<mark>ભગવાનનો ભક્ત હોય ને તે જ્ઞાન વૈરાગ્યે યુક્ત હોય ને વિચારને બળે કરીને પોતાને બંધન કરે એવી જે માયિક પદાર્થમાં પ્રીતિ તેને ટાળી નાખી હોય, તોપણ એ ભક્તને જ્યાં સુધી નિર્વિકલ્પ સમાધિ થાય નહિ ત્યાં સુધી બાધિતાનુવૃત્તિ રહી જાય છે</mark>, તેણે કરીને વિચારમાં એમ રહે છે જે, ‘‘રખે મારે મા, બાપ, સ્ત્રી, છોકરાં, દ્રવ્ય, કુટુંબ, દેહ, ગેહ એમને વિષે પ્રીતિ રહી ગઈ હોય નહિ,’’ એમ બીતો રહે છે. જેમ કોઈક શૂરવીર પુરુષ હોય તેણે પોતાના સર્વે શત્રુ મારી નાખ્યા હોય તો પણ …</blockquote>
+ <p class="why">Same section; the number is off by one or has swapped digits.</p>
+</article>
+<article class="item" id="d9">
+ <header><span class="num">9</span><div><h2 class="gu"><a href="index.html#n-2322">પવિત્રપણે રહેવું</a></h2>
+  <div class="meta">Note · Nondh page <a href="books/vachanamrut-nondh.pdf#page=364" target="_blank" rel="noopener">364</a> · <span class="tag">Same section, different number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-V-18">Vartal 18</a> <span class="gu">(વરતાલ 18)</span><div class="ttl gu">સત્સંગીએ ગુરૂ પરંપરા વિગેરે પાંચ અવશ્ય જાણવાની વિગત.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-V-8">Vartal 8</a> <span class="gu">(વરતાલ 8)</span> · paragraph 3, PDF page 536<div class="ttl gu">ભગવાનમાં વૃત્તિ રાખતાં રાખતાં નિર્ગુણ થઈ ભગવાનને આકારે થાય છે.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">માટે એવી રિત્યે જે ભગવાનના સ્વરુપમાં વૃત્તિ રાખતો હોય, તેને અતિશે પવિત્રપણે રહેવું જેમ દેવને પૂજવાને તત્પર થાય.....</blockquote>
+ <div class="lbl">The passage in Vartal 8 (matching words highlighted)</div><blockquote class="gu src">…ય, ને જ્યારે વાયુતત્ત્વપ્રધાન થાય ત્યારે લીલી જણાય. ને જ્યારે આકાશતત્ત્વપ્રધાન થાય ત્યારે શ્યામ જણાય પછી પંચભૂતનું પ્રધાનપણું મટીને વૃત્તિ નિર્ગુણ થાય ત્યારે અતિશે પ્રકાશે યુક્ત જણાય છે ને ભગવાનના સ્વરૂપને આકારે થાય છે. <mark>માટે એવી રીતે જે ભગવાનના સ્વરૂપમાં વૃત્તિ રાખતો હોય તેને અતિશે પવિત્રપણે રહેવું. જેમ દેવને પૂજવાને તત્પર થાય</mark> તે દેવ સરખો પવિત્ર થઈને જો દેવની પૂજા કરે ત્યારે તેની પૂજાને દેવ અંગીકાર કરે છે. તેમ પરમેશ્વરને વિષે વૃત્તિ રાખતો હોય તેને પણ સાંખ્યશાસ્ત્રની રીતે કરીને સ્થૂલ, સૂક્ષ્મ ને કારણ એ ત્રણ દેહથી પોતાનું સ્વરૂપ ન્યારું જાણીને …</blockquote>
+ <p class="why">Same section; a different discourse number.</p>
+</article>
+<article class="item" id="d10">
+ <header><span class="num">10</span><div><h2 class="gu"><a href="index.html#n-2341">પંચમસ્કંધ રહસ્ય</a></h2>
+  <div class="meta">Quotation · Nondh page <a href="books/vachanamrut-nondh.pdf#page=366" target="_blank" rel="noopener">366</a> · <span class="tag">Same number, different section</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-GA-39">Gadhada Antya 39</a> <span class="gu">(ગઢડા અંત્ય 39)</span><div class="ttl gu">વિશલ્યકરણી ઔષધિ. માયા થકી મુકવાની પ્રાર્થના. આત્મા પરમાત્માનો સંગ.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GM-39">Gadhada Madhya 39</a> <span class="gu">(ગઢડા મધ્ય 39)</span> · paragraph 5, PDF page 468<div class="ttl gu">સ્વાભાવિક ગુણે વર્ત્યાનું. સાકારપણાની દૃઢતા ભાગવત દ્વારા રહસ્ય કથન.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">.....“અને પંચમસ્કંધને વિષે તો એ શ્રીકૃષ્ણ ભગવાનનું માહાત્મ્ય કહ્યું છે”.....</blockquote>
+ <div class="lbl">The passage in Gadhada Madhya 39 (matching words highlighted)</div><blockquote class="gu src">…તુતિભાગ છે ત્યાં ત્યાં એવા એવા સ્તુતિના શબ્દને લઈને પ્રત્યક્ષ શ્રીકૃષ્ણભગવાનને જ કહ્યા છે, પણ શ્રીકૃષ્ણભગવાનથી અધિક કાંઈ નથી કહ્યું. તથા સર્વ જગતની ઉત્પત્તિ, સ્થિતિ, પ્રલયના કર્તા તે પણ શ્રીકૃષ્ણભગવાન જ છે એમ કહ્યું છે. <mark>અને પંચમસ્કંધને વિષે તો એ શ્રીકૃષ્ણભગવાનનું માહાત્મ્ય કહ્યું છે</mark>, તથા એ શ્રીકૃષ્ણભગવાન જે તે આ જગતની સ્થિતિને અર્થે ને પોતાના ભક્તજનને સુખ આપવાને અર્થે અનેક પ્રકારની મૂર્તિઓને ધારીને ખંડખંડ પ્રત્યે રહ્યા છે એમ કહ્યું છે. અને પોતે બાંધી એવી જે મર્યાદાઓ તેને વિષે જે રહે તે અતિશે મોટપને…</blockquote>
+ <p class="why">The number matches but the section differs, e.g. Gadhada Antya instead of Gadhada Madhya. Likely a section label slip.</p>
+</article>
+<article class="item" id="d11">
+ <header><span class="num">11</span><div><h2 class="gu"><a href="index.html#n-2389">પાયો કાચો</a></h2>
+  <div class="meta">Note · Nondh page <a href="books/vachanamrut-nondh.pdf#page=372" target="_blank" rel="noopener">372</a> · <span class="tag">Same section, different number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-GM-56">Gadhada Madhya 56</a> <span class="gu">(ગઢડા મધ્ય 56)</span><div class="ttl gu">ભગવાન વિના બીજે પ્રીતિ થાય નહિ તે સાચી પ્રીતિ કહેવાય.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GM-35">Gadhada Madhya 35</a> <span class="gu">(ગઢડા મધ્ય 35)</span> · paragraph 3, PDF page 461<div class="ttl gu">ઉપાસના વિના આત્મનિષ્ઠાથી કલ્યાણ થતું નથી.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">જુઓ : ‘દેશકાળાદિક’ માં તથા અને જેને ભગવાન જેવી બીજા પદાર્થમાં પણ પ્રીતિ હોય, તેનો તો ઘણોજ પાયો કાચો છે. ધર્મ વાળી સ્ત્રી હોય, ને તેને જો પુરૂષનો સહવાસ થાય, તો એનો પણ ધર્મ રહે જ નહિ. અને એવી રિત્યે સ્ત્રી પુરૂષને પરસ્પર સહવાસ થાય, ને એનો ધર્મ રહે, એવી તો આશા જ રાખવી નહિ. તે આ વાર્તા તે એમ જ છે, પણ એમાં કોઈ સંશય રાખવો નહિ. તે માટે ધર્મમાં તો ક્યારેય રહેવાય તો પરમહંસ હોય તથા બ્રહ્મચારી હોય, ને તે જો પોતાના બ્રહ્મચર્યાદિક નિયમ કહ્યા છે, તેમાં રહે તો એને ધર્મમાં રહેવાય. અને સ્ત્રી હોય ને તે પણ જો પોતપોતાના નિયમ કહ્યા છે, તેમાં વરતે તો તેને ધર્મમાં રહેવાય. અને બીજા જે સત્સંગી ગૃહસ્થ હોય, તે પણ જો પોતપોતાના નિયમ કહ્યા છે તેમાં રહે, ને જવાન અવસ્થાવાળી જે પોતાની મા, બોન ને દિકરી તે ભેળા પણ એકાંતમાં ન બેસે ને તેની સામું પણ દ્રષ્ટિ માંડીને ન જુવે, તો એને ધર્મમાં રહેવાય. એવી રિત્યે ધર્મમાં રહેવું.....</blockquote>
+ <div class="lbl">The passage in Gadhada Madhya 35 (matching words highlighted)</div><blockquote class="gu src">અને વળી જગતમાં એમ વાર્તા છે જે, “મન હોય ચંગા તો કથરોટમાં ગંગા.” એ વાર્તા ખોટી છે. એ તો ગમે તેવો સમાધિનિષ્ઠ હોય અથવા વિચારવાન હોય ને તે પણ જો સ્ત્રીઓના પ્રસંગમાં રહેવા માંડે, તો એનો<mark> ધર્મ કોઈ રીતે રહે જ નહિ. અને ગમે તેવી ધર્મવાળી સ્ત્રી હોય ને તેને જો પુરુષનો સહવાસ થાય, તો એનો પણ ધર્મ રહે જ નહિ. અને એવી રીતે સ્ત્રીપુરુષને પરસ્પર સહવાસ થાય ને એનો ધર્મ રહે એવી તો આશા રાખવી નહિ. તે આ વાર્તા તે એમ જ છે, પણ એમાં કાંઈ સંશય રાખવો નહિ. તે માટે ધર્મમાં તે કયારે રહેવાય તો પરમહંસ હોય તથા બ્રહ્મચારી હોય ને તે જો પોતાના બ્રહ્મચર્યાદિક નિયમ કહ્યા છે તેમાં રહે, તો એણે ધર્મમાં રહેવાય. અને સ્ત્રી હોય ને તે પણ જો પોતપોતાના નિયમ કહ્યા છે તેમાં વર્તે તો તેણે ધર્મમાં રહેવાય અને બીજા જે સત્સંગી ગૃહસ્થ હોય તે પણ જો પોતપોતાના નિયમ કહ્યા છે તેમાં રહે, ને યુવાન અવસ્થાવાળી જે પોતાની મા, બોન ને દીકરી તે ભેળે પણ એકાંતમાં ન બેસે ને તેની સામું પણ દૃષ્ટિ માંડીને ન જુવે, તો એણે ધર્મમાં રહેવાય. એવી રીતે ધર્મમાં રહેવું</mark> તથા ભગવાનના સ્વરૂપની ઉપાસના કરવી તથા ભગવાનના અવતાર ચરિત્રનું શ્રવણ કીર્તન કરવું તથા ભગવાનનું નામસ્મરણ કરવું. એ ચાર વાનાં જ જીવના અતિશય કલ્યાણને અર્થે છે, અને આ તમે સર્વ છો તે મને ભગવાન જાણો છો. તે અમે જ્યાં જ્યાં ઉત્સવ …</blockquote>
+ <p class="why">Same section; a different discourse number.</p>
+</article>
+<article class="item" id="d12">
+ <header><span class="num">12</span><div><h2 class="gu"><a href="index.html#n-2432">પુરૂષ પ્રયત્ન કોને જાણવું</a></h2>
+  <div class="meta">Quotation · Nondh page <a href="books/vachanamrut-nondh.pdf#page=378" target="_blank" rel="noopener">378</a> · <span class="tag">Same section, different number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-GP-9">Gadhada Pratham 9</a> <span class="gu">(ગઢડા પ્રથમ 9)</span><div class="ttl gu">પ્રત્યક્ષ મનુષ્ય સ્વરૂપ ભગવાનથી જ પૂર્ણકામપણું માનવું.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GP-29">Gadhada Pratham 29</a> <span class="gu">(ગઢડા પ્રથમ 29)</span> · paragraph 4, PDF page 87<div class="ttl gu">શુભ દેશાદિકથી ભક્તિનું બળ વધે છે. અંતર સુદ્ધ થવામાં પ્રારબ્ધ, કૃપા ને પ્રયત્ન.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">.....“રુડા સાધુનો સંગ કરે ને પોતપોતાને વિચારે કરીને જે સારો થાય તેને તો પુરૂષ પ્રયત્ન કહિયે”.</blockquote>
+ <div class="lbl">The passage in Gadhada Pratham 29 (matching words highlighted)</div><blockquote class="gu src">…તે અતિ શુદ્ધભાવે કરીને પ્રસન્ન થયા જે ભગવાન તેની ઈચ્છાએ કરીને તથા તે ભગવાનને વરદાને કરીને અથવા અતિ શુદ્ધ ભાવે કરીને પ્રસન્ન થયા જે ભગવાનના એકાંતિક સાધુ તેના વરદાને કરીને જે રૂડી બુદ્ધિ થાય તેને ભગવાનની કૃપા જાણવી. અને રૂ<mark>ડા સાધુનો સંગ કરે ને પોતે પોતાને વિચારે કરીને જે સારો થાય તેને તો પુરુષપ્રયત્ન કહ</mark>ીએ. એમ વાત કરીને જય સચ્ચિદાનંદ કહીને શ્રીજીમહારાજ હસતા હસતા પોતાને આસને પધાર્યા. ઈતિ વચનામૃતમ્ ।।૨૯।।</blockquote>
+ <p class="why">Same section; a different discourse number.</p>
+</article>
+<article class="item" id="d13">
+ <header><span class="num">13</span><div><h2 class="gu"><a href="index.html#n-2471">પ્રકાશના ભેદ</a></h2>
+  <div class="meta">Quotation · Nondh page <a href="books/vachanamrut-nondh.pdf#page=382" target="_blank" rel="noopener">382</a> · <span class="tag">Same section, different number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-L-5">Loya 5</a> <span class="gu">(લોયા 5)</span><div class="ttl gu">દંભી-કપટી લક્ષણ, સંત, સચ્છાસ્ત્ર ને વિચાર. અંતઃકરણ જીત્યાનો ઉપાય.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-L-15">Loya 15</a> <span class="gu">(લોયા 15)</span> · paragraph 7, PDF page 330<div class="ttl gu">ભુંગળી તથા ગાયના દૃષ્ટાંતે આત્મદર્શનનું.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">.....“જીવ, પુરૂષ, અક્ષર, ને પુરૂષોત્તમ એ સર્વેનું તેજ પ્રકાશપણે તો સજાતિય છે, માટે ચેતના પ્રકાશના ભેદ પાડવાને કોઈ સમર્થ છે નહિ; ને ભેદ તો અતિશે છે, પણ તે ભેદને દેખવાને કોઈ સમર્થ નથી. અને જેને એ ભગવાન કૃપા કરે છે, તેણે કરીને તેને પ્રકાશમય એવો દિવ્યદેહે બંધાય છે. પછે તે એમ જાણેછે જે ‘આ હું છું ને આ પુરૂષ છે ને આ અક્ષર છે, ને એ સર્વથી વિલક્ષણ એવા આ પુરૂષોત્તમ છે’ એવી રિત્યે એ સર્વેને પૃથકપણે દેખે છે; પણ બીજો તો કોઈ પૃથક દેખવાને અર્થે સમર્થ થાય નહિ. માટે એ ભગવાન સુજે એ રૂપે કરીને રહ્યા છે, પણ પોતેજ રહ્યા છે.”</blockquote>
+ <div class="lbl">The passage in Loya 15 (matching words highlighted)</div><blockquote class="gu src">…્યારે વળી નિત્યાનંદ સ્વામીએ પૂછ્યું જે, ‘‘હે મહારાજ ! એ ભગવાન ઈન્દ્રિયાદિકના આશ્રયપણે રહ્યા છે, તે પુરુષરૂપે કરીને રહ્યા છે, કે અક્ષરરૂપે રહ્યા છે, કે પોતે સ્વયં પુરુષોત્તમપણે રહ્યા છે ?’’ ત્યારે શ્રીજીમહારાજ બોલ્યા જે, <mark>જીવ, પુરુષ, અક્ષર અને પુરુષોત્તમ એ સર્વેનું તેજ પ્રકાશપણે તો સજાતીય છે, માટે એમના પ્રકાશના ભેદ પાડવાને તો કોઈ સમર્થ છે નહિ, અને ભેદ તો અતિશે છે પણ તે ભેદને દેખવાને કોઈ સમર્થ નથી. અને જેને એ ભગવાન કૃપા કરે છે તેણે કરીને તેને પ્રકાશમય એવો દિવ્ય દેહ બંધાય છે. પછી તે એમ જાણે છે જે, ‘આ હું છું ને આ પુરુષ છે, ને આ અક્ષર છે, ને એ સર્વેથી વિલક્ષણ એવા આ પુરુષોત્તમ છે.’ એવી રીતે એ સર્વેને પૃથક્્પણે દેખે છે, ને એમના પ્રકાશને પણ વિલક્ષણપણે દેખે છે, પણ બીજો તો કોઈ પૃથક્્પણે દેખવાને અર્થે સમર્થ થાય નહિ. માટે એ ભગવાન સૂઝે એ રૂપે કરીને રહ્યા છે પણ પોતે જ રહ્યા છે.</mark></blockquote>
+ <p class="why">Same section; a different discourse number.</p>
+</article>
+<article class="item" id="d14">
+ <header><span class="num">14</span><div><h2 class="gu"><a href="index.html#n-3122">ભગવાન</a></h2>
+  <div class="meta">Note · Nondh page <a href="books/vachanamrut-nondh.pdf#page=465" target="_blank" rel="noopener">465</a> · <span class="tag">Same section, different number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-GA-35">Gadhada Antya 35</a> <span class="gu">(ગઢડા અંત્ય 35)</span><div class="ttl gu">સાધુના હૃદયમાં ભગવાન રહ્યા છે. એવા સાધુનાં છ લક્ષણ.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GA-26">Gadhada Antya 26</a> <span class="gu">(ગઢડા અંત્ય 26)</span> · paragraph 2, PDF page 647<div class="ttl gu">ભગવાનની પેઠે સેવા કરવા યોગ્ય સંતનાં લક્ષણ. ધર્માંશવાળો બંધાય નહિ.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">ભગવાનની પેઠે સેવા કરવા યોગ્ય સાધુના લક્ષણોમાં</blockquote>
+ <div class="lbl">The passage in Gadhada Antya 26 (matching words highlighted)</div><blockquote class="gu src">પછી શ્રીજીમહારાજે એમ વાર્તા કરી જે, “<mark>ભગવાનની પેઠે સેવા કરવા યોગ્ય </mark>એવા જે સંત તે કેવા હોય તો ઈન્દ્રિયો, અંતઃકરણ આદિક જે માયાના ગુણ તેની જે ક્રિયા તેને પોતે દાબીને વર્તે પણ એની ક્રિયાએ કરીને પોતે દબાય નહિ, ને ભગવાન સંબંધી ક્રિયાને જ કરે. ને પંચવર્તમાનમાં દૃઢ રહેતા હોય ને પોતાને બ્રહ્મરૂપ…</blockquote>
+ <p class="why">Same section; a different discourse number.</p>
+</article>
+<article class="item" id="d15">
+ <header><span class="num">15</span><div><h2 class="gu"><a href="index.html#n-3371">માન ટાળ્યાનો ઉપાય</a></h2>
+  <div class="meta">Quotation · Nondh page <a href="books/vachanamrut-nondh.pdf#page=495" target="_blank" rel="noopener">495</a> · <span class="tag">Same section, nearby number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-GA-28">Gadhada Antya 28</a> <span class="gu">(ગઢડા અંત્ય 28)</span><div class="ttl gu">કલ્યાણના માર્ગમાંથી પડવાના બે પ્રકાર, માહાત્મ્યે કરી માન ટળી જાય.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GA-27">Gadhada Antya 27</a> <span class="gu">(ગઢડા અંત્ય 27)</span> · paragraph 5, PDF page 651<div class="ttl gu">ભગવાનની મૂર્તિમાં પાંચે વિષયનું સુખ એકી સાથે પ્રાપ્ત થાય છે.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">.....“માટે ભગવાનનું માહાત્મ્ય સમજીને માનને ટાળવું.”</blockquote>
+ <div class="lbl">The passage in Gadhada Antya 27 (matching words highlighted)</div><blockquote class="gu src">…ડતો. કેમ જે, આપણા સત્સંગમાં ગૃહસ્થ હરિભક્ત ઘણા છે તે સત્સંગમાં પડ્યા છે, માટે એ માન, ઈર્ષ્યા ને ક્રોધ એ ત્રણે ઉપર અમારે અતિશય અભાવ રહે છે અને અમારાં જે જે વચન લખેલાં હશે તેમાં પણ એમ જ હશે. તે વિચારીને જુવો તો જણાઈ આવશે. <mark>માટે ભગવાનનું માહાત્મ્ય સમજીને માનને ટાળવું.”</mark></blockquote>
+ <p class="why">Same section; the number is off by one or has swapped digits.</p>
+</article>
+<article class="item" id="d16">
+ <header><span class="num">16</span><div><h2 class="gu"><a href="index.html#n-3548">મૂર્ખતા</a></h2>
+  <div class="meta">Quotation · Nondh page <a href="books/vachanamrut-nondh.pdf#page=519" target="_blank" rel="noopener">519</a> · <span class="tag">Same section, nearby number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-GP-25">Gadhada Pratham 25</a> <span class="gu">(ગઢડા પ્રથમ 25)</span><div class="ttl gu">આત્મનિષ્ઠા ને પ્રત્યક્ષ પ્રભુના જ્ઞાને કરી પૂર્ણ કામ થવું.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GP-26">Gadhada Pratham 26</a> <span class="gu">(ગઢડા પ્રથમ 26)</span> · paragraph 2, PDF page 80<div class="ttl gu">સાચા રસિક ભક્ત ને નિર્ગુણભાવ વિષે.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">.....“જેવો ભગવાન ને ભગવાનના સંત તેના વચનમાં રસ જણાય છે તેવો જ બીજા વિષયના શબ્દમાં રસ જણાય છે, એવી જે એ મુરખતા તેનો ત્યાગ કરવો.....”</blockquote>
+ <div class="lbl">The passage in Gadhada Pratham 26 (matching words highlighted)</div><blockquote class="gu src">…રાખો ને અમે આ એક વાતરૂપ કીર્તન બોલીએ તે સાંભળો.” પછી પરમહંસે કહ્યું જે હે મહારાજ ! બહુ સારું તમો વાત કરો.” પછી શ્રીજીમહારાજ બોલ્યા જે, “ભગવાનનાં રસિક〔૧〕 કીર્તન ગાતાં ગાતાં જો એક ભગવાનના સ્વરૂપમાંજ રસ જણાય તો ઠીક છે અને જ<mark>ો ભગવાનના સ્વરૂપ વિના બીજે ઠેકાણે રસ જણાય તો તો એમાં મોટી ખોટ છે, કેમ જે એ ભક્તને જેમ ભગવાનના શબ્દમાં હેત થાય છે ને તે શબ્દમાં રસ જણાય છે તેમજ ગીત વાજિંત્રના શબ્દમાં અથવા સ્ત્રી આદિકના શબ્દમાં રસ જણાય છે ને હેત થાય છે. માટે એ ભક્તને અવિવેકી જાણવો. અને ભગવાન અથવા ભગવાનના સંત તેનાં જે વચન તેને વિષે જેવો રસ જણાય છે તેવો જ બીજા વિષયના શબ્દમાં રસ જણાય છે, એવી જે એ મૂર્ખતા તેનો ત્યાગ કરવો</mark> અને એવી મૂર્ખતાનો ત્યાગ કરીને એક ભગવાનને શબ્દે કરીને જ સુખ માનવું, અને એવી જાતનો જે રસિક ભક્ત છે તે ખરો છે. અને જેમ શબ્દ તેમજ સ્પર્શ પણ એક ભગવાનનો જ ઈચ્છે અને અન્ય સ્પર્શને તો કાળો નાગ તથા બળતો અગ્નિ તે જેવો જાણે</blockquote>
+ <p class="why">Same section; the number is off by one or has swapped digits.</p>
+</article>
+<article class="item" id="d17">
+ <header><span class="num">17</span><div><h2 class="gu"><a href="index.html#n-3625">મોટો (મુખિયો)</a></h2>
+  <div class="meta">Quotation · Nondh page <a href="books/vachanamrut-nondh.pdf#page=527" target="_blank" rel="noopener">527</a> · <span class="tag">Same section, nearby number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-GM-47">Gadhada Madhya 47</a> <span class="gu">(ગઢડા મધ્ય 47)</span><div class="ttl gu">મલીન આશય ત્યજી દેહમાંથી નીસરી બ્રહ્મરૂપે ભક્તિ કરવાની વાસના રાખવી.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GM-48">Gadhada Madhya 48</a> <span class="gu">(ગઢડા મધ્ય 48)</span> · paragraph 3, PDF page 481<div class="ttl gu">વંદુ સહજાનંદ એ કીર્તનમાં જણાવ્યા પ્રમાણેની વાર્તા.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">.....“જેના અંતરમાં અખંડ ભગવાનની મૂર્તિનું ચિંતવન થયા કરે, એથી ઉપરાંત મનુષ દેહનો બીજો લાભ નથી. અને એ તો સર્વે હરિભક્તમાં મુખિયો છે.....” જુઓ : ‘એકાંતિક ભક્ત’ માં</blockquote>
+ <div class="lbl">The passage in Gadhada Madhya 48 (matching words highlighted)</div><blockquote class="gu src">…્થ તે તો જે જે યોનિમાં જાય છે તે સર્વેમાં મળે છે, પણ આવા બ્રહ્મવેત્તા સંતનો સંગ ને શ્રીવાસુદેવ ભગવાનનું સાક્ષાત્કાર દર્શન ને ચિંતવન તે તો અતિશે દુર્લભ છે. માટે જેમ વિષયી જનને પંચવિષયનું ચિંતવન અંતઃકરણમાં થયા કરે છે, તેમ <mark>જેના અંતરમાં અખંડ ભગવાનનું ચિંતવન થયા કરે એથી ઉપરાંત મનુષ્ય દેહનો બીજો લાભ નથી, અને એ તો સર્વે હરિભક્તમાં મુખિયો છે. અને એ ભક્તને શબ્દ, સ્પર્શ, રૂપ, રસ અને ગંધ એ પંચવિષય હોય તોપણ ભગવાન સંબંધી જ હોય, અને તેના શ્રવણ તે અખંડ ભગવાનની કથા સાંભળવાને ઈચ્છે, અને ત્વચા તે ભગવાનનો સ્પર્શ કરવા ઈચ્છે, અને નેત્ર તે ભગવાન ને ભગવાનના સંતનાં દર્શન કરવા ઈચ્છે, અને રસના તે ભગવાનના મહાપ્રસાદના સ્વાદને ઈચ્છે, અને નાસિકા તે ભગવાનને ચઢ્યાં જે પુષ્પ તુલસી તેના સુગંધને ઈચ્છે, પણ પરમેશ્વર વિના અન્ય વસ્તુને સુખદાયી જાણે જ નહિ. એવી રીતે જે વર્તે તે ભગવાનનો એકાંતિક ભક્ત</mark> કહેવાય.” ઈતિ વચનામૃતમ્ ।।૪૮।। ૧૮૧</blockquote>
+ <p class="why">Same section; the number is off by one or has swapped digits.</p>
+</article>
+<article class="item" id="d18">
+ <header><span class="num">18</span><div><h2 class="gu"><a href="index.html#n-3670">યોગકળા</a></h2>
+  <div class="meta">Note · Nondh page <a href="books/vachanamrut-nondh.pdf#page=534" target="_blank" rel="noopener">534</a> · <span class="tag">Same section, nearby number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-GM-65">Gadhada Madhya 65</a> <span class="gu">(ગઢડા મધ્ય 65)</span><div class="ttl gu">ધામની મૂર્તિ પ્રત્યક્ષ મનુષ્યરૂપે દર્શન આપે છે. અખતર ડાહ્યાનું.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GM-64">Gadhada Madhya 64</a> <span class="gu">(ગઢડા મધ્ય 64)</span> · paragraph 3, PDF page 509<div class="ttl gu">મત્સ્યાદિ અવતારના અવતારી શ્રીકૃષ્ણ છે.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">(સિધ્ધપુરૂષનું દ્રષ્ટાંત).....“તેમ ભગવાન પોતાના અક્ષરધામમાં રહ્યા થકા અનંતકોટિ બ્રહ્માંડને વિષે જ્યાં જેમ જણાયું ઘટે ત્યાં તેમ જણાય છે. અને પોતે તો સદા પોતાના અક્ષરધામમાં જ છે. અને એક ઠેકાણે રહ્યા થકા જે અનંત ઠેકાણે જણાય છે, તે તો પોતાની યોગકળા છે, જેમ રાસમંડળને વિષે જેટલી ગોપીઓ તેટલા જ પોતે થયા. માટે એક ઠેકાણે રહ્યા થકા જે અનંત ઠેકાણે દેખાવું તે ભગવાનનું યોગકળાયે કરીને વ્યાપકપણું છે, પણ આકાશની પેઠે અરૂપપણે કરીને વ્યાપક નથી..... (શ્રી કૃષ્ણ ભગવાન) યોગકળાને વિષે પ્રવિણપણ છે”.....</blockquote>
+ <div class="lbl">The passage in Gadhada Madhya 64 (matching words highlighted)</div><blockquote class="gu src">…દર્શન દેવું ઘટે ત્યાં તેને તેમ દર્શન દે છે અને જે સાથે બોલવું ઘટે તે સાથે બોલે છે અને જેનો સ્પર્શ કરવો ઘટે તેનો સ્પર્શ કરે છે. જેમ કોઈક સિદ્ધપુરુષ હોય તે એક ઠેકાણે બેઠો થકો હજારો ગાઉ દેખે ને હજારો ગાઉની વાર્તાને સાંભળે, <mark>તેમ ભગવાન પોતાના અક્ષરધામમાં રહ્યા થકા અનંતકોટિ બ્રહ્માંડને વિષે જ્યાં જેમ જણાવું ઘટે ત્યાં તેમ જણાય છે અને પોતે તો સદા પોતાના અક્ષરધામમાં જ છે અને એક ઠેકાણે રહ્યા થકા જે અનંત ઠેકાણે જણાય છે, તે તો પોતાની યોગકળા છે. જેમ રાસમંડળને વિષે જેટલી ગોપીઓ તેટલાજ પોતે થયા. માટે એક ઠેકાણે રહ્યા થકા જે અનંત ઠેકાણે દેખાવું એ જ ભગવાનનું યોગકળાએ કરીને વ્યાપકપણું છે પણ આકાશની પેઠે અરૂપપણે કરીને વ્યાપક નથી અને જે ભગવાનની યોગમાયાએ કરીને પચાસ કરોડ યોજન જે પૃથ્વીનું મંડળ છે તે પ્રલયકાળને વિષે પરમાણુ રૂપ થઈ જાય છે. અને તે પૃથ્વી પાછી સૃષ્ટિકાળને વિષે પરમાણુમાંથી પચાસ કરોડ યોજન થાય છે. અને ચોમાસું આવે છે ત્યારે ગાજવીજ ને મેઘની ઘટા થઈ આવે છે. એ આદિક સર્વે આશ્ચર્ય તે ભગવાનની યોગમાયાએ કરીને થાય છે. એવા જે શ્રીકૃષ્ણભગવાન તે મુમુક્ષુને સર્વે પ્રકારે ભજન કરવા યોગ્ય છે. શા માટે જે, બીજા અવતારને વિષે તો એક કે બે કળાનો પ્રકાશ હોય છે અને શ્રીકૃષ્ણભગવાનને વિષે તો સર્વે કળાઓ છે. માટે એ શ્રીકૃષ્ણભગવાન તો રસિક પણ છે, ને ત્યાગી પણ છે, ને જ્ઞાની પણ છે, ને રાજાધિરાજ પણ છે, ને કાયર પણ છે, ને શૂરવીર પણ છે, અતિશે કૃપાળુ પણ છે, ને યોગકળાને વિષે પ્રવ</mark>ીણ છે, ને અતિશય બળિયા પણ છે, ને અતિશય છળિયા પણ છે, માટે સર્વે કળાએ સંપન્ન તો એક શ્રીકૃષ્ણભગવાન જ છે. અને તે શ્રીકૃષ્ણભગવાનનું જે અક્ષરધામ તેને આશ્રિત જે અનંત કોટિ બ્રહ્માંડ તે પણ સદાય રહે છે. તેમાંથી જે બ્રહ્માંડની સો વર…</blockquote>
+ <p class="why">Same section; the number is off by one or has swapped digits.</p>
+</article>
+<article class="item" id="d19">
+ <header><span class="num">19</span><div><h2 class="gu"><a href="index.html#n-4003">વાત (વાર્તા) તે આામજ છે</a></h2>
+  <div class="meta">Quotation · Nondh page <a href="books/vachanamrut-nondh.pdf#page=579" target="_blank" rel="noopener">579</a> · <span class="tag">Same number, different section</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-GP-33">Gadhada Pratham 33</a> <span class="gu">(ગઢડા પ્રથમ 33)</span><div class="ttl gu">મૂઢપણું, પ્રીતિ અને સમજણ વિષે.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GA-33">Gadhada Antya 33</a> <span class="gu">(ગઢડા અંત્ય 33)</span> · paragraph 5, PDF page 666<div class="ttl gu">સ્ત્રીધનાદિકને વિષે ન લેવાય એવા થોડા છે.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">.....“ને એ ચારની કાચ્યપ (સ્ત્રી, ધન, દેહાભિમાન ને સ્વભાવ) કાચ્યપ હોય, તો પણ સમજીને ધીરે ધીરે ત્યાગ કરવી, તો વાસુદેવ ભગવાનની નિશ્ચય ભક્તિ થાય. આ વાર્તા તે આમજ છે, પણ એમાં કાંઈ સંશય નથી.”</blockquote>
+ <div class="lbl">The passage in Gadhada Antya 33 (matching words highlighted)</div><blockquote class="gu src">અને વળી શ્રીજીમહારાજે એમ વાર્તા કરી જે, “ભગવાનના ભક્તને <mark>સ્ત્રી, ધન, દેહાભિમાન અને સ્વભાવ એ ચાર વાનામાં કાચ્યપ હોય ને તે ભગવાનની ભક્તિ કરતો હોય તોપણ એની ભક્તિનો વિશ્વાસ નહિ, એની ભકિતમાં જરૂર વિઘ્ન આવે, કેમ જે ક્યારેક એને સ્ત્રી ધનનો યોગ થાય તો ભક્તિનો ઠા રહે નહિ ને તેમાં આસક્ત થઈ જાય, તથા દેહાધ્યાસ હોય તો જ્યારે દેહમાં રોગાદિક કષ્ટ પ્રાપ્ત થાય તથા અન્નવસ્ત્રાદિક ન મળે અથવા કોઈક કઠણ વર્તમાન પાળવાની આજ્ઞા થાય ત્યારે પણ તેને ભકિતમાં ભંગ થાય ને વિકળ થઈ જાય ને કાંઈ વિચાર ન રહે ને ચાળા ચૂંથવા લાગે તથા કોઈક રીતનો સ્વભાવ હોય તેને સંત ટોકવા માંડે ને તે સ્વભાવ પ્રમાણે વર્તવા ન દે, બીજી રીતે વર્તાવે, ત્યારે પણ એ મૂંઝાય ને એને સંતના સમાગમમાં રહેવાય નહિ, ત્યારે ભક્તિ તે ક્યાંથી રહે ? માટે જેને દૃઢ ભક્તિ ઈચ્છવી હોય તેને એ ચાર વાનામાં કાચપ રાખવી નહિ, ને એ ચારની કાચ્યપ હોય તો પણ સમજીને ધીરે ધીરે ત્યાગ કરવી તો વાસુદેવ ભગવાનની નિશ્ચળ ભક્તિ થાય. આ વાર્તા તે આમ જ છે પણ એમાં કાંઈ સંશય નથી.”</mark> ઈતિ વચનામૃતમ્ ।।૩૩।। ૨૬૭ ।।</blockquote>
+ <p class="why">The number matches but the section differs, e.g. Gadhada Antya instead of Gadhada Madhya. Likely a section label slip.</p>
+</article>
+<article class="item" id="d20">
+ <header><span class="num">20</span><div><h2 class="gu"><a href="index.html#n-4089">વિકાસ અવસ્થા</a></h2>
+  <div class="meta">Quotation · Nondh page <a href="books/vachanamrut-nondh.pdf#page=592" target="_blank" rel="noopener">592</a> · <span class="tag">Same section, nearby number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-L-8">Loya 8</a> <span class="gu">(લોયા 8)</span><div class="ttl gu">અવગુણ ટાળ્યાના ખટકાનું તથા ઈન્દ્રિયોની ચંચળતા ટાળ્યાનું.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-L-7">Loya 7</a> <span class="gu">(લોયા 7)</span> · paragraph 10, PDF page 302<div class="ttl gu">ઈન્દ્રિયો, અંતઃકરણ, અનુભવ ત્રણેથી પ્રત્યક્ષ પ્રભુને જાણે તે પૂર્ણજ્ઞાની.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">.....“તેમ એ બે પ્રકૃતિની (વ્યાપ્ય પ્રકૃતિ અને વ્યાપક પ્રકૃતિ) સંકોચ વિકાસ અવસ્થા તે ભગવાનને વિષે છે. ખુલાસો માટે જુઓ :- - વચ. લો. 8 માં નીચે આપેલ ટીકામાં (વચ વડતાલ પ્રત)- (હરિજીવનદાસ શાસ્ત્રી) (.....બે પ્રકૃતિમાં થતા સંકોચ વિકાસનો શરીરી પરમાત્મામાં પરંપરાએ ઉપચાર માત્ર થાય છે આવો ભાવાર્થ સમજવો.)</blockquote>
+ <div class="lbl">The passage in Loya 7 (matching words highlighted)</div><blockquote class="gu src">છે તો એ અષ્ટ પ્રકારની જે <mark>વ્યાપ્ય પ્રકૃતિ અને તેને વિષે વ્યાપક એવી જે ચૈતન્ય પ્રકૃતિ તે બેયના આધાર છે, જેમ આકાશ છે તે પૃથિવ્યાદિક ચાર તત્વનો આધાર છે. અને પૃથ્વીની જ્યારે સંકોચ અવસ્થા થાય છે તે ભેળો આકાશ પણ સંકોચને પામે છે, ને પૃથ્વીની વિકાસ અવસ્થા થાય છે તે ભેળી આકાશની પણ વિકાસ અવસ્થા છે તથા જળ, તેજ અને વાયુની સંકોચ વિકાસ અવસ્થા ભેળી આકાશની પણ સંકોચ વિકાસ અવસ્થા છે. અને પૃથિવ્યાદિ તત્ત્વની સંકોચ વિકાસ અવસ્થા તે બેય આકાશને વિષે થાય છે, તેમ એ બે પ્રકૃતિની સંકોચ વિકાસ અવસ્થા ભેળી ભગવાનની પણ સંકોચ વિકાસ અવસ્થા છે ને એ બે પ્રકૃતિની સંકોચ વિકાસ અવસ્થા તે ભગવાનને વિષે છે. એવા જે ભગવાન તે સર્વના આત્મા છે, ત્યાં શ્રુતિયો છે– “&quot;यस्याक्षरं रीरं , यस्यात्मा ज़ारीरं , यस्या पृथ्वी शरीरं ’’ ઈત્યાદિક શ્રુતિઓ છે, તથા અન્નમય બ્રહ્મ કહ્યો છે, મનોમય બ્રહ્મ કહ્યો છે, વિજ્ઞાનમય બ્રહ્મ કહ્યો છે. આનંદમય બ્રહ્મ કહ્યો છે. ઈત્યાદિક ઘણીક પ્રકારની બ્રહ્મવિદ્યા કહી છે. તેનું શું તાત્પર્ય છે જે, ભગવાન સર્વના કારણ છે, ને સર્વના આધાર છે. માટે એ સર્વને બ્રહ્મ કહ્યા છે, પણ એ સર્વે શરીર છે, અને એ સર્વેના શરીરી તે ભગવાન શ્રીકૃષ્ણ પ્રત્યક્ષ પુરુષોત્તમ છે. તે ભગવાનને વિષે એ જડ ચેતનરૂપ જે બે પ્રકૃતિ તે સંકોચ વિકાસ</mark> અવસ્થાએ કરીને પોતાના કાર્ય સહિત સુખે કરીને રહી છે, અને એ સર્વેને વિષે ભગવાન જે તે અંતર્યામીરૂપે કારણપણે કરીને રહ્યા છે, અને તેજ ભગવાન આ પ્રત્યક્ષ પ્રમાણ છે. એવી રીતે મહિમાએ સહિત જે ભગવાનને જાણે ને દેખે તેને પરિપૂર્ણ જ્ઞ…</blockquote>
+ <p class="why">Same section; the number is off by one or has swapped digits.</p>
+</article>
+<article class="item" id="d21">
+ <header><span class="num">21</span><div><h2 class="gu"><a href="index.html#n-4107">વિચાર (આત્મા અનાત્મા વિવેકનું કારણ)</a></h2>
+  <div class="meta">Quotation · Nondh page <a href="books/vachanamrut-nondh.pdf#page=595" target="_blank" rel="noopener">595</a> · <span class="tag">Same section, different number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-GP-59">Gadhada Pratham 59</a> <span class="gu">(ગઢડા પ્રથમ 59)</span><div class="ttl gu">પ્રત્યક્ષ શ્રીહરિમાં અસાધારણ સ્નેહ વિષે.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GP-56">Gadhada Pratham 56</a> <span class="gu">(ગઢડા પ્રથમ 56)</span> · paragraph 5, PDF page 137<div class="ttl gu">જ્ઞાની ભક્ત શ્રેષ્ઠ, આત્મા અનાત્માના વિવેકનું કારણ ને ઉપાસનાની દઢતા.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">......“એવી રિત્યે ભગવાનનો મહિમા વિચારવો એ જ આત્મા અનાત્માના વિવેકનું કારણ છે.”</blockquote>
+ <div class="lbl">The passage in Gadhada Pratham 56 (matching words highlighted)</div><blockquote class="gu src">…ે તેમણે નિરંતર સેવ્યા એવા એ ભગવાન છે અને જ્યારે બ્રહ્માંડોનો પ્રલય થઈ જાય છે, ત્યારે આ પ્રગટ ભગવાન છે તેજ એક રહે છે. અને પછી સૃષ્ટિ રચવાને સમે પણ પ્રકૃતિપુરુષદ્વારે કરીને અનંતકોટિ બ્રહ્માંડોને એજ ભગવાન ઉપજાવે છે, એવી રીત<mark>ે ભગવાનનો મહિમા વિચારવો એજ આત્મા અનાત્માના વિવેકનું કારણ છે</mark> અને જેટલી એ ભક્તને ભગવાનના માહાત્મ્યે સહિત ભગવાનને વિષે નિષ્ઠા છે, તેટલોજ એ ભક્તના હૃદયમાં વૈરાગ્ય આવે છે. માટે બીજા સાધનના બળને તજીને એકલું ૧. ભગવાનના માહાત્મ્ય જ્ઞાનથી ઉપાસનાનું બળ વૃદ્ધિ પામે છે. તેથી જ્ઞાનનિષ્ઠા કે …</blockquote>
+ <p class="why">Same section; a different discourse number.</p>
+</article>
+<article class="item" id="d22">
+ <header><span class="num">22</span><div><h2 class="gu"><a href="index.html#n-4458">શાબાશ</a></h2>
+  <div class="meta">Note · Nondh page <a href="books/vachanamrut-nondh.pdf#page=642" target="_blank" rel="noopener">642</a> · <span class="tag">Same number, different section</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-GM-30">Gadhada Madhya 30</a> <span class="gu">(ગઢડા મધ્ય 30)</span><div class="ttl gu">અક્ષરરૂપ થઈ પુરૂષોત્તમની ઉપાસના કરનારને કનક કાન્તા બાધ કરે નહિ.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GA-30">Gadhada Antya 30</a> <span class="gu">(ગઢડા અંત્ય 30)</span> · paragraph 2, PDF page 659<div class="ttl gu">ઉપાસના કરવાનો પ્રકાર. પાંચ વાર્તાનું નિરંતર અનુસંધાન.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">(પોતાને મનમાં ગમતી એવી બે વાર્તા પ્રમાણે જે વર્તન કરતો હોય)” એવાને દેખીને અમારૂં મન રાજી થાય છે ને એને શાબાશ છે જે એ આવી રિત્યે વર્તે છે”.</blockquote>
+ <div class="lbl">The passage in Gadhada Antya 30 (matching words highlighted)</div><blockquote class="gu src">પછી શ્રીજીમહારાજ બોલ્યા જે, “અમારા<mark> મનમાં આ બે વાર્તા ગમે છે ને ત્યાં મન અટકે છે. તેમાં એક તો જેને એમ હોય જે, એક ચૈતન્યના તેજનો રાશિ છે ને તેના મધ્યને વિષે શ્રી પુરુષોત્તમ ભગવાનની મૂર્તિ સદા વિરાજમાન છે, એવો દૃઢ નિશ્ચય હોય અને તે ભગવાનની ઉપાસના ભક્તિ કરતો હોય તે વાત ગમે. પણ કેવળ ચૈતન્ય તેજને માનતો હોય ને તેની ઉપાસના કરતો હોય ને ભગવાનને સદા સાકાર ન માનતો હોય ને તેની ઉપાસના ન કરતો હોય તો તે ન ગમે. અને બીજું એમ જે એવા જે ભગવાન તેને અર્થે જે તપને કરતો હોય તથા યોગને સાધતો હોય તથા પંચવિષયના અભાવને કરતો હોય તથા વૈરાગ્યવાન હોય ઈત્યાદિક જે જે સાધન તે ભગવાનની પ્રસન્નતાને અર્થે નિર્દંભપણે કરે તે ગમે. અને એવાને દેખીને અમારું મન રાજી થાય છે જે, એને શાબાશ છે જે એ આવી રીતે વર્તે છે</mark>.’’</blockquote>
+ <p class="why">The number matches but the section differs, e.g. Gadhada Antya instead of Gadhada Madhya. Likely a section label slip.</p>
+</article>
+<article class="item" id="d23">
+ <header><span class="num">23</span><div><h2 class="gu"><a href="index.html#n-4520">શુષ્કજ્ઞાનીનો મત</a></h2>
+  <div class="meta">Note · Nondh page <a href="books/vachanamrut-nondh.pdf#page=648" target="_blank" rel="noopener">648</a> · <span class="tag">Same number, different section</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-GA-19">Gadhada Antya 19</a> <span class="gu">(ગઢડા અંત્ય 19)</span><div class="ttl gu">ત્યાગીને કુટુંબમાં હેત ન રાખવાની વિગત.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GM-19">Gadhada Madhya 19</a> <span class="gu">(ગઢડા મધ્ય 19)</span> · paragraph 2, PDF page 426<div class="ttl gu">ધર્મ અને ભક્તિથી પડાય નહિ તેવો હરિભક્તો પર શ્રીજીનો પત્ર.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">(શુષ્ક) વેદાંત શાસ્ત્રને શ્રવણે કરીને જીવની બુધ્ધિમાંથી ભગવાનની ઉપાસનાનું ખંડન થઈ જાય છે; અને હૈયામાં સમભાવ આવી જાય છે, એટલે અન્ય દેવની પણ ઉપાસના થઈ જાય છે, અને તે શુષ્ક વેદાંતિના વચનને જે સાંભળે, તેની બુધ્ધિ અતિશે ભ્રષ્ટ થઈ જાય છે.</blockquote>
+ <div class="lbl">The passage in Gadhada Madhya 19 (matching words highlighted)</div><blockquote class="gu src">પછી શ્રીજીમહારાજ પરમહંસ પ્રત્યે બોલ્યા જે, “અમે શુષ્ક જ્ઞાનીનો મત જાણવા સારુ તેના શાસ્ત્રનું શ્રવણ કર્યું, તે શ્રવણ માત્રે કરીને જ અમારા અંતરમાં આવો ઉદ્વેગ થઈ આવ્યો. કેમ જે, જે શુષ્ક<mark>વેદાંત શાસ્ત્રને શ્રવણે કરીને જીવની બુદ્ધિમાંથી ભગવાનની ઉપાસનાનું ખંડન થઈ જાય છે, અને હૈયામાં સમભાવ આવી જાય છે, એટલે અન્ય દેવની પણ ઉપાસના થઈ જાય છે. અને તે શુષ્કવેદાંતિના વચનને જે સાંભળે તેની બુધ્ધિ અતિશે ભ્રષ્ટ થઈ જાય છે.</mark> અને〔૧〕 અમે તો કાંઈક〔〕〔૨〕 પ્રયોજન સારુ શુષ્કવેદાંતની વાત સાંભળી હશે તેણે કરીને પણ હવે અમારે શોક ઘણો થાય છે.” એમ કહીને</blockquote>
+ <p class="why">The number matches but the section differs, e.g. Gadhada Antya instead of Gadhada Madhya. Likely a section label slip.</p>
+</article>
+<article class="item" id="d24">
+ <header><span class="num">24</span><div><h2 class="gu"><a href="index.html#n-4566">શ્રીકૃષ્ણનું નિર્ગુણપણું</a></h2>
+  <div class="meta">Note · Nondh page <a href="books/vachanamrut-nondh.pdf#page=655" target="_blank" rel="noopener">655</a> · <span class="tag">Different section and number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-GP-66">Gadhada Pratham 66</a> <span class="gu">(ગઢડા પ્રથમ 66)</span><div class="ttl gu">શાસ્ત્રના શબ્દછળ ને ચતુર્વ્યુહની વાત.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-K-8">Kariyani 8</a> <span class="gu">(કારિયાણી 8)</span> · paragraph 4, PDF page 265<div class="ttl gu">ભગવાનનાં અલૌકિક ઐશ્વર્ય, સગુણનિગુર્ણપણાને સમજવાની રીત.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">શ્રીકૃષ્ણ ભગવાન બ્રાહ્મણના પુત્રને લેવા સારૂ અર્જુન સહિત રથે બેસીને ચાલ્યા તે લોકાલોક પર્વતને ઉલ્લંઘીને માયાનું તમ આવ્યું તેને સુદર્શન ચક્રે કરીને કાપીને તેથી પર જે બ્રહ્મજ્યોતિ તેને વિષે રહ્યા જે ભૂમાપુરૂષ તેની પાસેથી બ્રાહ્મણના પુત્રને લઈ આવ્યા; ત્યારે તે રથ ને ઘોડા તે માયિક હતા ને સ્થૂળભાવે યુક્ત હતા પણ તે શ્રીકૃષ્ણ ભગવાનને યોગે કરીને અતિ સૂક્ષ્મ અને ચૈતન્યરુપ થઈને ભગવાનના નિર્ગુણ બ્રહ્મધામને પામ્યા. એવી રિત્યે જે સ્થુળ પદાર્થને સૂક્ષ્મપણાને પમાડી દેવું એ શ્રીકૃષ્ણ ભગવાનની મૂર્તિને વિષે નિર્ગુણપણું છે.</blockquote>
+ <div class="lbl">The passage in Kariyani 8 (matching words highlighted)</div><blockquote class="gu src">… બેય રૂપનું ધરનારું જે ભગવાનનું મૂળ સ્વરૂપ તે કેવું છે ? તો તેનો ઉત્તર એ છે જે, પ્રકટ પ્રમાણ મનુષ્યાકારે દેખાય છે. એજ ભગવાનનું સદાય મૂળસ્વરૂપ છે, અને નિર્ગુણપણું અને સગુણપણું એ તો એ મૂર્તિનું કોઈક અલૌકિક ઐશ્વર્ય છે, જેમ <mark>શ્રીકૃષ્ણભગવાન બ્રાહ્મણના પુત્રને લેવા સારુ અર્જુન સહિત રથે બેસીને ચાલ્યા તે લોકાલોક પર્વતને ઉલ્લંઘીને માયાનું તમ આવ્યું તેને સુદર્શન ચક્રે કરીને કાપીને તેથી પર જે બ્રહ્મજ્યોતિ તેને વિષે રહ્યા જે ભૂમાપુરુષ તેની પાસેથી બ્રાહ્મણના પુત્રને લઈ આવ્યા, ત્યારે તે રથ ને ઘોડા તે માયિક હતા ને સ્થૂલભાવે યુક્ત હતા, પણ તે શ્રીકૃષ્ણ ભગવાનને યોગે કરીને અતિ સૂક્ષ્મ ને ચૈતન્યરૂપે થઈને ભગવાનના નિર્ગુણ બ્રહ્મધામને પામ્યા; એવી રીતે જે સ્થૂલ પદાર્થને સૂક્ષ્મપણાને પમાડી દેવું એ શ્રીકૃષ્ણભગવાનની મૂર્તિને વિષે નિર્ગુણપણું છે</mark> અને એજ શ્રીકૃષ્ણ ભગવાન તેણે પોતાની માતા જે યશોદાજી તેને પોતાના મુખને વિષે અષ્ટાવરણે યુક્ત સમગ્ર બ્રહ્માંડ દેખાડ્યું. અને વળી અર્જુનને પોતાની મૂર્તિને વિષે વિશ્વરૂપ દેખાડ્યું, અને અર્જુન વિના જે બીજા હતા તે તો સાડાત્રણ હ…</blockquote>
+ <p class="why">Both the section and the number differ. Possibly the passage also appears elsewhere, or the reference belongs to a neighbouring entry.</p>
+</article>
+<article class="item" id="d25">
+ <header><span class="num">25</span><div><h2 class="gu"><a href="index.html#n-5053">સિદ્ધદશા</a></h2>
+  <div class="meta">Note · Nondh page <a href="books/vachanamrut-nondh.pdf#page=722" target="_blank" rel="noopener">722</a> · <span class="tag">Same number, different section</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-L-1">Loya 1</a> <span class="gu">(લોયા 1)</span><div class="ttl gu">ક્રોધનું દુષ્ટ સ્વરૂપ, ત્રિવિધ જ્ઞાન-વૈરાગ્ય લક્ષણ, સંપૂર્ણ સત્સંગનાં લક્ષણ.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GM-1">Gadhada Madhya 1</a> <span class="gu">(ગઢડા મધ્ય 1)</span> · paragraph 11, PDF page 378<div class="ttl gu">મોહનું સ્વરૂપ અને તેને ટાળ્યાનો ઉપાય.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">ઉત્તમ દશાવાળો આ ને આ જન્મે કરીને સિદ્ધ થાય છે. અને જ્યારે સારા નરસા વિષય તુલ્ય ભાસે એ ભક્ત સિદ્ધ દશાને પામ્યો જાણવો. અને જ્યારે વિષયમાંથી આસક્તિ મુકીને સિદ્ધ દશાને પામે છે, ત્યારે, તેને કૃતાર્થ થયો જાણવો.</blockquote>
+ <div class="lbl">The passage in Gadhada Madhya 1 (matching words highlighted)</div><blockquote class="gu src">…ી, એને વિષે આકળા થઈને અકળાઈ જવું નહિ. એવી રીતે ગીતામાં પણ કહ્યું છે જે, &#x27; अनेकजन्मसंसिद्िस्ततो याति परां गतिम् &#x27; માટે એમ વિચારવું જે, આ જન્મે જેટલી વિષયમાંથી આસક્તિ ટળશે તેટલી ટાળવી છે અને એમ કરતાં જો કાંઈ રહી ગઈ તો બીજે<mark> જન્મે કરીને ટાળવી છે પણ ભગવાનના ભક્ત છીએ તે નરક ચોરાશીમાં તો જવું નથી. એવી રીતે ભગવાનના ભક્તને હિંમત રાખીને ધીરે ધીરે મોહનું મૂળ ઉખાડ્યાનો આદર રાખવો, અને જ્યાં સુધી સારા અને નરસા એ બે વિષય તુલ્ય ન જણાય, ત્યાં સુધી એ ભગવાનનો ભક્ત સાધનદશામાં કહેવાય. અને જ્યારે સારા નરસા વિષય તુલ્ય ભાસે ત્યારે એ ભક્ત સિદ્ધદશાને પામ્યો જાણવો, અને જ્યારે વિષયમાંથી આસક્તિ મૂકીને સિદ્ધદશાને પામે છે ત્યારે એને કૃતાર્થ થયો જાણવો.</mark> અને વેદ, શાસ્ત્ર, પુરાણ, ઈતિહાસ એ સર્વે ગ્રંથનો એ જ ગલિતાર્થ છે. આ જે અમે વાત કરી છે તે સર્વે શાસ્ત્રનું રહસ્ય છે. માટે આ વાર્તાને સર્વે હરિભક્ત દૃઢ કરીને રાખજ્યો. ઈતિ વચનામૃતમ્ ।।૧।। ૧૩૪ ।।</blockquote>
+ <p class="why">The number matches but the section differs, e.g. Gadhada Antya instead of Gadhada Madhya. Likely a section label slip.</p>
+</article>
+<article class="item" id="d26">
+ <header><span class="num">26</span><div><h2 class="gu"><a href="index.html#n-5162">સ્થૂળદેહ અને સૂક્ષ્મદેહની એકતા</a></h2>
+  <div class="meta">Quotation · Nondh page <a href="books/vachanamrut-nondh.pdf#page=743" target="_blank" rel="noopener">743</a> · <span class="tag">Same section, different number</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-S-18">Sarangpur 18</a> <span class="gu">(સારંગપુર 18)</span><div class="ttl gu">ખારભૂમી વિષે, ભૂંડા સ્વભાવ ટાળવા વિષે.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-S-14">Sarangpur 14</a> <span class="gu">(સારંગપુર 14)</span> · paragraph 6, PDF page 233<div class="ttl gu">ધામમાંથી ભગવદિચ્છા વિના કોઈ પડે નહિ, પ્રમાદ ને મોહરૂપ શત્રુ ટાળવા.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">.....“અને જો સૂક્ષ્મદેહમાં સ્થૂળદેહ છે, તો સૂક્ષ્મદેહમાં સ્ત્રીનો સંગ કરે છે, તેનો સ્થૂળદેહમાં વિર્યપાત થઈ જાય છે. માટે સ્થૂળદેહ ને સૂક્ષ્મદેહની જાગ્રત અવસ્થાને વિષે ને સ્વપ્ન અવસ્થાને વિષે એકતા છે.”</blockquote>
+ <div class="lbl">The passage in Sarangpur 14 (matching words highlighted)</div><blockquote class="gu src">…્મ દેહને વિષે પણ પંચ તત્ત્વનું જે સ્થૂલ દેહ તે એકત્વપણે વર્તે છે ત્યારેજ સૂક્ષ્મ દેહના ભોગ સિદ્ધ થાય છે અને સૂક્ષ્મ દેહ ઓગણીશ તત્ત્વનું છે તેને વિષે પંચ તત્ત્વનું સ્થૂલ દેહ ભળે છે માટે સૂક્ષ્મ દેહ પણ ચોવીશ તત્ત્વનું છે. <mark>અને જો સૂક્ષ્મ દેહમાં સ્થૂલ દેહ છે તો સૂક્ષ્મ દેહમાં સ્ત્રીનો〔૧〕 સંગ કરે છે તેનો સ્થૂલ દેહમાં વીર્યપાત થઈ જાય છે. માટે સ્થૂલ દેહ ને સૂક્ષ્મ દેહની જાગ્રત અવસ્થાને વિષે ને સ્વપ્ન અવસ્થાને વિષે એકતા છે.</mark>’’</blockquote>
+ <p class="why">Same section; a different discourse number.</p>
+</article>
+<article class="item" id="d27">
+ <header><span class="num">27</span><div><h2 class="gu"><a href="index.html#n-5247">સ્થિતપ્રજ્ઞ</a></h2>
+  <div class="meta">Quotation · Nondh page <a href="books/vachanamrut-nondh.pdf#page=757" target="_blank" rel="noopener">757</a> · <span class="tag">Same number, different section</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-L-17">Loya 17</a> <span class="gu">(લોયા 17)</span><div class="ttl gu">સ્તુતિ નિંદાનું, મહિમાવાળાને સંતનો અવગુણ ન આવે.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GM-17">Gadhada Madhya 17</a> <span class="gu">(ગઢડા મધ્ય 17)</span> · paragraph 8, PDF page 423<div class="ttl gu">ભગવાનનું સ્વરૂપ તત્ત્વે સહિત કે રહિત કહેવાય નહિ, સ્થિત પ્રજ્ઞનું લક્ષણ.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">“અને જેને ભગવાનના સ્વરુપમાં કોઈ રિત્યનું ઉત્થાન નથી તેને નિર્વિકલ્પ સ્થિતિવાળો જાણવો. અને જેને એવી એકમતિ હોય તેને સ્થિતપ્રજ્ઞ જાણવો. .....‘ભગવાન તો નિર્વિકારી નિર્લેપ જ છે.’ એવી રિત્યે જે ભગવાનના સ્વરુપને સમજે તે ભગવાનનો ભક્ત સ્થિતપ્રજ્ઞ જાણવો. .....અને જેમ ભગવાનનું સમર્થપણું હોય ને તેનું ગાન કરે તેમ જ અસમર્થપણું હોય તેનું પણ ગાન કરે; અને જેમ ભગવાનનું યોગ્ય ચરિત્ર હોય, તેનું ગાન કરે, તેમ જ જે અયોગ્ય જેવું ચરિત્ર જણાતું હોય, તેનું પણ ગાન કરે પણ ભગવાનના ચરિત્રને વિષે યોગ્ય અયોગ્ય એવો ઘાટ ઘડે નહિ. એવો જે ભગવાનનો ભક્ત હોય તેને પુરુષોત્તમના સ્વરુપને વિષે સ્થિતપ્રજ્ઞ જાણવો.”.....</blockquote>
+ <div class="lbl">The passage in Gadhada Madhya 17 (matching words highlighted)</div><blockquote class="gu src">અને પુરુષોત્તમ<mark> ભગવાન છે તે સર્વ ક્ષેત્રજ્ઞના ક્ષેત્રજ્ઞ છે તો પણ નિર્વિકાર છે, અને માયા આદિક જે વિકારવાન પદાર્થ તેનો વિકાર પુરુષોત્તમ ભગવાનને અડતો નથી. અને જે આત્મનિષ્ઠ પુરુષ છે તેને પણ સ્થૂલ, સૂક્ષ્મ અને કારણના વિકાર નથી અડતા, તો પુરુષોત્તમ ભગવાનને ન અડે એમાં શું કહેવું ? ભગવાન તો નિર્વિકારી ને નિર્લેપ જ છે. એવી રીતે જે ભગવાનના સ્વરૂપને સમજે તે ભગવાનનો ભક્ત સ્થિતપ્રજ્ઞ જાણવો. જેમ પોતાના આત્માને વિષે જેને સ્થિતિ હોય તે પણ સ્થિતપ્રજ્ઞ કહેવાય છે, તેમ જેને ભગવાનના સ્વરૂપને વિષે કોઈ જાતનો ઘાટ ન હોય અને જેમ ભગવાનનું સમર્થપણું હોય ને તેનું ગાન કરે તેમજ અસમર્થપણું હોય તેનું પણ ગાન કરે, અને જેમ ભગવાનનું યોગ્ય ચરિત્ર હોય તેનું ગાન કરે તેમજ જે અયોગ્ય જેવું ચરિત્ર જણાતું હોય તેનું પણ ગાન કરે, પણ ભગવાનના ચરિત્રને વિષે યોગ્ય અયોગ્ય એવો ઘાટ ઘડે નહિ. એવો જે ભગવાનનો ભક્ત હોય તેને પુરુષોત્તમના સ્વરૂપને વિષે સ્થિતપ્રજ્ઞ જાણવો</mark> અને જેને એવી પુરુષોત્તમના સ્વરૂપને વિષે દૃઢ નિષ્ઠા થઈ, તેને એથી ઉપરાંત બીજું કાંઈ સમજવાનું રહ્યું નથી. ઈતિ વચનામૃતમ્ ।।૧૭।। ૧૫૦ ।।</blockquote>
+ <p class="why">The number matches but the section differs, e.g. Gadhada Antya instead of Gadhada Madhya. Likely a section label slip.</p>
+</article>
+<article class="item" id="d28">
+ <header><span class="num">28</span><div><h2 class="gu"><a href="index.html#n-5282">સ્વતંત્ર</a></h2>
+  <div class="meta">Quotation · Nondh page <a href="books/vachanamrut-nondh.pdf#page=763" target="_blank" rel="noopener">763</a> · <span class="tag">Same number, different section</span></div></div></header>
+ <dl class="refs">
+  <dt>Nondh cites</dt><dd><a href="index.html#v-GP-13">Gadhada Pratham 13</a> <span class="gu">(ગઢડા પ્રથમ 13)</span><div class="ttl gu">દેહ દેહ પ્રત્યે જીવ જુદા છે. કર્માનુસારે પ્રભુ જુદા જુદા દેહ પમાડે છે.</div></dd>
+  <dt>Words found in</dt><dd><a href="index.html#v-GM-13">Gadhada Madhya 13</a> <span class="gu">(ગઢડા મધ્ય 13)</span> · paragraph 5, PDF page 410<div class="ttl gu">તેજમાં દિવ્યમૂર્તિ વિરાજમાન છે તેજ આ પ્રત્યક્ષ મહારાજ છે.</div></dd>
+ </dl>
+ <div class="lbl">What the Nondh says</div><blockquote class="gu">....“એવી રિત્યે જેણે ભગવાનનું સ્વરૂપ જાણ્યું તેને અમારી પેઠે જ પંચ વિષયમાં ક્યાંય પ્રીતિ રહેતી નથી, ને તે સ્વતંત્ર થાય છે.</blockquote>
+ <div class="lbl">The passage in Gadhada Madhya 13 (matching words highlighted)</div><blockquote class="gu src">…લ્યરૂપે જ છે અને તે ભગવાન જે જગ્યામાં વિરાજતા હોય તે જગ્યા પણ નિર્ગુણ છે અને તે ભગવાનનાં વસ્ત્ર, અલંકાર તથા વાહન તથા પરિચર્યાના કરનારા સેવક તથા ખાનપાનાદિક જે જે પદાર્થ ભગવાનના સંબંધને પામે છે તે સર્વે નિર્ગુણ છે. એવી રીત<mark>ે જેણે ભગવાનનું સ્વરૂપ જાણ્યું તેને અમારી પેઠે જ પંચવિષયમાં કયાંઈ પ્રીતિ રહેતી નથી, ને તે સ્વતંત્ર થાય છે.</mark></blockquote>
+ <p class="why">The number matches but the section differs, e.g. Gadhada Antya instead of Gadhada Madhya. Likely a section label slip.</p>
+</article>
+</main>
+<footer class="wrap">Vachanamrut Nondh compiled by Ashwin Babubhai Shah, with special guidance / inspiration from Nathji Mandal and (Bhaiji Dada and Dadaji). <a href="index.html#nondh">Open the Nondh</a>.</footer>
+</body>
+</html>
